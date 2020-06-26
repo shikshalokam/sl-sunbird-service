@@ -51,8 +51,12 @@ function callToSunbird(requestType,url,token,requestBody ="") {
                     message: constants.apiResponses.SUNBIRD_SERVICE_DOWN
                 });
             } else {
-
                 if(data.statusCode == httpStatusCode.ok.status){
+
+                    if(!data.body.responseCode){
+                        data.body = JSON.parse(data.body);
+                    }
+                    
                     if(data.body && data.body.responseCode  && data.body.responseCode == constants.common.RESPONSE_OK ){
                         if(data.body.result){
                            return resolve(data.body.result);
@@ -75,21 +79,62 @@ function callToSunbird(requestType,url,token,requestBody ="") {
   * @returns {JSON} - consist of learning resources list
 */
 
-const learningResources = function (token) {
+const learningResources = function (token,limit,offset) {
     return new Promise(async (resolve, reject) => {
 
         const learningResourceUrl = constants.apiEndpoints.GET_RESOURCES;
+        
         let requestBody = {
             "source": "web",
             "name": "Resource",
+            "facets": ["board", "gradeLevel", "subject", "medium"],
             "filters": {
-              "objectType": [
-                "Content"
-              ]
-            }
+                "contentType": ["Resource"]
+            },
+            "limit": limit,
+            "mode": "soft",
+            "offset": offset -1,
+            // "query": ""
           }
+        // let requestBody = {
+        //     "request": {
+        //       "source": "web",
+        //       "name": "Resource",
+        //       "filters": {
+        //         "objectType": [
+        //           "Content"
+        //         ]
+        //       }
+        //     }
+        //   }
+
+          
         let response = await callToSunbird("POST",learningResourceUrl,token,requestBody);
         return resolve(response);
+        
+    })
+}
+
+/**
+  * Get learning resources.
+  * @function
+  * @name categoryList
+  * @param token - Logged in user token.
+  * @returns {JSON} - consist of learning resources list
+*/
+
+const categoryList = function (token,limit,offset) {
+    return new Promise(async (resolve, reject) => {
+
+        try {
+            const apiEndPoint = constants.apiEndpoints.FRAMEWORK_LIST; 
+            let response = await callToSunbird("GET",apiEndPoint,token);
+            return resolve(response);
+
+        } catch (error) {
+             reject(error )
+        }
+       
         
     })
 }
@@ -98,5 +143,6 @@ const learningResources = function (token) {
 
 
 module.exports = {
-    learningResources: learningResources
+    learningResources: learningResources,
+    categoryList: categoryList
 };

@@ -6,5 +6,6 @@
  */
 
 module.exports = {
-    GET_RESOURCES : "/api/data/v1/page/assemble"
+    GET_RESOURCES : "/api/content/v1/search",
+    FRAMEWORK_LIST: "/api/framework/v1/read/NCF"
 };

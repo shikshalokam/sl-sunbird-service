@@ -7,5 +7,6 @@
 
 module.exports = {
     SUNBIRD_SERVICE_DOWN : "Sunbird service is down",
-    LEARNING_RESORCES_FOUND: "Learning resources found successfully"
+    LEARNING_RESORCES_FOUND: "Learning resources found successfully",
+    LEARNING_RESORCES__NOT_FOUND: "Learning resources not found"
 };

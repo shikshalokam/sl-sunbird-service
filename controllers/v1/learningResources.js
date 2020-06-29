@@ -18,12 +18,12 @@ module.exports = class LearningResources {
   }
 
   /**
-  * @api {get} /sunbird-service/api/v1/learningResources/list 
+  * @api {get} /sunbird-service/api/v1/learningResources/list?limit=10&page=1 
   * To get list of learning resources
   * @apiVersion 1.0.0
   * @apiGroup Learning Resources
   * @apiHeader {String} X-authenticated-user-token Authenticity token
-  * @apiSampleRequest /sunbird-service/api/v1/learningResources/list
+  * @apiSampleRequest /sunbird-service/api/v1/learningResources/list?limit=10&page=1
   * @apiUse successBody
   * @apiUse errorBody
   * @apiParamExample {json} Response:
@@ -68,18 +68,26 @@ module.exports = class LearningResources {
   **/
 
   /**
-   * For list
+   * For list of learning resources
    * @method
-   * @name create
+   * @name list
    * @param  {req}  - requested data.
-   * @returns {json} Response consists list of learning resource
+   * @returns {json} Response consists list of learning resources
   */
 
   list(req) {
     return new Promise(async (resolve, reject) => {
       try {
         
-        let response = await learningResourceshelper.list(req.userDetails.userToken,req.pageSize,req.pageNo);
+        let response = await learningResourceshelper.list(
+          req.userDetails.userToken,
+          req.pageSize,
+          req.pageNo,
+          req.query.board ? req.query.board : "",
+          req.query.gradeLevel ? req.query.gradeLevel : "",
+          req.query.subject ? req.query.subject : "",
+          req.query.medium ? req.query.medium : "", 
+          );
         return resolve(response);
 
       } catch (error) {
@@ -98,68 +106,87 @@ module.exports = class LearningResources {
   }
 
   /**
-  * @api {get} /sunbird-service/api/v1/learningResources/list 
-  * To get list of learning resources
+  * @api {get} /sunbird-service/api/v1/learningResources/filtersList 
+  * To get filters list of learning resources
   * @apiVersion 1.0.0
   * @apiGroup Learning Resources
   * @apiHeader {String} X-authenticated-user-token Authenticity token
-  * @apiSampleRequest /sunbird-service/api/v1/learningResources/list
+  * @apiSampleRequest /sunbird-service/api/v1/learningResources/filtersList
   * @apiUse successBody
   * @apiUse errorBody
   * @apiParamExample {json} Response:
     {
-    "message": "Learning resources found successfully",
+    "message":"filters featched successfully",
     "status": 200,
-    "result": [
-        {
-            "display": "{\"name\":{\"en\":\"Popular Worksheet\",\"hi\":\"लोकप्रिय वर्कशीट\"}}",
-            "alt": null,
-            "count": 0,
-            "description": null,
-            "index": 1,
-            "sectionDataType": "content",
-            "imgUrl": null,
-            "resmsgId": "e6c90f20-b5f6-11ea-aa64-cf82d77f4119",
-            "contents": null,
-            "searchQuery": "{\"request\":{\"query\":\"\",\"filters\":{\"language\":[\"English\"],\"contentType\":[\"Worksheet\"]},\"limit\":10,\"sort_by\":{\"lastUpdatedOn\":\"desc\"}}}",
-            "name": "Popular Worksheet",
-            "id": "01228383082462412826",
-            "apiId": "api.content.search",
-            "group": 1
-        },
-        {
-            "display": "{\"name\":{\"en\":\"Popular Story\",\"hi\":\"लोकप्रिय कहानी\"}}",
-            "alt": null,
-            "count": 0,
-            "description": null,
-            "index": 1,
-            "sectionDataType": "content",
-            "imgUrl": null,
-            "resmsgId": "e6c98450-b5f6-11ea-aa64-cf82d77f4119",
-            "contents": null,
-            "searchQuery": "{\"request\":{\"query\":\"\",\"filters\":{\"language\":[\"English\"],\"contentType\":[\"Story\"]},\"limit\":10,\"sort_by\":{\"lastUpdatedOn\":\"desc\"}}}",
-            "name": "Popular Story",
-            "id": "01228383384379392023",
-            "apiId": "api.content.search",
-            "group": 2
-        }
-    ]
-  }
+      "result": {
+         "medium": [
+            {
+                "label": "English",
+                "value": "english"
+            },
+            {
+                "label": "Hindi",
+                "value": "hindi"
+            },
+            {
+                "label": "Odia",
+                "value": "oriya"
+            },
+            {
+                "label": "Telugu",
+                "value": "telugu"
+            },
+            {
+                "label": "Kannada",
+                "value": "kannada"
+            },
+            {
+                "label": "Marathi",
+                "value": "marathi"
+            },
+            {
+                "label": "Assamese",
+                "value": "assamese"
+            },
+            {
+                "label": "Bengali",
+                "value": "bengali"
+            },
+            {
+                "label": "Gujarati",
+                "value": "gujarati"
+            },
+            {
+                "label": "Tamil",
+                "value": "tamil"
+            },
+            {
+                "label": "Urdu",
+                "value": "urdu"
+            },
+            {
+                "label": "Other",
+                "value": "other"
+            }
+        ]
+      }
+    }
+
   **/
 
   /**
-   * For category
+   * To get filters of learning resources 
    * @method
-   * @name categoryList
+   * @name filtersList
    * @param  {req}  - requested data.
    * @returns {json} Response consists of learning resources category list
   */
 
- categoryList(req) {
+ filtersList(req) {
   return new Promise(async (resolve, reject) => {
     try {
 
-      let response = await learningResourceshelper.categoryList(req.userDetails.userToken);
+      let response = await learningResourceshelper.filtersList(req.userDetails.userToken);
       return resolve(response);
 
     } catch (error) {

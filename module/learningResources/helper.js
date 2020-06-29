@@ -1,4 +1,4 @@
-const { constant } = require("lodash");
+
 
 let sunbirdService =
     require(ROOT_PATH + "/generics/services/sunbird");
@@ -16,21 +16,27 @@ module.exports = class learningResourcesHelper {
     * @method
     * @name  list
     * @param {String} token - user access token.
+    * @param {String} pageSize - page size of the request
+    * @param {String} pageNo - page no of the request
     * @returns {json} Response consists of list of learning resources
     */
-    static list(token,limit,offset) {
+    static list(token,pageSize,pageNo,board,gradeLevel,subject,medium) {
         return new Promise(async (resolve, reject) => {
            try {
-            let learningResources  = await sunbirdService.learningResources(token,limit,offset);
-            // console.log("learningResources",learningResources);
+            let filters = {
+                board:board,
+                gradeLevel:gradeLevel,
+                subject:subject,
+                medium:medium
+            }
+            let learningResources  = await sunbirdService.learningResources(token,pageSize,pageNo,filters);
             if(learningResources){
                 if(learningResources.content){
                     resolve({ message:constants.apiResponses.LEARNING_RESORCES_FOUND,result:{ data: learningResources.content,count:learningResources.count  } })
                 }else{
-                    reject({ message:constants.apiResponses.LEARNING_RESORCES__NOT_FOUND })
+                    reject({ message:constants.apiResponses.LEARNING_RESORCES_NOT_FOUND })
                 }
             }
-            
             resolve(response);
 
            } catch (error) {
@@ -40,23 +46,22 @@ module.exports = class learningResourcesHelper {
 
     }
 
-        /**
-    * To get list of laerning resources
+    /**
+    * To get filters list
     * @method
-    * @name  list
+    * @name  filtersList
     * @param {String} token - user access token.
-    * @returns {json} Response consists of list of learning resources
+    * @returns {json} Response consists of list of filters
     */
-   static categoryList(token) {
+   static filtersList(token) {
     return new Promise(async (resolve, reject) => {
        try {
-        let category  = await sunbirdService.categoryList(token);
+        let category  = await sunbirdService.filtersList(token);
         if(category){
             if(category){
-                resolve({ message:constants.apiResponses.LEARNING_RESORCES_FOUND,result:category })
+                resolve({ message:constants.apiResponses.FILTERS_FOUND,result:category })
             }
         }
-        
         resolve(response);
 
        } catch (error) {

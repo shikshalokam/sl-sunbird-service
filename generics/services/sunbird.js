@@ -79,7 +79,7 @@ function callToSunbird(requestType,url,token,requestBody ="") {
   * @returns {JSON} - consist of learning resources list
 */
 
-const learningResources = function (token,limit,offset) {
+const learningResources = function (token,limit,offset,filters = "") {
     return new Promise(async (resolve, reject) => {
 
         const learningResourceUrl = constants.apiEndpoints.GET_RESOURCES;
@@ -89,13 +89,33 @@ const learningResources = function (token,limit,offset) {
             "name": "Resource",
             "facets": ["board", "gradeLevel", "subject", "medium"],
             "filters": {
-                "contentType": ["Resource"]
+                "contentType": ["Resource"],
+                // "medium":["Kannada"],
+                // "gradeLevel":["Class 1"],
+                // "board":
             },
             "limit": limit,
             "mode": "soft",
             "offset": offset -1,
             // "query": ""
           }
+
+          if(filters){
+              if(filters["board"]){
+                requestBody["filters"]["board"] =[filters["board"]];
+              }
+              if(filters["gradeLevel"]){
+                requestBody["filters"]["gradeLevel"] =[filters["gradeLevel"]];
+              }
+              if(filters["subject"]){
+                requestBody["filters"]["subject"] =[filters["subject"]];
+              }
+              if(filters["medium"]){
+                requestBody["filters"]["medium"] =[filters["medium"]];
+              }
+          }
+        //   if(requestBody)
+
         // let requestBody = {
         //     "request": {
         //       "source": "web",
@@ -118,12 +138,12 @@ const learningResources = function (token,limit,offset) {
 /**
   * Get learning resources.
   * @function
-  * @name categoryList
+  * @name filtersList
   * @param token - Logged in user token.
-  * @returns {JSON} - consist of learning resources list
+  * @returns {JSON} - consist of learning filters list
 */
 
-const categoryList = function (token,limit,offset) {
+const filtersList = function (token) {
     return new Promise(async (resolve, reject) => {
 
         try {
@@ -133,8 +153,7 @@ const categoryList = function (token,limit,offset) {
 
         } catch (error) {
              reject(error )
-        }
-       
+        } 
         
     })
 }
@@ -144,5 +163,5 @@ const categoryList = function (token,limit,offset) {
 
 module.exports = {
     learningResources: learningResources,
-    categoryList: categoryList
+    filtersList: filtersList
 };

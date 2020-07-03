@@ -78,7 +78,6 @@ module.exports = class LearningResources {
   list(req) {
     return new Promise(async (resolve, reject) => {
       try {
-        
         let response = await learningResourceshelper.list(
           req.userDetails.userToken,
           req.pageSize,
@@ -87,6 +86,7 @@ module.exports = class LearningResources {
           req.query.gradeLevel ? req.query.gradeLevel : "",
           req.query.subject ? req.query.subject : "",
           req.query.medium ? req.query.medium : "", 
+          req.query.sortBy ? req.query.sortBy : ""
           );
         return resolve(response);
 

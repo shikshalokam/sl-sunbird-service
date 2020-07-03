@@ -20,14 +20,15 @@ module.exports = class learningResourcesHelper {
     * @param {String} pageNo - page no of the request
     * @returns {json} Response consists of list of learning resources
     */
-    static list(token,pageSize,pageNo,board,gradeLevel,subject,medium) {
+    static list(token,pageSize,pageNo,board,gradeLevel,subject,medium,sortBy) {
         return new Promise(async (resolve, reject) => {
            try {
             let filters = {
                 board:board,
                 gradeLevel:gradeLevel,
                 subject:subject,
-                medium:medium
+                medium:medium,
+                sortBy:sortBy
             }
             let learningResources  = await sunbirdService.learningResources(token,pageSize,pageNo,filters);
             if(learningResources){

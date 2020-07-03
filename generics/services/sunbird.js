@@ -113,22 +113,20 @@ const learningResources = function (token,limit,offset,filters = "") {
               if(filters["medium"]){
                 requestBody["filters"]["medium"] =[filters["medium"]];
               }
+
+              if(filters['sortBy'] && filters['sortBy']=="popular"){
+                requestBody["sort_by"]  = {
+                    "me_totalRatings": "desc"
+                 }
+              }
+
+              if(filters['sortBy'] && filters['sortBy']=="recent"){
+                requestBody["sort_by"]  = {
+                    "createdOn": "desc"
+                 }
+              }
           }
-        //   if(requestBody)
 
-        // let requestBody = {
-        //     "request": {
-        //       "source": "web",
-        //       "name": "Resource",
-        //       "filters": {
-        //         "objectType": [
-        //           "Content"
-        //         ]
-        //       }
-        //     }
-        //   }
-
-          
         let response = await callToSunbird("POST",learningResourceUrl,token,requestBody);
         return resolve(response);
         

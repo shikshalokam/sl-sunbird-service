@@ -12,12 +12,17 @@ let sunbirdService =
 module.exports = class learningResourcesHelper {
 
     /**
-    * To get list of laerning resources
+    * To get list of learning resources
     * @method
     * @name  list
     * @param {String} token - user access token.
     * @param {String} pageSize - page size of the request
     * @param {String} pageNo - page no of the request
+    * @param {String} board - board of the resource
+    * @param {String} gradeLevel - gradeLevel of the resource
+    * @param {String} subject - subject of the resource
+    * @param {String} medium - medium of the resource
+    * @param {String} sortBy - sortBy filter of the resource
     * @returns {json} Response consists of list of learning resources
     */
     static list(token,pageSize,pageNo,board,gradeLevel,subject,medium,sortBy) {
@@ -32,14 +37,16 @@ module.exports = class learningResourcesHelper {
             }
             let learningResources  = await sunbirdService.learningResources(token,pageSize,pageNo,filters);
             if(learningResources){
+
                 if(learningResources.content){
                     resolve({ message:constants.apiResponses.LEARNING_RESORCES_FOUND,result:{ data: learningResources.content,count:learningResources.count  } })
                 }else{
-                    reject({ message:constants.apiResponses.LEARNING_RESORCES_NOT_FOUND })
+                    reject({ message:constants.apiResponses.LEARNING_RESORCES_NOT_FOUND });
                 }
+            }else{
+                reject({ message:constants.apiResponses.LEARNING_RESORCES_NOT_FOUND });
             }
-            resolve(response);
-
+           
            } catch (error) {
                 return reject(error);
             }

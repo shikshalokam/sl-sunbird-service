@@ -47,23 +47,30 @@ function callToSunbird(requestType,url,token,requestBody ="") {
 
         function callback(err, data) {
             if (err) {
+
                 return reject({
                     message: constants.apiResponses.SUNBIRD_SERVICE_DOWN
                 });
             } else {
+
+               
                 if(data.statusCode == httpStatusCode.ok.status){
 
                     if(!data.body.responseCode){
                         data.body = JSON.parse(data.body);
                     }
-                    
                     if(data.body && data.body.responseCode  && data.body.responseCode == constants.common.RESPONSE_OK ){
                         if(data.body.result){
                            return resolve(data.body.result);
                         }
                     }
+                }else{
+                    if(! data.body && !data.body.params){
+                        data.body = JSON.parse(data.body);
+                    }
+                    return reject({ message:data.body.params.errmsg });
                 }
-                return reject({ result:data.body });
+                
             }
         }
 
@@ -76,12 +83,16 @@ function callToSunbird(requestType,url,token,requestBody ="") {
   * @function
   * @name learningResources
   * @param token - Logged in user token.
+  * @param limit - page limit for the request 
+  * @param offset - page offset for the request
+  * @param filters - api filters for the request 
   * @returns {JSON} - consist of learning resources list
 */
 
 const learningResources = function (token,limit,offset,filters = "") {
     return new Promise(async (resolve, reject) => {
 
+        try {
         const learningResourceUrl = constants.apiEndpoints.GET_RESOURCES;
         
         let requestBody = {
@@ -90,14 +101,10 @@ const learningResources = function (token,limit,offset,filters = "") {
             "facets": ["board", "gradeLevel", "subject", "medium"],
             "filters": {
                 "contentType": ["Resource"],
-                // "medium":["Kannada"],
-                // "gradeLevel":["Class 1"],
-                // "board":
             },
             "limit": limit,
             "mode": "soft",
-            "offset": offset -1,
-            // "query": ""
+            "offset": offset -1
           }
 
           if(filters){
@@ -129,12 +136,14 @@ const learningResources = function (token,limit,offset,filters = "") {
 
         let response = await callToSunbird("POST",learningResourceUrl,token,requestBody);
         return resolve(response);
-        
+    } catch (error) {
+        reject(error )
+   } 
     })
 }
 
 /**
-  * Get learning resources.
+  * Get learning filters.
   * @function
   * @name filtersList
   * @param token - Logged in user token.

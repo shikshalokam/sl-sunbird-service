@@ -2,7 +2,7 @@
  * name : learningResources.js
  * author : Rakesh Kumar
  * created-date : 24-Jun-2020
- * Description : related to learning resources
+ * Description : Related to learning resources
  */
 
 const learningResourceshelper = require(MODULES_BASE_PATH + "/learningResources/helper.js");
@@ -68,7 +68,7 @@ module.exports = class LearningResources {
   **/
 
   /**
-   * For list of learning resources
+   * For to get list of learning resources
    * @method
    * @name list
    * @param  {req}  - requested data.
@@ -116,7 +116,7 @@ module.exports = class LearningResources {
   * @apiUse errorBody
   * @apiParamExample {json} Response:
     {
-    "message":"filters featched successfully",
+    "message":"filters fetched successfully",
     "status": 200,
       "result": {
          "medium": [

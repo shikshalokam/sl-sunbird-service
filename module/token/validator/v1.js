@@ -10,7 +10,7 @@ module.exports = (req) => {
     let tokenValidator = {
         
         verify: function () {
-            req.checkBody('token').exists().withMessage("required token");
+            req.checkBody('token').exists().notEmpty().withMessage("required token");
         }
        
     }

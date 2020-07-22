@@ -30,12 +30,12 @@ module.exports = class Abhyasa {
 
 
     /**
-     * @api {get} /kendra/api/v1/bodh/abhyasa/userIsAllowed/:userId  
+     * @api {get} /sunbird-service/api/v1/bodh/abhyasa/userIsAllowed/:userId  
      * Check whether user belongs to AP organisations or not.
      * @apiVersion 1.0.0
      * @apiGroup Abhyasa
      * @apiHeader {String} X-authenticated-user-token Authenticity token
-     * @apiSampleRequest /kendra/api/v1/bodh/abhyasa/userIsAllowed/c828382f-89d4-4dc6-ae14-47a6d0337364
+     * @apiSampleRequest /sunbird-service/api/v1/bodh/abhyasa/userIsAllowed/c828382f-89d4-4dc6-ae14-47a6d0337364
      * @apiUse successBody
      * @apiUse errorBody
      * @apiParamExample {json} Response:
@@ -73,7 +73,7 @@ module.exports = class Abhyasa {
                     throw new Error(abhyasaUser.message)
                 }
 
-                abhyasaUser.message = constants.apiResponses.AP_USER_ALLOWED;
+                abhyasaUser.message = CONSTANTS.apiResponses.AP_USER_ALLOWED;
                 if(!abhyasaUser.data.isAllowed) {
                     abhyasaUser.data.validationMessage  = "You are not authorized to access the app. Please re-login with valid user credentials.";
                 }
@@ -88,10 +88,10 @@ module.exports = class Abhyasa {
 
                 return reject({
                     status: 
-                    error.status || httpStatusCode["internal_server_error"].status,
+                    error.status || HTTP_STATUS_CODE["internal_server_error"].status,
 
                     message: 
-                    error.message || httpStatusCode["internal_server_error"].message,
+                    error.message || HTTP_STATUS_CODE["internal_server_error"].message,
 
                     errorObject: error
                 });

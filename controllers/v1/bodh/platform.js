@@ -23,12 +23,12 @@ module.exports = class Platform {
      */
 
     /**
-     * @api {post} /kendra/api/v1/bodh/platform/generate 
+     * @api {post} /sunbird-service/api/v1/bodh/platform/generate 
      * Generate qr code information.
      * @apiVersion 1.0.0
      * @apiGroup bodhPlatform
      * @apiHeader {String} X-authenticated-user-token Authenticity token
-     * @apiSampleRequest /kendra/api/v1/bodh/platform/generate
+     * @apiSampleRequest /sunbird-service/api/v1/bodh/platform/generate
      * @apiUse successBody
      * @apiUse errorBody
      * @apiParamExample {json} Request:
@@ -68,22 +68,22 @@ module.exports = class Platform {
                 
                 return reject({
                     status: error.status || 
-                    httpStatusCode["internal_server_error"].status,
+                    HTTP_STATUS_CODE["internal_server_error"].status,
                     
                     message: error.message || 
-                    httpStatusCode["internal_server_error"].message
+                    HTTP_STATUS_CODE["internal_server_error"].message
                 });
             }
         });
     }
 
     /**
-     * @api {post} /kendra/api/v1/bodh/platform/uploadScromContent?name=:name 
+     * @api {post} /sunbird-service/api/v1/bodh/platform/uploadScromContent?name=:name 
      * Upload scrom content data for bodh platform.
      * @apiVersion 1.0.0
      * @apiGroup bodhPlatform
      * @apiHeader {String} X-authenticated-user-token Authenticity token
-     * @apiSampleRequest /kendra/api/v1/bodh/platform/uploadScromContent?name=TEST-BODH-SCROM
+     * @apiSampleRequest /sunbird-service/api/v1/bodh/platform/uploadScromContent?name=TEST-BODH-SCROM
      * @apiUse successBody
      * @apiUse errorBody
      * @apiParam {File} contentData Mandatory contentData file of type csv.
@@ -115,8 +115,8 @@ module.exports = class Platform {
 
             if ( !req.files || !req.files.contentData ) {
                 throw { 
-                    status: httpStatusCode["bad_request"].status, 
-                    message: constants.apiResponses.CONTENT_FILE_REQUIRED 
+                    status: HTTP_STATUS_CODE["bad_request"].status, 
+                    message: CONSTANTS.apiResponses.CONTENT_FILE_REQUIRED 
                 };
             }
 
@@ -133,10 +133,10 @@ module.exports = class Platform {
             
             return reject({
                 status: error.status || 
-                httpStatusCode["internal_server_error"].status,
+                HTTP_STATUS_CODE["internal_server_error"].status,
                 
                 message: error.message || 
-                httpStatusCode["internal_server_error"].message
+                HTTP_STATUS_CODE["internal_server_error"].message
             });
         }
     });

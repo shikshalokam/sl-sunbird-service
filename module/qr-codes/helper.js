@@ -80,7 +80,7 @@ module.exports = class QrCodeHelper {
                 if( !codeData ) {
                     throw {
                         message : 
-                        constants.apiResponses.QR_CODE_DATA_NOT_FOUND
+                        CONSTANTS.apiResponses.QR_CODE_DATA_NOT_FOUND
                     }; 
                 }
                     
@@ -93,7 +93,7 @@ module.exports = class QrCodeHelper {
                 
                 if( qrCodeDocument && qrCodeDocument.length > 0 ) {
                     qrCodeCreationData["_id"] = 
-                    constants.apiResponses.QR_CODE_EXISTS;
+                    CONSTANTS.apiResponses.QR_CODE_EXISTS;
                 } else {
                     
                     qrCodeCreationData["createdBy"] = userId;
@@ -194,7 +194,7 @@ module.exports = class QrCodeHelper {
             
             if( !qrCodeImage[0] ) {
                 throw {
-                  message : constants.apiResponses.QR_CODE_NOT_FOUND
+                  message : CONSTANTS.apiResponses.QR_CODE_NOT_FOUND
                 }
             };
 
@@ -205,7 +205,7 @@ module.exports = class QrCodeHelper {
             );
 
             return resolve({
-                message : constants.apiResponses.QR_CODE_FETCHED,
+                message : CONSTANTS.apiResponses.QR_CODE_FETCHED,
                 result : {
                   url : imageDownloadLink,
                   metaInformation : qrCodeImage[0].metaInformation
@@ -242,10 +242,9 @@ module.exports = class QrCodeHelper {
                     },
                     userToken
                 );
-
-                if( generateDialCode.responseCode !== constants.common.OK ) {
+                if( generateDialCode.responseCode !== CONSTANTS.common.OK ) {
                     throw {
-                        message : constants.apiResponses.DIAL_CODE_NOT_GENERATED
+                        message : CONSTANTS.apiResponses.DIAL_CODE_NOT_GENERATED
                     }
                 }
 
@@ -278,9 +277,9 @@ module.exports = class QrCodeHelper {
                     }
                 );
 
-                if( publishCodeData.responseCode !== constants.common.OK ) {
+                if( publishCodeData.responseCode !== CONSTANTS.common.OK ) {
                     throw {
-                        message : constants.apiResponses.COULD_NOT_PUBLISH_DIAL_CODE
+                        message : CONSTANTS.apiResponses.COULD_NOT_PUBLISH_DIAL_CODE
                     }
                 }
 
@@ -296,12 +295,12 @@ module.exports = class QrCodeHelper {
                 );
 
                 if(
-                    codeStatus.responseCode !== constants.common.OK &&
-                    codeStatus.result.dialcode.status !== constants.common.BODH_DIAL_CODE_LIVE_STATUS
+                    codeStatus.responseCode !== CONSTANTS.common.OK &&
+                    codeStatus.result.dialcode.status !== CONSTANTS.common.BODH_DIAL_CODE_LIVE_STATUS
                 ) {
                     throw {
                         message : 
-                        constants.apiResponses.DIAL_CODE_NOT_PUBLISHED
+                        CONSTANTS.apiResponses.DIAL_CODE_NOT_PUBLISHED
                     }
                 }
 
@@ -436,7 +435,7 @@ module.exports = class QrCodeHelper {
 
                 if( codes.length < 1) {
                     throw {
-                        message : constants.apiResponses.QR_CODE_DATA_SIZE
+                        message : CONSTANTS.apiResponses.QR_CODE_DATA_SIZE
                     };
                 }
 
@@ -447,7 +446,7 @@ module.exports = class QrCodeHelper {
 
                 if( pdfData.length < 1 ) {
                     throw { 
-                        message : constants.apiResponses.QR_CODE_NOT_FOUND
+                        message : CONSTANTS.apiResponses.QR_CODE_NOT_FOUND
                     }
                 }
 
@@ -470,7 +469,7 @@ module.exports = class QrCodeHelper {
                 }
 
                 return resolve({
-                    message : constants.apiResponses.QR_CODE_FETCHED,
+                    message : CONSTANTS.apiResponses.QR_CODE_FETCHED,
                     result : result
                 });
             

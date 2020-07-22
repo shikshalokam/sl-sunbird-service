@@ -31,12 +31,12 @@ module.exports = class Search {
 
 
     /**
-     * @api {post} /kendra/api/v1/bodh/search/middleware  
+     * @api {post} /sunbird-service/api/v1/bodh/search/middleware  
      * Middleware for Bodh Search APIs
      * @apiVersion 1.0.0
      * @apiGroup Bodh
      * @apiHeader {String} X-authenticated-user-token Authenticity token
-     * @apiSampleRequest /kendra/api/v1/bodh/search/middleware
+     * @apiSampleRequest /sunbird-service/api/v1/bodh/search/middleware
      * @apiUse successBody
      * @apiUse errorBody
      */
@@ -86,7 +86,7 @@ module.exports = class Search {
                 .getSearchResults(request);
                 
                 if(!getBodhServiceResponse.data) {
-                    throw { message: constants.apiResponses.BODH_SEARCH_MIDDLEWARE_FAILURE }
+                    throw { message: CONSTANTS.apiResponses.BODH_SEARCH_MIDDLEWARE_FAILURE }
                 }
 
                 let isRequestForACourse = false;
@@ -111,7 +111,7 @@ module.exports = class Search {
 
                     // Check if original query yielded any result and parse that content if yes.
                     if(!getBodhServiceResponse.data) {
-                        throw { message: constants.apiResponses.BODH_SEARCH_MIDDLEWARE_FAILURE }
+                        throw { message: CONSTANTS.apiResponses.BODH_SEARCH_MIDDLEWARE_FAILURE }
                     } else if (getBodhServiceResponse.data.data.result && getBodhServiceResponse.data.data.result.count > 0) {
                         bodhHelper.parseContentForKeywords(getBodhServiceResponse.data.data.result.content);
                     }
@@ -119,7 +119,7 @@ module.exports = class Search {
 
                 // Add did you mean if user query is different from searched query.
                 if(queryString.trim().toLowerCase() != userQueryString.trim().toLowerCase()) {
-                    getBodhServiceResponse.data[constants.apiResponses.BODH_SEARCH_MIDDLEWARE_DID_YOU_MEAN_KEY] = `${queryString}`
+                    getBodhServiceResponse.data[CONSTANTS.apiResponses.BODH_SEARCH_MIDDLEWARE_DID_YOU_MEAN_KEY] = `${queryString}`
                 }
 
                 // Parse content from Bodh for updating auto complete
@@ -134,17 +134,17 @@ module.exports = class Search {
                 
                 return resolve({
                     result: getBodhServiceResponse.data,
-                    message: constants.apiResponses.BODH_SEARCH_MIDDLEWARE_SUCCESS
+                    message: CONSTANTS.apiResponses.BODH_SEARCH_MIDDLEWARE_SUCCESS
                 });
 
             } catch (error) {
 
                 return reject({
                     status: 
-                    error.status || httpStatusCode["internal_server_error"].status,
+                    error.status || HTTP_STATUS_CODE["internal_server_error"].status,
 
                     message: 
-                    error.message || httpStatusCode["internal_server_error"].message,
+                    error.message || HTTP_STATUS_CODE["internal_server_error"].message,
 
                     errorObject: error
                 });
@@ -156,12 +156,12 @@ module.exports = class Search {
 
 
     /**
-     * @api {post} /kendra/api/v1/bodh/search/autocomplete  
+     * @api {post} /sunbird-service/api/v1/bodh/search/autocomplete  
      * Autocomplete for Bodh Search
      * @apiVersion 1.0.0
      * @apiGroup Bodh
      * @apiHeader {String} X-authenticated-user-token Authenticity token
-     * @apiSampleRequest /kendra/api/v1/bodh/search/autocomplete
+     * @apiSampleRequest /sunbird-service/api/v1/bodh/search/autocomplete
      * @apiUse successBody
      * @apiUse errorBody
      */
@@ -189,22 +189,22 @@ module.exports = class Search {
                 .getSearchSuggestions(queryString,filters,size);
                 
                 if(!searchSuggestions.data) {
-                    throw { message: constants.apiResponses.BODH_SEARCH_AUTOCOMPLETE_FAILURE };
+                    throw { message: CONSTANTS.apiResponses.BODH_SEARCH_AUTOCOMPLETE_FAILURE };
                 }
                 
                 return resolve({
                     result: { suggestions : searchSuggestions.data },
-                    message: constants.apiResponses.BODH_SEARCH_AUTOCOMPLETE_SUCCESS
+                    message: CONSTANTS.apiResponses.BODH_SEARCH_AUTOCOMPLETE_SUCCESS
                 });
 
             } catch (error) {
 
                 return reject({
                     status: 
-                    error.status || httpStatusCode["internal_server_error"].status,
+                    error.status || HTTP_STATUS_CODE["internal_server_error"].status,
 
                     message: 
-                    error.message || httpStatusCode["internal_server_error"].message,
+                    error.message || HTTP_STATUS_CODE["internal_server_error"].message,
 
                     errorObject: error
                 });

@@ -25,7 +25,7 @@ const fs = require("fs");
 const generateCodes = async function ( dialCodeData,token ) {
 
     const generateDialCodeUrl = 
-    process.env.SUNBIRD_URL+constants.endpoints.SUNBIRD_GENERATE_DIALCODE;
+    process.env.SUNBIRD_URL+CONSTANTS.endpoints.SUNBIRD_GENERATE_DIALCODE;
 
     return new Promise(async (resolve,reject)=>{
         
@@ -44,7 +44,7 @@ const generateCodes = async function ( dialCodeData,token ) {
         function callback(err,data){
             if( err ) {
                 return reject({
-                    message : constants.apiResponses.SUNBIRD_SERVICE_DOWN
+                    message : CONSTANTS.apiResponses.SUNBIRD_SERVICE_DOWN
                 });
             } else {
                 const dialCodeData = data.body;
@@ -69,7 +69,7 @@ const generateCodes = async function ( dialCodeData,token ) {
 const publishCode = async function ( codeId,token,dialCodeData ) {
 
     const publishDialCodeUrl = 
-    process.env.SUNBIRD_URL+constants.endpoints.SUNBIRD_PUBLISH_DIALCODE+"/"+codeId;
+    process.env.SUNBIRD_URL+CONSTANTS.endpoints.SUNBIRD_PUBLISH_DIALCODE+"/"+codeId;
 
     return new Promise(async (resolve,reject)=>{
         
@@ -88,7 +88,7 @@ const publishCode = async function ( codeId,token,dialCodeData ) {
         function callback(err,data){
             if( err ) {
                 return reject({
-                    message : constants.apiResponses.SUNBIRD_SERVICE_DOWN
+                    message : CONSTANTS.apiResponses.SUNBIRD_SERVICE_DOWN
                 });
             } else {
                 const dialCodeData = data.body;
@@ -110,7 +110,7 @@ const publishCode = async function ( codeId,token,dialCodeData ) {
 const codeStatus = async function ( token,codeData ) {
 
     const dialCodeStatusUrl = 
-    process.env.SUNBIRD_URL+constants.endpoints.SUNBIRD_DIALCODE_STATUS;
+    process.env.SUNBIRD_URL+CONSTANTS.endpoints.SUNBIRD_DIALCODE_STATUS;
 
     return new Promise(async (resolve,reject)=>{
         
@@ -129,7 +129,7 @@ const codeStatus = async function ( token,codeData ) {
         function callback(err,data){
             if( err ) {
                 return reject({
-                    message : constants.apiResponses.SUNBIRD_SERVICE_DOWN
+                    message : CONSTANTS.apiResponses.SUNBIRD_SERVICE_DOWN
                 });
             } else {
                 const dialCodeStatus = data.body;
@@ -152,7 +152,7 @@ const codeStatus = async function ( token,codeData ) {
 const linkContent = async function ( token,contentData ) {
 
     const linkContentUrl = 
-    process.env.SUNBIRD_URL+constants.endpoints.SUNBIRD_CONTENT_LINK;
+    process.env.SUNBIRD_URL+CONSTANTS.endpoints.SUNBIRD_CONTENT_LINK;
 
     return new Promise(async (resolve,reject)=>{
         
@@ -171,7 +171,7 @@ const linkContent = async function ( token,contentData ) {
         function callback(err,data){
             if( err ) {
                 return reject({
-                    message : constants.apiResponses.SUNBIRD_SERVICE_DOWN
+                    message : CONSTANTS.apiResponses.SUNBIRD_SERVICE_DOWN
                 })
             } else {
                 const linkContentData = data.body;
@@ -194,7 +194,7 @@ const linkContent = async function ( token,contentData ) {
 const publishContent = async function ( contentData,contentId ) {
 
     const publishContentUrl = 
-    process.env.SUNBIRD_URL+constants.endpoints.SUNBIRD_PUBLISH_CONTENT+"/"+contentId;
+    process.env.SUNBIRD_URL+CONSTANTS.endpoints.SUNBIRD_PUBLISH_CONTENT+"/"+contentId;
 
     return new Promise(async (resolve,reject)=>{
         try {
@@ -224,7 +224,7 @@ const publishContent = async function ( contentData,contentId ) {
                 if( err ) {
                     throw {
                         message : 
-                        constants.apiResponses.SUNBIRD_SERVICE_DOWN
+                        CONSTANTS.apiResponses.SUNBIRD_SERVICE_DOWN
                     };
                 } else {
                     const publishContentData = data.body;
@@ -251,7 +251,7 @@ const publishContent = async function ( contentData,contentId ) {
 const getUserProfile = async function ( token,userId ) {
 
     const userProfileUrl = 
-    process.env.SUNBIRD_URL+constants.endpoints.SUNBIRD_USER_READ+"/"+userId;
+    process.env.SUNBIRD_URL+CONSTANTS.endpoints.SUNBIRD_USER_READ+"/"+userId;
 
     return new Promise(async (resolve,reject)=>{
         try {
@@ -270,7 +270,7 @@ const getUserProfile = async function ( token,userId ) {
                 if( err) {
                     throw {
                         message : 
-                        constants.apiResponses.SUNBIRD_SERVICE_DOWN
+                        CONSTANTS.apiResponses.SUNBIRD_SERVICE_DOWN
                     };
                 } else {
                     if(data.statusCode != 200) {
@@ -283,7 +283,7 @@ const getUserProfile = async function ( token,userId ) {
                     }
                 }
             }
-        } catch(err) {
+        } catch(err){
             return reject(err);
         }
     })
@@ -304,7 +304,7 @@ const getUserProfile = async function ( token,userId ) {
 const indexSync = async function ( syncData,token ) {
 
     const indexSyncUrl = 
-    process.env.SUNBIRD_URL+constants.endpoints.SUNBIRD_INDEX_SYNC;
+    process.env.SUNBIRD_URL+CONSTANTS.endpoints.SUNBIRD_INDEX_SYNC;
 
     return new Promise(async (resolve,reject)=>{
         
@@ -323,7 +323,7 @@ const indexSync = async function ( syncData,token ) {
         function callback(err,data){
             if( err ) {
                 return reject({
-                    message : constants.apiResponses.SUNBIRD_SERVICE_DOWN
+                    message : CONSTANTS.apiResponses.SUNBIRD_SERVICE_DOWN
                 });
             } else {
                 const indexSyncedData = data.body;
@@ -346,7 +346,7 @@ const indexSync = async function ( syncData,token ) {
 const createContent = async function ( contentData,token ) {
 
     const contentUrl = 
-    process.env.SUNBIRD_URL+constants.endpoints.SUNBIRD_CREATE_CONTENT;
+    process.env.SUNBIRD_URL+CONSTANTS.endpoints.SUNBIRD_CREATE_CONTENT;
 
     return new Promise(async (resolve,reject)=>{
         
@@ -365,7 +365,7 @@ const createContent = async function ( contentData,token ) {
         function callback(err,data){
             if( err ) {
                 return reject({
-                    message : constants.apiResponses.SUNBIRD_SERVICE_DOWN
+                    message : CONSTANTS.apiResponses.SUNBIRD_SERVICE_DOWN
                 });
             } else {
                 const contentData = data.body;
@@ -391,7 +391,7 @@ const createContent = async function ( contentData,token ) {
 const uploadContent = async function ( file,contentId,token,contentType,mimeType ) {
 
     const contentUrl = 
-    process.env.SUNBIRD_URL+constants.endpoints.SUNBIRD_UPLOAD_CONTENT + `/${contentId}`;
+    process.env.SUNBIRD_URL+CONSTANTS.endpoints.SUNBIRD_UPLOAD_CONTENT + `/${contentId}`;
 
     return new Promise(async (resolve,reject)=>{
         
@@ -417,7 +417,7 @@ const uploadContent = async function ( file,contentId,token,contentType,mimeType
         function callback(err,data){
             if( err ) {
                 return reject({
-                    message : constants.apiResponses.SUNBIRD_SERVICE_DOWN
+                    message : CONSTANTS.apiResponses.SUNBIRD_SERVICE_DOWN
                 });
             } else {
                 const contentData = data.body;
@@ -428,6 +428,161 @@ const uploadContent = async function ( file,contentId,token,contentType,mimeType
     
 }
 
+/**
+  * Call to sunbird api's. 
+  * @function
+  * @name callToSunbird
+  * @param requestBody - Logged in user Id.
+  * @param token - Logged in user token.
+  * @param url - url of the api call.
+  * @param requestType - http request method
+  * @returns {JSON} - consist of sunbird service response
+*/
+
+function callToSunbird(requestType,url,token,requestBody ="") {
+
+    return new Promise(async (resolve, reject) => {
+        let options = {
+            "headers": {
+                "content-type": "application/json",
+                "authorization": process.env.AUTHORIZATION,
+                "x-authenticated-user-token": token
+            }
+        };
+
+        if (requestType != "GET") {
+            options['json'] = { request: requestBody };
+        }
+
+        url =process.env.SUNBIRD_URL + url;
+        if (requestType == "PATCH") {
+            request.patch(url, options, callback);
+        } else if (requestType == "GET") {
+            request.get(url, options, callback);
+        } else {
+            request.post(url, options, callback);
+        }
+
+        function callback(err, data) {
+            if (err) {
+                return reject({
+                    message: CONSTANTS.apiResponses.SUNBIRD_SERVICE_DOWN
+                });
+            } else {
+
+               
+                if(data.statusCode == HTTP_STATUS_CODE.ok.status){
+
+                    if(!data.body.responseCode){
+                        data.body = JSON.parse(data.body);
+                    }
+                    if(data.body && data.body.responseCode  && data.body.responseCode == CONSTANTS.common.OK ){
+                        if(data.body.result){
+                           return resolve(data.body.result);
+                        }
+                    }
+                }else{
+                     data.body = JSON.parse(data.body);
+                    return reject({ message:data.body.params.errmsg });
+                }
+                
+            }
+        }
+
+    });
+}
+
+
+/**
+  * Get learning resources.
+  * @function
+  * @name learningResources
+  * @param token - Logged in user token.
+  * @param limit - page limit for the request 
+  * @param offset - page offset for the request
+  * @param filters - api filters for the request 
+  * @returns {JSON} - consist of learning resources list
+*/
+
+const learningResources = function (token,limit,offset,filters = "") {
+    return new Promise(async (resolve, reject) => {
+
+        try {
+
+        const learningResourceUrl = CONSTANTS.endpoints.GET_RESOURCES;
+        
+        let requestBody = {
+            "source": "web",
+            "name": "Resource",
+            "facets": ["board", "gradeLevel", "subject", "medium"],
+            "filters": {
+                "contentType": ["Resource"],
+            },
+            "limit": limit,
+            "mode": "soft",
+            "offset": offset -1
+          }
+
+          if(filters){
+              if(filters["board"]){
+                requestBody["filters"]["board"] =[filters["board"]];
+              }
+              if(filters["gradeLevel"]){
+                requestBody["filters"]["gradeLevel"] =[filters["gradeLevel"]];
+              }
+              if(filters["subject"]){
+                requestBody["filters"]["subject"] =[filters["subject"]];
+              }
+              if(filters["medium"]){
+                requestBody["filters"]["medium"] =[filters["medium"]];
+              }
+
+              if(filters['sortBy'] && filters['sortBy']=="popular"){
+                requestBody["sort_by"]  = {
+                    "me_totalRatings": "desc"
+                 }
+              }
+
+              if(filters['sortBy'] && filters['sortBy']=="recent"){
+                requestBody["sort_by"]  = {
+                    "createdOn": "desc"
+                 }
+              }
+          }
+
+        let response = await callToSunbird("POST",learningResourceUrl,token,requestBody);
+        return resolve(response);
+    } catch (error) {
+        reject(error )
+   } 
+    })
+}
+
+/**
+  * Get learning filters.
+  * @function
+  * @name filtersList
+  * @param token - Logged in user token.
+  * @returns {JSON} - consist of learning filters list
+*/
+
+const filtersList = function (token) {
+    return new Promise(async (resolve, reject) => {
+
+        try {
+            const apiEndPoint = CONSTANTS.endpoints.FRAMEWORK_LIST; 
+            let response = await callToSunbird("GET",apiEndPoint,token);
+            return resolve(response);
+
+        } catch (error) {
+             reject(error )
+        } 
+        
+    })
+}
+
+
+
 module.exports = {
     generateCodes : generateCodes,
     publishCode : publishCode,
@@ -437,5 +592,7 @@ module.exports = {
     getUserProfile : getUserProfile,
     indexSync : indexSync,
     createContent : createContent,
-    uploadContent : uploadContent
+    uploadContent : uploadContent,
+    learningResources: learningResources,
+    filtersList: filtersList
 };

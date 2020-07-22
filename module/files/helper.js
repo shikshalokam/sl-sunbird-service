@@ -9,10 +9,8 @@
 // Dependencies
 const Zip = require('adm-zip');
 const fs = require('fs');
-const awsServices = require(PROJECT_ROOT_DIRECTORY + '/generics/services/aws');
-const googleCloudServices = require(PROJECT_ROOT_DIRECTORY +
-  '/generics/services/google-cloud');
-const azureService = require(PROJECT_ROOT_DIRECTORY + '/generics/services/azure');
+
+const kendraService = require(PROJECT_ROOT_DIRECTORY + '/generics/services/kendra');
 
 /**
  * FilesHelper
@@ -39,7 +37,7 @@ module.exports = class FilesHelper {
         let filePath;
         if (file && file.data && file.name) {
           deleteFile = true;
-          let tempPath = constants.common.UPLOAD_FOLDER_PATH;
+          let tempPath = CONSTANTS.common.UPLOAD_FOLDER_PATH;
           if (!fs.existsSync(`${PROJECT_ROOT_DIRECTORY}${tempPath}`)) {
             fs.mkdirSync(`${PROJECT_ROOT_DIRECTORY}${tempPath}`)
           }
@@ -52,35 +50,8 @@ module.exports = class FilesHelper {
 
         }
 
-        let cloudStorage = process.env.CLOUD_STORAGE;
-        let result
-        if (storage) {
-          cloudStorage = storage;
-        }
+        let result = await kendraService.uploadFile(file, filePathForBucket);
 
-        if (cloudStorage === constants.common.AWS_SERVICE) {
-          result = await awsServices.uploadFile(
-            file,
-            filePathForBucket,
-            bucketName
-          )
-        } else if (
-          cloudStorage === constants.common.GOOGLE_CLOUD_SERVICE
-        ) {
-          result = await googleCloudServices.uploadFile(
-            file,
-            filePathForBucket,
-            bucketName
-          )
-        } else if (
-          cloudStorage === constants.common.AZURE_SERVICE
-        ) {
-          result = await azureService.uploadFile(
-            file,
-            filePathForBucket,
-            bucketName
-          )
-        }
         if (deleteFile) {
           _removeFiles(filePath);
         }
@@ -104,11 +75,6 @@ module.exports = class FilesHelper {
   static getDownloadableUrl(filePath, bucketName, storageName = '') {
     return new Promise(async (resolve, reject) => {
       try {
-        let cloudStorage = process.env.CLOUD_STORAGE
-
-        if (storageName !== '') {
-          cloudStorage = storageName
-        }
 
         if (Array.isArray(filePath) && filePath.length > 0) {
           let result = []
@@ -117,11 +83,7 @@ module.exports = class FilesHelper {
             filePath.map(async element => {
               let responseObj = {}
               responseObj.filePath = element
-              responseObj.url = await _getLinkFromCloudService(
-                element,
-                bucketName,
-                cloudStorage
-              )
+              responseObj.url = await kendraService.getDownloadableUrls(filePath);
 
               result.push(responseObj)
             })
@@ -129,13 +91,8 @@ module.exports = class FilesHelper {
 
           return resolve(result)
         } else {
-          let result
 
-          result = await _getLinkFromCloudService(
-            filePath,
-            bucketName,
-            cloudStorage
-          )
+          let result = await kendraService.getDownloadableUrls(filePath);
 
           let responseObj = {
             filePath: filePath,
@@ -293,35 +250,6 @@ module.exports = class FilesHelper {
 
 }
 
-/**
- * Get downloadable url
- * @method
- * @name _getLinkFromCloudService
- * @param  {filePath}  - File path.
- * @return {String} - Downloadable url link
- */
-
-function _getLinkFromCloudService(filePath, bucketName, cloudStorage) {
-  return new Promise(async function (resolve, reject) {
-    try {
-      let result
-      if (cloudStorage === constants.common.AWS_SERVICE) {
-        result = await awsServices.getDownloadableUrl(filePath, bucketName)
-      } else if (cloudStorage === constants.common.GOOGLE_CLOUD_SERVICE) {
-        result = await googleCloudServices.getDownloadableUrl(
-          filePath,
-          bucketName
-        )
-      } else if (cloudStorage === constants.common.AZURE_SERVICE) {
-        result = await azureService.getDownloadableUrl(filePath, bucketName)
-      }
-
-      return resolve(result)
-    } catch (error) {
-      return reject(error)
-    }
-  })
-}
 
 /**
  * Remove folder recursively
@@ -356,7 +284,7 @@ function _removeFolder(path) {
  * @return
  */
 
-function _removeFiles(filePath){
+function _removeFiles(filePath) {
 
   if (fs.existsSync(filePath)) {
     fs.unlinkSync(filePath);

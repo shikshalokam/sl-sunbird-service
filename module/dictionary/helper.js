@@ -86,7 +86,7 @@ module.exports = class DictionaryHelper {
 
                 const dictionaryIndexMapping = await elasticSearchHelper.getIndexTypeMapping(dictionaryIndex, dictionaryIndexType);
 
-                if(dictionaryIndexMapping.statusCode != httpStatusCode["ok"].status) {
+                if(dictionaryIndexMapping.statusCode != HTTP_STATUS_CODE["ok"].status) {
                     throw new Error("Keywords index type map does not exist.");
                 }
             
@@ -132,7 +132,7 @@ module.exports = class DictionaryHelper {
                         encodeURI(word)
                     );
 
-                if(dictionaryWordRemoval.statusCode != httpStatusCode["ok"].status) {
+                if(dictionaryWordRemoval.statusCode != HTTP_STATUS_CODE["ok"].status) {
                     throw new Error("Failed to remove word from dictionary.")
                 }
             
@@ -178,7 +178,7 @@ module.exports = class DictionaryHelper {
                     {words : word }
                 );
 
-                if(addWordToDictionary.statusCode != httpStatusCode["ok"].status && addWordToDictionary.statusCode != httpStatusCode["created"].status) {
+                if(addWordToDictionary.statusCode != HTTP_STATUS_CODE["ok"].status && addWordToDictionary.statusCode != HTTP_STATUS_CODE["created"].status) {
                     throw new Error("Failed to add word to dictionary.")
                 }
             

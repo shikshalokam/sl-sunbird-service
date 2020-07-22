@@ -135,13 +135,13 @@ var searchDocumentFromIndex = function (index = "", type = "", queryObject = "",
 
       let searchDocuments = [];
 
-      if (result.statusCode === httpStatusCode["ok"].status && result.body.hits.hits.length > 0) {
+      if (result.statusCode === HTTP_STATUS_CODE["ok"].status && result.body.hits.hits.length > 0) {
 
         result.body.hits.hits.forEach(eachResultData => {
           searchDocuments.push(_.merge({ id: eachResultData._id }, eachResultData._source));
         })
 
-      } else if (result.statusCode === httpStatusCode["ok"].status && Object.keys(result.body.suggest).length > 0) {
+      } else if (result.statusCode === HTTP_STATUS_CODE["ok"].status && Object.keys(result.body.suggest).length > 0) {
         searchDocuments = result.body.suggest;
       } else {
         throw new Error("Failed to get search results from index.")

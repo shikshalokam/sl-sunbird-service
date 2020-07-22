@@ -30,12 +30,12 @@ module.exports = class Request {
 
 
     /**
-     * @api {post} /kendra/api/v1/bodh/request/middleware  
+     * @api {post} /sunbird-service/api/v1/bodh/request/middleware  
      * Middleware for Bodh requests
      * @apiVersion 1.0.0
      * @apiGroup Bodh-Request 
      * @apiHeader {String} X-authenticated-user-token Authenticity token
-     * @apiSampleRequest /kendra/api/v1/bodh/request/middleware
+     * @apiSampleRequest /sunbird-service/api/v1/bodh/request/middleware
      * @apiUse successBody
      * @apiUse errorBody
      * @apiParamExample {json} Request:
@@ -103,7 +103,7 @@ module.exports = class Request {
                 if( !getBodhServiceResponse.result ) {
                     throw { 
                         message: 
-                        constants.apiResponses.BODH_REQUEST_MIDDLEWARE_FAILED 
+                        CONSTANTS.apiResponses.BODH_REQUEST_MIDDLEWARE_FAILED 
                     }
                 }
                 
@@ -113,10 +113,10 @@ module.exports = class Request {
 
                 return reject({
                     status: 
-                    error.status || httpStatusCode["internal_server_error"].status,
+                    error.status || HTTP_STATUS_CODE["internal_server_error"].status,
 
                     message: 
-                    error.message || httpStatusCode["internal_server_error"].message,
+                    error.message || HTTP_STATUS_CODE["internal_server_error"].message,
 
                     errorObject: error
                 });

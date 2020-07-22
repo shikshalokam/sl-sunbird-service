@@ -13,18 +13,10 @@ const messageUtil = require("./lib/message-util");
 let responseCode = require("../http-status-codes");
 const shikshalokam = require("../helpers/shikshalokam");
 
-var reqMsg = messageUtil.REQUEST;
-var keyCloakConfig = {
-  authServerUrl : process.env.SUNBIRD_URL+ process.env.SUNBIRD_KEYCLOAK_AUTH_ENDPOINT,
-  realm : process.env.SUNBIRD_KEYCLOAK_REALM,
-  clientId : process.env.SUNBIRD_KEYCLOAK_CLIENT_ID,
-  public : process.env.SUNBIRD_KEYCLOAK_PUBLIC
-};
+const apiInterceptor = require('./apiInterceptor');
 
-var cacheConfig = {
-  store: process.env.SUNBIRD_CACHE_STORE,
-  ttl: process.env.SUNBIRD_CACHE_TTL
-};
+var reqMsg = messageUtil.REQUEST;
+
 
 var respUtil = function (resp) {
   return {
@@ -52,7 +44,6 @@ var tokenAuthenticationFailureMessageToSlack = function (req, token, msg) {
   slackClient.sendMessageToSlack(tokenByPassAllowedLog)
 }
 
-var apiInterceptor = new interceptor(keyCloakConfig, cacheConfig);
 var removedHeaders = [
   "host",
   "origin",
@@ -77,7 +68,9 @@ async function getAllRoles(obj) {
   return roles;
 }
 
-module.exports = async function (req, res, next) {
+
+
+module.exports = async function (req, res, next,token="") {
 
   removedHeaders.forEach(function (e) {
     delete req.headers[e];
@@ -98,12 +91,17 @@ module.exports = async function (req, res, next) {
     return
   }
 
+  if(req.headers["internal-access-token"] == process.env.INTERNAL_ACCESS_TOKEN && !req.headers["X-authenticated-user-token"] ) {
+    next();
+    return;
+
+  }
   if (req.path.includes("keywords")) {
     if(req.headers["internal-access-token"] !== process.env.INTERNAL_ACCESS_TOKEN) {
       rspObj.errCode = reqMsg.TOKEN.MISSING_CODE;
       rspObj.errMsg = reqMsg.TOKEN.MISSING_MESSAGE;
       rspObj.responseCode = responseCode.unauthorized;
-      return res.status(httpStatusCode["unauthorized"].status).send(respUtil(rspObj));
+      return res.status(HTTP_STATUS_CODE["unauthorized"].status).send(respUtil(rspObj));
     } else {
       next();
       return;
@@ -114,7 +112,7 @@ module.exports = async function (req, res, next) {
     rspObj.errCode = reqMsg.TOKEN.MISSING_CODE;
     rspObj.errMsg = reqMsg.TOKEN.MISSING_MESSAGE;
     rspObj.responseCode = responseCode.unauthorized;
-    return res.status(httpStatusCode["unauthorized"].status).send(respUtil(rspObj));
+    return res.status(HTTP_STATUS_CODE["unauthorized"].status).send(respUtil(rspObj));
   }
 
   apiInterceptor.validateToken(token, function (err, tokenData) {
@@ -128,7 +126,7 @@ module.exports = async function (req, res, next) {
         req,
         token, "TOKEN VERIFICATION WITH KEYCLOAK FAILED"
       );
-      return res.status(httpStatusCode["unauthorized"].status).send(respUtil(rspObj));
+      return res.status(HTTP_STATUS_CODE["unauthorized"].status).send(respUtil(rspObj));
     } else {
       req.rspObj.userId = tokenData.userId;
       req.rspObj.userToken = req.headers["x-authenticated-user-token"];
@@ -155,7 +153,7 @@ module.exports = async function (req, res, next) {
             rspObj.errCode = reqMsg.TOKEN.INVALID_CODE;
             rspObj.errMsg = reqMsg.TOKEN.INVALID_MESSAGE;
             rspObj.responseCode = responseCode.UNAUTHORIZED_ACCESS;
-            return res.status(httpStatusCode["unauthorized"].status).send(respUtil(rspObj));
+            return res.status(HTTP_STATUS_CODE["unauthorized"].status).send(respUtil(rspObj));
           }
         })
         .catch(error => {
@@ -165,8 +163,10 @@ module.exports = async function (req, res, next) {
             "TOKEN VERIFICATION - ERROR FETCHING USER DETAIL FROM Kendra SERVICE"
           );
 
-          return res.status(httpStatusCode["unauthorized"].status).send(error);
+          return res.status(HTTP_STATUS_CODE["unauthorized"].status).send(error);
         });
     }
   });
+
+
 };

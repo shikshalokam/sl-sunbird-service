@@ -30,12 +30,12 @@ module.exports = class Abhyasa {
 
 
     /**
-     * @api {get} /sunbird-service/api/v1/bodh/abhyasa/userIsAllowed/:userId  
+     * @api {get} /sunbird/api/v1/bodh/abhyasa/userIsAllowed/:userId  
      * Check whether user belongs to AP organisations or not.
      * @apiVersion 1.0.0
      * @apiGroup Abhyasa
      * @apiHeader {String} X-authenticated-user-token Authenticity token
-     * @apiSampleRequest /sunbird-service/api/v1/bodh/abhyasa/userIsAllowed/c828382f-89d4-4dc6-ae14-47a6d0337364
+     * @apiSampleRequest /sunbird/api/v1/bodh/abhyasa/userIsAllowed/c828382f-89d4-4dc6-ae14-47a6d0337364
      * @apiUse successBody
      * @apiUse errorBody
      * @apiParamExample {json} Response:

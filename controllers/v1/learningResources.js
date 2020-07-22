@@ -18,12 +18,12 @@ module.exports = class LearningResources {
   }
 
   /**
-  * @api {get} /sunbird-service/api/v1/learningResources/list?limit=10&page=1 
+  * @api {get} /sunbird/api/v1/learningResources/list?limit=10&page=1 
   * To get list of learning resources
   * @apiVersion 1.0.0
   * @apiGroup Learning Resources
   * @apiHeader {String} X-authenticated-user-token Authenticity token
-  * @apiSampleRequest /sunbird-service/api/v1/learningResources/list?limit=10&page=1
+  * @apiSampleRequest /sunbird/api/v1/learningResources/list?limit=10&page=1
   * @apiUse successBody
   * @apiUse errorBody
   * @apiParamExample {json} Response:
@@ -106,12 +106,12 @@ module.exports = class LearningResources {
   }
 
   /**
-  * @api {get} /sunbird-service/api/v1/learningResources/filtersList 
+  * @api {get} /sunbird/api/v1/learningResources/filtersList 
   * To get filters list of learning resources
   * @apiVersion 1.0.0
   * @apiGroup Learning Resources
   * @apiHeader {String} X-authenticated-user-token Authenticity token
-  * @apiSampleRequest /sunbird-service/api/v1/learningResources/filtersList
+  * @apiSampleRequest /sunbird/api/v1/learningResources/filtersList
   * @apiUse successBody
   * @apiUse errorBody
   * @apiParamExample {json} Response:

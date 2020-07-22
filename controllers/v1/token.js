@@ -19,12 +19,12 @@ module.exports = class Token {
   }
 
   /**
-  * @api {get} /sunbird-service/api/v1/token/verify
+  * @api {get} /sunbird/api/v1/token/verify
   * To verify the access token
   * @apiVersion 1.0.0
   * @apiGroup Token
   * @apiHeader {String} X-authenticated-user-token Authenticity token
-  * @apiSampleRequest /sunbird-service/api/v1/token/verify
+  * @apiSampleRequest /sunbird/api/v1/token/verify
   * @apiUse successBody
   * @apiUse errorBody
   * @apiParamExample {json} Response:

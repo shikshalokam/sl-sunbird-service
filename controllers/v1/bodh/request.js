@@ -30,12 +30,12 @@ module.exports = class Request {
 
 
     /**
-     * @api {post} /sunbird-service/api/v1/bodh/request/middleware  
+     * @api {post} /sunbird/api/v1/bodh/request/middleware  
      * Middleware for Bodh requests
      * @apiVersion 1.0.0
      * @apiGroup Bodh-Request 
      * @apiHeader {String} X-authenticated-user-token Authenticity token
-     * @apiSampleRequest /sunbird-service/api/v1/bodh/request/middleware
+     * @apiSampleRequest /sunbird/api/v1/bodh/request/middleware
      * @apiUse successBody
      * @apiUse errorBody
      * @apiParamExample {json} Request:

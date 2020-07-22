@@ -35,12 +35,12 @@ module.exports = class Batch extends Abstract {
 
 
     /**
-     * @api {post} /sunbird-service/api/v1/bodh/batch/enrol    
+     * @api {post} /sunbird/api/v1/bodh/batch/enrol    
      * Courses enrolled by users.
      * @apiVersion 1.0.0
      * @apiGroup Batch
      * @apiHeader {String} X-authenticated-user-token Authenticity token
-     * @apiSampleRequest /sunbird-service/api/v1/bodh/batch/enrol
+     * @apiSampleRequest /sunbird/api/v1/bodh/batch/enrol
      * @apiUse successBody
      * @apiUse errorBody
      * @apiParamExample {json} Request:

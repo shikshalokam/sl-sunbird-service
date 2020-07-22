@@ -31,12 +31,12 @@ module.exports = class Search {
 
 
     /**
-     * @api {post} /sunbird-service/api/v1/bodh/search/middleware  
+     * @api {post} /sunbird/api/v1/bodh/search/middleware  
      * Middleware for Bodh Search APIs
      * @apiVersion 1.0.0
      * @apiGroup Bodh
      * @apiHeader {String} X-authenticated-user-token Authenticity token
-     * @apiSampleRequest /sunbird-service/api/v1/bodh/search/middleware
+     * @apiSampleRequest /sunbird/api/v1/bodh/search/middleware
      * @apiUse successBody
      * @apiUse errorBody
      */
@@ -156,12 +156,12 @@ module.exports = class Search {
 
 
     /**
-     * @api {post} /sunbird-service/api/v1/bodh/search/autocomplete  
+     * @api {post} /sunbird/api/v1/bodh/search/autocomplete  
      * Autocomplete for Bodh Search
      * @apiVersion 1.0.0
      * @apiGroup Bodh
      * @apiHeader {String} X-authenticated-user-token Authenticity token
-     * @apiSampleRequest /sunbird-service/api/v1/bodh/search/autocomplete
+     * @apiSampleRequest /sunbird/api/v1/bodh/search/autocomplete
      * @apiUse successBody
      * @apiUse errorBody
      */

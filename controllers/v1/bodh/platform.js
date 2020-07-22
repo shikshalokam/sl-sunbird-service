@@ -23,12 +23,12 @@ module.exports = class Platform {
      */
 
     /**
-     * @api {post} /sunbird-service/api/v1/bodh/platform/generate 
+     * @api {post} /sunbird/api/v1/bodh/platform/generate 
      * Generate qr code information.
      * @apiVersion 1.0.0
      * @apiGroup bodhPlatform
      * @apiHeader {String} X-authenticated-user-token Authenticity token
-     * @apiSampleRequest /sunbird-service/api/v1/bodh/platform/generate
+     * @apiSampleRequest /sunbird/api/v1/bodh/platform/generate
      * @apiUse successBody
      * @apiUse errorBody
      * @apiParamExample {json} Request:
@@ -78,12 +78,12 @@ module.exports = class Platform {
     }
 
     /**
-     * @api {post} /sunbird-service/api/v1/bodh/platform/uploadScromContent?name=:name 
+     * @api {post} /sunbird/api/v1/bodh/platform/uploadScromContent?name=:name 
      * Upload scrom content data for bodh platform.
      * @apiVersion 1.0.0
      * @apiGroup bodhPlatform
      * @apiHeader {String} X-authenticated-user-token Authenticity token
-     * @apiSampleRequest /sunbird-service/api/v1/bodh/platform/uploadScromContent?name=TEST-BODH-SCROM
+     * @apiSampleRequest /sunbird/api/v1/bodh/platform/uploadScromContent?name=TEST-BODH-SCROM
      * @apiUse successBody
      * @apiUse errorBody
      * @apiParam {File} contentData Mandatory contentData file of type csv.

@@ -25,7 +25,7 @@ const fs = require("fs");
 const generateCodes = async function ( dialCodeData,token ) {
 
     const generateDialCodeUrl = 
-    process.env.SUNBIRD_URL+CONSTANTS.endpoints.SUNBIRD_GENERATE_DIALCODE;
+    process.env.SUNBIRD_BASE_URL+CONSTANTS.endpoints.SUNBIRD_GENERATE_DIALCODE;
 
     return new Promise(async (resolve,reject)=>{
         
@@ -69,7 +69,7 @@ const generateCodes = async function ( dialCodeData,token ) {
 const publishCode = async function ( codeId,token,dialCodeData ) {
 
     const publishDialCodeUrl = 
-    process.env.SUNBIRD_URL+CONSTANTS.endpoints.SUNBIRD_PUBLISH_DIALCODE+"/"+codeId;
+    process.env.SUNBIRD_BASE_URL+CONSTANTS.endpoints.SUNBIRD_PUBLISH_DIALCODE+"/"+codeId;
 
     return new Promise(async (resolve,reject)=>{
         
@@ -110,7 +110,7 @@ const publishCode = async function ( codeId,token,dialCodeData ) {
 const codeStatus = async function ( token,codeData ) {
 
     const dialCodeStatusUrl = 
-    process.env.SUNBIRD_URL+CONSTANTS.endpoints.SUNBIRD_DIALCODE_STATUS;
+    process.env.SUNBIRD_BASE_URL+CONSTANTS.endpoints.SUNBIRD_DIALCODE_STATUS;
 
     return new Promise(async (resolve,reject)=>{
         
@@ -152,7 +152,7 @@ const codeStatus = async function ( token,codeData ) {
 const linkContent = async function ( token,contentData ) {
 
     const linkContentUrl = 
-    process.env.SUNBIRD_URL+CONSTANTS.endpoints.SUNBIRD_CONTENT_LINK;
+    process.env.SUNBIRD_BASE_URL+CONSTANTS.endpoints.SUNBIRD_CONTENT_LINK;
 
     return new Promise(async (resolve,reject)=>{
         
@@ -194,7 +194,7 @@ const linkContent = async function ( token,contentData ) {
 const publishContent = async function ( contentData,contentId ) {
 
     const publishContentUrl = 
-    process.env.SUNBIRD_URL+CONSTANTS.endpoints.SUNBIRD_PUBLISH_CONTENT+"/"+contentId;
+    process.env.SUNBIRD_BASE_URL+CONSTANTS.endpoints.SUNBIRD_PUBLISH_CONTENT+"/"+contentId;
 
     return new Promise(async (resolve,reject)=>{
         try {
@@ -251,7 +251,7 @@ const publishContent = async function ( contentData,contentId ) {
 const getUserProfile = async function ( token,userId ) {
 
     const userProfileUrl = 
-    process.env.SUNBIRD_URL+CONSTANTS.endpoints.SUNBIRD_USER_READ+"/"+userId;
+    process.env.SUNBIRD_BASE_URL+CONSTANTS.endpoints.SUNBIRD_USER_READ+"/"+userId;
 
     return new Promise(async (resolve,reject)=>{
         try {
@@ -304,7 +304,7 @@ const getUserProfile = async function ( token,userId ) {
 const indexSync = async function ( syncData,token ) {
 
     const indexSyncUrl = 
-    process.env.SUNBIRD_URL+CONSTANTS.endpoints.SUNBIRD_INDEX_SYNC;
+    process.env.SUNBIRD_BASE_URL+CONSTANTS.endpoints.SUNBIRD_INDEX_SYNC;
 
     return new Promise(async (resolve,reject)=>{
         
@@ -346,7 +346,7 @@ const indexSync = async function ( syncData,token ) {
 const createContent = async function ( contentData,token ) {
 
     const contentUrl = 
-    process.env.SUNBIRD_URL+CONSTANTS.endpoints.SUNBIRD_CREATE_CONTENT;
+    process.env.SUNBIRD_BASE_URL+CONSTANTS.endpoints.SUNBIRD_CREATE_CONTENT;
 
     return new Promise(async (resolve,reject)=>{
         
@@ -391,7 +391,7 @@ const createContent = async function ( contentData,token ) {
 const uploadContent = async function ( file,contentId,token,contentType,mimeType ) {
 
     const contentUrl = 
-    process.env.SUNBIRD_URL+CONSTANTS.endpoints.SUNBIRD_UPLOAD_CONTENT + `/${contentId}`;
+    process.env.SUNBIRD_BASE_URL+CONSTANTS.endpoints.SUNBIRD_UPLOAD_CONTENT + `/${contentId}`;
 
     return new Promise(async (resolve,reject)=>{
         
@@ -454,7 +454,7 @@ function callToSunbird(requestType,url,token,requestBody ="") {
             options['json'] = { request: requestBody };
         }
 
-        url =process.env.SUNBIRD_URL + url;
+        url =process.env.SUNBIRD_BASE_URL + url;
         if (requestType == "PATCH") {
             request.patch(url, options, callback);
         } else if (requestType == "GET") {

@@ -12,7 +12,7 @@ const interceptor = require("./lib/api-interceptor");
 const messageUtil = require("./lib/message-util");
 
 var keyCloakConfig = {
-  authServerUrl : process.env.SUNBIRD_URL+ process.env.SUNBIRD_KEYCLOAK_AUTH_ENDPOINT,
+  authServerUrl : process.env.SUNBIRD_BASE_URL+ process.env.SUNBIRD_KEYCLOAK_AUTH_ENDPOINT,
   realm : process.env.SUNBIRD_KEYCLOAK_REALM,
   clientId : process.env.SUNBIRD_KEYCLOAK_CLIENT_ID,
   public : process.env.SUNBIRD_KEYCLOAK_PUBLIC

@@ -137,7 +137,7 @@ var getUserInfo = function (token, userId) {
   }
 
   let options = {
-    host: process.env.SHIKSHALOKAM_BASE_HOST,
+    host: process.env.SUNBIRD_BASE_URL,
     port: 443,
     path: "/api/user/v1/read/" + userId,
     method: "GET",

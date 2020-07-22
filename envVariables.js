@@ -50,8 +50,8 @@ let enviromentVariables = {
     "message" : "Required cassandra Database",
     "optional" : false
   },
-  "SHIKSHALOKAM_BASE_HOST" : {
-    "message" : "Required shikshalokam base host",
+  "SUNBIRD_BASE_URL" : {
+    "message" : "Required sunbird base URL",
     "optional" : false
   },
   "MONGODB_DATABASE_NAME" : {
@@ -80,10 +80,6 @@ let enviromentVariables = {
   },
   "INTERNAL_ACCESS_TOKEN" : {
     "message" : "Required internal access token",
-    "optional" : false
-  },
-  "SUNBIRD_URL" : {
-    "message" : "Required sunbird url",
     "optional" : false
   },
   "SUNBIRD_KEYCLOAK_AUTH_ENDPOINT" : {

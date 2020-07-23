@@ -1,7 +1,9 @@
 
 
-let sunbirdService =
+const sunbirdService =
     require(GENERICS_FILES_PATH + "/services/sunbird.js");
+
+const sessions = require(GENERICS_FILES_PATH + "/helpers/sessions.js");
 
 /**
 * learning resource related information be here.
@@ -32,10 +34,10 @@ module.exports = class LearningResourcesHelper {
                     board: board,
                     gradeLevel: gradeLevel,
                     subject: subject,
-                    medium: medium,
-                    sortBy: sortBy
+                    medium: medium
                 }
-                let learningResources = await sunbirdService.learningResources(token, pageSize, pageNo, filters);
+                sss
+                let learningResources = await sunbirdService.learningResources(token, pageSize, pageNo, filters, sortBy);
                 if (learningResources) {
 
                     if (learningResources.content) {
@@ -48,7 +50,11 @@ module.exports = class LearningResourcesHelper {
                 }
 
             } catch (error) {
-                return reject(error);
+                return reject({
+                    success: false,
+                    message: error.message ? error.message : HTTP_STATUS_CODE["internal_server_error"].message,
+                    data: false
+                });
             }
         })
 
@@ -64,16 +70,18 @@ module.exports = class LearningResourcesHelper {
     static filtersList(token) {
         return new Promise(async (resolve, reject) => {
             try {
-                let category = await sunbirdService.filtersList(token);
-                if (category) {
-                    if (category) {
-                        resolve({ message: CONSTANTS.apiResponses.FILTERS_FOUND, result: category })
-                    }
+                let filters = sessions.get("Filters");
+                if (!filters) {
+                    filters = await sunbirdService.filtersList(token);
                 }
-                resolve(response);
+                resolve({ message: CONSTANTS.apiResponses.FILTERS_FOUND, result: filters })
 
             } catch (error) {
-                return reject(error);
+                return reject({
+                    success: false,
+                    message: error.message ? error.message : HTTP_STATUS_CODE["internal_server_error"].message,
+                    data: false
+                });
             }
         })
 

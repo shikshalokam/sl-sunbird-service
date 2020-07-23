@@ -85,28 +85,36 @@ module.exports = async function (req, res, next,token="") {
     return
   }
 
+
   // Allow search endpoints for non-logged in users.
-  if (req.path.includes("bodh/search")) {
-    next();
-    return
-  }
+  let guestAccessPaths = ["bodh/search","bodh/request"];
+  await Promise.all(guestAccessPaths.map(async function (path) {
+    if (req.path.includes(path)) {
+      next();
+      return;
+    }
+  }));
 
-  if(req.headers["internal-access-token"] == process.env.INTERNAL_ACCESS_TOKEN && !req.headers["X-authenticated-user-token"] ) {
-    next();
-    return;
+  let internalAccessApiPaths = ["token/verify","keywords"];
+  let performInternalAccessTokenCheck = false;
+  await Promise.all(internalAccessApiPaths.map(async function (path) {
+    if (req.path.includes(path)) {
+      performInternalAccessTokenCheck = true;
+    }
+  }));
 
-  }
-  if (req.path.includes("keywords")) {
-    if(req.headers["internal-access-token"] !== process.env.INTERNAL_ACCESS_TOKEN) {
+  if (performInternalAccessTokenCheck) {
+    if (req.headers["internal-access-token"] == process.env.INTERNAL_ACCESS_TOKEN) {
+      next();
+      return;
+    } else {
       rspObj.errCode = reqMsg.TOKEN.MISSING_CODE;
       rspObj.errMsg = reqMsg.TOKEN.MISSING_MESSAGE;
       rspObj.responseCode = responseCode.unauthorized;
       return res.status(HTTP_STATUS_CODE["unauthorized"].status).send(respUtil(rspObj));
-    } else {
-      next();
-      return;
     }
   }
+
 
   if (!token) {
     rspObj.errCode = reqMsg.TOKEN.MISSING_CODE;

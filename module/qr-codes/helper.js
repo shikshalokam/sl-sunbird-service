@@ -7,13 +7,13 @@
 
 // Dependencies
 
-let qrGeneratorService = require(PROJECT_ROOT_DIRECTORY+"/generics/services/qr-generator");
-let gotenbergService = require(PROJECT_ROOT_DIRECTORY+"/generics/services/gotenberg");
+const qrGeneratorService = require(PROJECT_ROOT_DIRECTORY+"/generics/services/qr-generator");
+const gotenbergService = require(PROJECT_ROOT_DIRECTORY+"/generics/services/gotenberg");
 const ejs = require('ejs');
-let fs = require("fs");
-let filesHelper = require(PROJECT_ROOT_DIRECTORY+"/module/files/helper");
-let sunbirdService = require(PROJECT_ROOT_DIRECTORY+"/generics/services/sunbird");
-let BUCKET_NAME = process.env.QR_CODE_BUCKET_NAME;
+const fs = require("fs");
+const filesHelper = require(PROJECT_ROOT_DIRECTORY+"/module/files/helper");
+const sunbirdService = require(PROJECT_ROOT_DIRECTORY+"/generics/services/sunbird");
+const BUCKET_NAME = process.env.QR_CODE_BUCKET_NAME;
 
 /**
     * QrCodeHelper

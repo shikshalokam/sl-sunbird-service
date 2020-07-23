@@ -23,10 +23,25 @@ module.exports = class Token {
   * To verify the access token
   * @apiVersion 1.0.0
   * @apiGroup Token
-  * @apiHeader {String} X-authenticated-user-token Authenticity token
+  * @apiBody {String} X-authenticated-user-token Authenticity token
   * @apiSampleRequest /sunbird/api/v1/token/verify
   * @apiUse successBody
   * @apiUse errorBody
+  * @apiParamExample {json} Request:
+  * {
+  *   "token": "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICItRjZVRW5nVHdlZFg1UlZaSkNnRFZWZ1IxYURjYmFrUUplams0cW
+  * J1VTFNIn0.eyJqdGkiOiJiOWI4NTJkNi1hZWY3LTRjNTMtOGJhYS00YTQ1ZjZhN2IwZWQiLCJleHAiOjE1OTU1Njg2NzgsIm5iZiI6MCwiaWF0IjoxNT
+  * k1NDgyMjc4LCJpc3MiOiJodHRwczovL2Rldi5ib2RoLnNoaWtzaGFsb2thbS5vcmcvYXV0aC9yZWFsbXMvc3VuYmlyZCIsImF1ZCI6ImFkbWluLWNsaS
+  * IsInN1YiI6ImY6N2U3YjU2NmMtNTU0Yi00OGZjLWIyZTMtNDAyZGQ4MjUwNjE0OjcwNjhjNDVkLWJhOWMtNDg0ZS1hNTJjLTIwYmJhYjEzOWNhOSIsIn
+  * R5cCI6IkJlYXJlciIsImF6cCI6ImFkbWluLWNsaSIsImF1dGhfdGltZSI6MCwic2Vzc2lvbl9zdGF0ZSI6IjJmMmMxM2Y1LThmMGQtNGZhZS05MGMzLW
+  * UyNjNlNzJjOGRmYyIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOltdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsiY3JlYXRlLXJlYWxtIiwib2
+  * ZmbGluZV9hY2Nlc3MiLCJhZG1pbiIsInVtYV9hdXRob3JpemF0aW9uIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnt9LCJuYW1lIjoiUGxhdGZvcm0gQWRtaW
+  * 4iLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJwYWRtaW4iLCJnaXZlbl9uYW1lIjoiUGxhdGZvcm0gQWRtaW4iLCJmYW1pbHlfbmFtZSI6IiIsImVtYWlsIj
+  * oicGEqKioqQHNoaWtzaGFsb2thbS5kZXYifQ.rw7eiYxetNrO5pJ7oEGykunjNkZGtAc1hGX-eV-iI8DOPaM10hjHD2pxVvflug7bUJlhLMQowWjNKnW
+  * HEbFICoXQpKx75SBBMVY_rfXPGwNsFYioqWVqQ6pOKDTscJV27IUqAc88eSqZ0rfbKEPy0RizxRLc5qvsQK5SEEM665ueoPWcpInK7Yw07f5qUqBdV_d
+  * etI5kS0QhffxC29r_-tmTP-YmvbyR54zB9Ai4qKG4_H9WUTjaEmGC7lVr7SqHRPI0btyxsAT-SIqi3vtJUTWFZ4de7NpEqfNBUztDBZTyqNoUn-A43so
+  * ZiPyMJiE84OLl0U_UCRt1BUrhpmul5A"
+  * }
   * @apiParamExample {json} Response:
     {
     "message": "Token is valid",

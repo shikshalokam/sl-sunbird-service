@@ -5,12 +5,12 @@
  * Description : All utility functions.
  */
 
- /**
-  * convert camel case to title case.
-  * @function
-  * @name camelCaseToTitleCase
-  * @param {String} in_camelCaseString - String of camel case.
-  * @returns {String} returns a titleCase string. ex: helloThereMister, o/p: Hello There Mister
+/**
+ * convert camel case to title case.
+ * @function
+ * @name camelCaseToTitleCase
+ * @param {String} in_camelCaseString - String of camel case.
+ * @returns {String} returns a titleCase string. ex: helloThereMister, o/p: Hello There Mister
 */
 
 function camelCaseToTitleCase(in_camelCaseString) {
@@ -34,36 +34,36 @@ function camelCaseToTitleCase(in_camelCaseString) {
   return result.charAt(0).toUpperCase() + result.slice(1);
 }
 
- /**
-  * Convert hyphen case string to camelCase.
-  * @function
-  * @name hyphenCaseToCamelCase
-  * @param {String} string - String in hyphen case.
-  * @returns {String} returns a camelCase string.
+/**
+ * Convert hyphen case string to camelCase.
+ * @function
+ * @name hyphenCaseToCamelCase
+ * @param {String} string - String in hyphen case.
+ * @returns {String} returns a camelCase string.
 */
 
 function hyphenCaseToCamelCase(string) {
   return string.replace(/-([a-z])/g, function (g) { return g[1].toUpperCase(); });
 }
 
- /**
-  * convert string to lowerCase.
-  * @function
-  * @name lowerCase
-  * @param {String} str 
-  * @returns {String} returns a lowercase string. ex: HELLO, o/p: hello
+/**
+ * convert string to lowerCase.
+ * @function
+ * @name lowerCase
+ * @param {String} str 
+ * @returns {String} returns a lowercase string. ex: HELLO, o/p: hello
 */
 
 function lowerCase(str) {
   return str.toLowerCase()
 }
 
- /**
-  * check whether the given string is url.
-  * @function
-  * @name checkIfStringIsUrl - check whether string is url or not.
-  * @param {String} str 
-  * @returns {Boolean} returns a Boolean value. ex:"http://example.com:3000/pathname/?search=test" , o/p:true
+/**
+ * check whether the given string is url.
+ * @function
+ * @name checkIfStringIsUrl - check whether string is url or not.
+ * @param {String} str 
+ * @returns {Boolean} returns a Boolean value. ex:"http://example.com:3000/pathname/?search=test" , o/p:true
 */
 
 function checkIfStringIsUrl(str) {
@@ -76,9 +76,22 @@ function checkIfStringIsUrl(str) {
   return pattern.test(str);
 }
 
+/**
+ * check whether the url is a valid sunbird API
+ * @function
+ * @name checkIfURLIsSunbirdAPI
+ * @param {String} url 
+ * @returns {Boolean} returns whether url is valid sunbird API or not.  
+*/
+
+function checkIfURLIsSunbirdAPI(url) {
+  return (url.startsWith(process.env.sunbird_url)) ? true : false;
+}
+
 module.exports = {
-  camelCaseToTitleCase : camelCaseToTitleCase,
-  lowerCase : lowerCase,
-  checkIfStringIsUrl : checkIfStringIsUrl,
-  hyphenCaseToCamelCase : hyphenCaseToCamelCase
+  camelCaseToTitleCase: camelCaseToTitleCase,
+  lowerCase: lowerCase,
+  checkIfStringIsUrl: checkIfStringIsUrl,
+  hyphenCaseToCamelCase: hyphenCaseToCamelCase,
+  checkIfURLIsSunbirdAPI: checkIfURLIsSunbirdAPI
 };

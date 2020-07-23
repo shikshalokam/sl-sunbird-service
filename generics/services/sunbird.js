@@ -8,7 +8,7 @@
 //dependencies
 
 const request = require('request');
-const shikshalokamService = require(PROJECT_ROOT_DIRECTORY+"/generics/helpers/shikshalokam");
+const shikshalokamService = require(PROJECT_ROOT_DIRECTORY + "/generics/helpers/shikshalokam");
 const fs = require("fs");
 
 /**
@@ -22,29 +22,29 @@ const fs = require("fs");
   * @returns {Promise}
 */
 
-const generateCodes = async function ( dialCodeData,token ) {
+const generateCodes = async function (dialCodeData, token) {
 
-    const generateDialCodeUrl = 
-    process.env.SUNBIRD_BASE_URL+CONSTANTS.endpoints.SUNBIRD_GENERATE_DIALCODE;
+    const generateDialCodeUrl =
+        process.env.SUNBIRD_BASE_URL + CONSTANTS.endpoints.SUNBIRD_GENERATE_DIALCODE;
 
-    return new Promise(async (resolve,reject)=>{
-        
+    return new Promise(async (resolve, reject) => {
+
         const options = {
-            "headers":{
-            "content-type": "application/json",
-            "authorization" :  process.env.AUTHORIZATION,
-            "x-authenticated-user-token" : token,
-            "x-channel-id" : process.env.SUNBIRD_ORGANISATION_ID 
+            "headers": {
+                "content-type": "application/json",
+                "authorization": process.env.AUTHORIZATION,
+                "x-authenticated-user-token": token,
+                "x-channel-id": process.env.SUNBIRD_ORGANISATION_ID
             },
-            json : dialCodeData
+            json: dialCodeData
         };
-        
-        request.post(generateDialCodeUrl,options,callback);
-        
-        function callback(err,data){
-            if( err ) {
+
+        request.post(generateDialCodeUrl, options, callback);
+
+        function callback(err, data) {
+            if (err) {
                 return reject({
-                    message : CONSTANTS.apiResponses.SUNBIRD_SERVICE_DOWN
+                    message: CONSTANTS.apiResponses.SUNBIRD_SERVICE_DOWN
                 });
             } else {
                 const dialCodeData = data.body;
@@ -52,7 +52,7 @@ const generateCodes = async function ( dialCodeData,token ) {
             }
         }
     })
-    
+
 }
 
 /**
@@ -66,29 +66,29 @@ const generateCodes = async function ( dialCodeData,token ) {
   * @returns {Promise}
 */
 
-const publishCode = async function ( codeId,token,dialCodeData ) {
+const publishCode = async function (codeId, token, dialCodeData) {
 
-    const publishDialCodeUrl = 
-    process.env.SUNBIRD_BASE_URL+CONSTANTS.endpoints.SUNBIRD_PUBLISH_DIALCODE+"/"+codeId;
+    const publishDialCodeUrl =
+        process.env.SUNBIRD_BASE_URL + CONSTANTS.endpoints.SUNBIRD_PUBLISH_DIALCODE + "/" + codeId;
 
-    return new Promise(async (resolve,reject)=>{
-        
+    return new Promise(async (resolve, reject) => {
+
         const options = {
-            "headers":{
-            "content-type": "application/json",
-            "authorization" : process.env.AUTHORIZATION,
-            "x-authenticated-user-token" : token,
-            "x-channel-id" : process.env.SUNBIRD_ORGANISATION_ID 
+            "headers": {
+                "content-type": "application/json",
+                "authorization": process.env.AUTHORIZATION,
+                "x-authenticated-user-token": token,
+                "x-channel-id": process.env.SUNBIRD_ORGANISATION_ID
             },
-            json : dialCodeData
+            json: dialCodeData
         };
 
-        request.post(publishDialCodeUrl,options,callback);
-            
-        function callback(err,data){
-            if( err ) {
+        request.post(publishDialCodeUrl, options, callback);
+
+        function callback(err, data) {
+            if (err) {
                 return reject({
-                    message : CONSTANTS.apiResponses.SUNBIRD_SERVICE_DOWN
+                    message: CONSTANTS.apiResponses.SUNBIRD_SERVICE_DOWN
                 });
             } else {
                 const dialCodeData = data.body;
@@ -107,29 +107,29 @@ const publishCode = async function ( codeId,token,dialCodeData ) {
   * @returns {String} status code
 */
 
-const codeStatus = async function ( token,codeData ) {
+const codeStatus = async function (token, codeData) {
 
-    const dialCodeStatusUrl = 
-    process.env.SUNBIRD_BASE_URL+CONSTANTS.endpoints.SUNBIRD_DIALCODE_STATUS;
+    const dialCodeStatusUrl =
+        process.env.SUNBIRD_BASE_URL + CONSTANTS.endpoints.SUNBIRD_DIALCODE_STATUS;
 
-    return new Promise(async (resolve,reject)=>{
-        
+    return new Promise(async (resolve, reject) => {
+
         const options = {
-            "headers":{
-            "content-type": "application/json",
-            "authorization" :  process.env.AUTHORIZATION,
-            "x-authenticated-user-token" : token,
-            "x-channel-id" : process.env.SUNBIRD_ORGANISATION_ID 
+            "headers": {
+                "content-type": "application/json",
+                "authorization": process.env.AUTHORIZATION,
+                "x-authenticated-user-token": token,
+                "x-channel-id": process.env.SUNBIRD_ORGANISATION_ID
             },
-            json : codeData
+            json: codeData
         };
 
-        request.post(dialCodeStatusUrl,options,callback);
-            
-        function callback(err,data){
-            if( err ) {
+        request.post(dialCodeStatusUrl, options, callback);
+
+        function callback(err, data) {
+            if (err) {
                 return reject({
-                    message : CONSTANTS.apiResponses.SUNBIRD_SERVICE_DOWN
+                    message: CONSTANTS.apiResponses.SUNBIRD_SERVICE_DOWN
                 });
             } else {
                 const dialCodeStatus = data.body;
@@ -137,7 +137,7 @@ const codeStatus = async function ( token,codeData ) {
             }
         }
     })
-    
+
 }
 
 /**
@@ -149,29 +149,29 @@ const codeStatus = async function ( token,codeData ) {
   * @returns {String} status code
 */
 
-const linkContent = async function ( token,contentData ) {
+const linkContent = async function (token, contentData) {
 
-    const linkContentUrl = 
-    process.env.SUNBIRD_BASE_URL+CONSTANTS.endpoints.SUNBIRD_CONTENT_LINK;
+    const linkContentUrl =
+        process.env.SUNBIRD_BASE_URL + CONSTANTS.endpoints.SUNBIRD_CONTENT_LINK;
 
-    return new Promise(async (resolve,reject)=>{
-        
+    return new Promise(async (resolve, reject) => {
+
         const options = {
-            "headers":{
-            "content-type": "application/json",
-            "authorization" :  process.env.AUTHORIZATION,
-            "x-authenticated-user-token" : token,
-            "x-channel-id" : process.env.SUNBIRD_ORGANISATION_ID 
+            "headers": {
+                "content-type": "application/json",
+                "authorization": process.env.AUTHORIZATION,
+                "x-authenticated-user-token": token,
+                "x-channel-id": process.env.SUNBIRD_ORGANISATION_ID
             },
-            json : contentData
+            json: contentData
         };
 
-        request.post(linkContentUrl,options,callback);
-            
-        function callback(err,data){
-            if( err ) {
+        request.post(linkContentUrl, options, callback);
+
+        function callback(err, data) {
+            if (err) {
                 return reject({
-                    message : CONSTANTS.apiResponses.SUNBIRD_SERVICE_DOWN
+                    message: CONSTANTS.apiResponses.SUNBIRD_SERVICE_DOWN
                 })
             } else {
                 const linkContentData = data.body;
@@ -179,7 +179,7 @@ const linkContent = async function ( token,contentData ) {
             }
         }
     })
-    
+
 }
 
 /**
@@ -191,51 +191,51 @@ const linkContent = async function ( token,contentData ) {
   * @returns {String}
 */
 
-const publishContent = async function ( contentData,contentId ) {
+const publishContent = async function (contentData, contentId) {
 
-    const publishContentUrl = 
-    process.env.SUNBIRD_BASE_URL+CONSTANTS.endpoints.SUNBIRD_PUBLISH_CONTENT+"/"+contentId;
+    const publishContentUrl =
+        process.env.SUNBIRD_BASE_URL + CONSTANTS.endpoints.SUNBIRD_PUBLISH_CONTENT + "/" + contentId;
 
-    return new Promise(async (resolve,reject)=>{
+    return new Promise(async (resolve, reject) => {
         try {
 
-            if( !global.publisherToken ) {
+            if (!global.publisherToken) {
 
-                global.publisherToken = 
-                await shikshalokamService.generateKeyCloakAccessToken(
-                    process.env.SUNBIRD_PUBLISHER_USERNAME,
-                    process.env.SUNBIRD_PUBLISHER_PASSWORD 
-                );   
+                global.publisherToken =
+                    await shikshalokamService.generateKeyCloakAccessToken(
+                        process.env.SUNBIRD_PUBLISHER_USERNAME,
+                        process.env.SUNBIRD_PUBLISHER_PASSWORD
+                    );
             }
-            
+
             let options = {
-                "headers":{
+                "headers": {
                     "content-type": "application/json",
-                    "authorization" : process.env.AUTHORIZATION,
-                    "x-authenticated-user-token" :  global.publisherToken.token ,
-                    "x-channel-id" : process.env.SUNBIRD_ORGANISATION_ID 
+                    "authorization": process.env.AUTHORIZATION,
+                    "x-authenticated-user-token": global.publisherToken.token,
+                    "x-channel-id": process.env.SUNBIRD_ORGANISATION_ID
                 },
-                json : contentData
+                json: contentData
             };
 
-            request.post(publishContentUrl,options,callback);
-            
-            function callback(err,data){
-                if( err ) {
+            request.post(publishContentUrl, options, callback);
+
+            function callback(err, data) {
+                if (err) {
                     throw {
-                        message : 
-                        CONSTANTS.apiResponses.SUNBIRD_SERVICE_DOWN
+                        message:
+                            CONSTANTS.apiResponses.SUNBIRD_SERVICE_DOWN
                     };
                 } else {
                     const publishContentData = data.body;
                     return resolve(publishContentData)
                 }
             }
-        } catch(err) {
+        } catch (err) {
             return reject(err);
         }
     })
-    
+
 }
 
 
@@ -248,34 +248,34 @@ const publishContent = async function ( contentData,contentId ) {
   * @returns {JSON} - user profile information
 */
 
-const getUserProfile = async function ( token,userId ) {
+const getUserProfile = async function (token, userId) {
 
-    const userProfileUrl = 
-    process.env.SUNBIRD_BASE_URL+CONSTANTS.endpoints.SUNBIRD_USER_READ+"/"+userId;
+    const userProfileUrl =
+        process.env.SUNBIRD_BASE_URL + CONSTANTS.endpoints.SUNBIRD_USER_READ + "/" + userId;
 
-    return new Promise(async (resolve,reject)=>{
+    return new Promise(async (resolve, reject) => {
         try {
-            
+
             const options = {
                 "headers": {
-                    "content-type" : "application/json",
-                    "authorization" : process.env.AUTHORIZATION,
-                    "x-authenticated-user-token" :  token
+                    "content-type": "application/json",
+                    "authorization": process.env.AUTHORIZATION,
+                    "x-authenticated-user-token": token
                 }
             };
 
-            request.get(userProfileUrl,options,callback);
-            
-            function callback(err,data) {
-                if( err) {
+            request.get(userProfileUrl, options, callback);
+
+            function callback(err, data) {
+                if (err) {
                     throw {
-                        message : 
-                        CONSTANTS.apiResponses.SUNBIRD_SERVICE_DOWN
+                        message:
+                            CONSTANTS.apiResponses.SUNBIRD_SERVICE_DOWN
                     };
                 } else {
-                    if(data.statusCode != 200) {
+                    if (data.statusCode != 200) {
                         return resolve({
-                            responseCode : "SUNBIRD_SERVICE_ERROR"
+                            responseCode: "SUNBIRD_SERVICE_ERROR"
                         })
                     } else {
                         const userProfileInformationData = data.body;
@@ -283,11 +283,11 @@ const getUserProfile = async function ( token,userId ) {
                     }
                 }
             }
-        } catch(err){
+        } catch (err) {
             return reject(err);
         }
     })
-    
+
 }
 
 /**
@@ -301,29 +301,29 @@ const getUserProfile = async function ( token,userId ) {
   * @returns {Promise}
 */
 
-const indexSync = async function ( syncData,token ) {
+const indexSync = async function (syncData, token) {
 
-    const indexSyncUrl = 
-    process.env.SUNBIRD_BASE_URL+CONSTANTS.endpoints.SUNBIRD_INDEX_SYNC;
+    const indexSyncUrl =
+        process.env.SUNBIRD_BASE_URL + CONSTANTS.endpoints.SUNBIRD_INDEX_SYNC;
 
-    return new Promise(async (resolve,reject)=>{
-        
+    return new Promise(async (resolve, reject) => {
+
         const options = {
-            "headers":{
-            "content-type": "application/json",
-            "authorization" :  process.env.AUTHORIZATION,
-            "x-authenticated-user-token" : token,
-            "x-channel-id" : process.env.SUNBIRD_ORGANISATION_ID 
+            "headers": {
+                "content-type": "application/json",
+                "authorization": process.env.AUTHORIZATION,
+                "x-authenticated-user-token": token,
+                "x-channel-id": process.env.SUNBIRD_ORGANISATION_ID
             },
-            json : syncData
+            json: syncData
         };
-        
-        request.post(indexSyncUrl,options,callback);
-        
-        function callback(err,data){
-            if( err ) {
+
+        request.post(indexSyncUrl, options, callback);
+
+        function callback(err, data) {
+            if (err) {
                 return reject({
-                    message : CONSTANTS.apiResponses.SUNBIRD_SERVICE_DOWN
+                    message: CONSTANTS.apiResponses.SUNBIRD_SERVICE_DOWN
                 });
             } else {
                 const indexSyncedData = data.body;
@@ -331,7 +331,7 @@ const indexSync = async function ( syncData,token ) {
             }
         }
     })
-    
+
 }
 
 /**
@@ -343,29 +343,29 @@ const indexSync = async function ( syncData,token ) {
   * @returns {Promise}
 */
 
-const createContent = async function ( contentData,token ) {
+const createContent = async function (contentData, token) {
 
-    const contentUrl = 
-    process.env.SUNBIRD_BASE_URL+CONSTANTS.endpoints.SUNBIRD_CREATE_CONTENT;
+    const contentUrl =
+        process.env.SUNBIRD_BASE_URL + CONSTANTS.endpoints.SUNBIRD_CREATE_CONTENT;
 
-    return new Promise(async (resolve,reject)=>{
-        
+    return new Promise(async (resolve, reject) => {
+
         const options = {
-            "headers" : {
+            "headers": {
                 "content-type": "application/json",
-                "authorization" : process.env.AUTHORIZATION,
-                "x-authenticated-user-token" : token,
-                "x-channel-id" : process.env.SUNBIRD_ORGANISATION_ID 
+                "authorization": process.env.AUTHORIZATION,
+                "x-authenticated-user-token": token,
+                "x-channel-id": process.env.SUNBIRD_ORGANISATION_ID
             },
-            json : contentData
+            json: contentData
         };
-        
-        request.post(contentUrl,options,callback);
-        
-        function callback(err,data){
-            if( err ) {
+
+        request.post(contentUrl, options, callback);
+
+        function callback(err, data) {
+            if (err) {
                 return reject({
-                    message : CONSTANTS.apiResponses.SUNBIRD_SERVICE_DOWN
+                    message: CONSTANTS.apiResponses.SUNBIRD_SERVICE_DOWN
                 });
             } else {
                 const contentData = data.body;
@@ -373,7 +373,7 @@ const createContent = async function ( contentData,token ) {
             }
         }
     })
-    
+
 }
 
 /**
@@ -388,36 +388,36 @@ const createContent = async function ( contentData,token ) {
   * @returns {Promise}
 */
 
-const uploadContent = async function ( file,contentId,token,contentType,mimeType ) {
+const uploadContent = async function (file, contentId, token, contentType, mimeType) {
 
-    const contentUrl = 
-    process.env.SUNBIRD_BASE_URL+CONSTANTS.endpoints.SUNBIRD_UPLOAD_CONTENT + `/${contentId}`;
+    const contentUrl =
+        process.env.SUNBIRD_BASE_URL + CONSTANTS.endpoints.SUNBIRD_UPLOAD_CONTENT + `/${contentId}`;
 
-    return new Promise(async (resolve,reject)=>{
-        
+    return new Promise(async (resolve, reject) => {
+
         const options = {
-            "headers" : {
-                "content-type" : contentType,
-                "authorization" : process.env.AUTHORIZATION,
-                "x-authenticated-user-token" : token,
-                "x-channel-id" : process.env.SUNBIRD_ORGANISATION_ID 
+            "headers": {
+                "content-type": contentType,
+                "authorization": process.env.AUTHORIZATION,
+                "x-authenticated-user-token": token,
+                "x-channel-id": process.env.SUNBIRD_ORGANISATION_ID
             },
-            formData : {
-                "fileName" : {
-                    "value" : fs.createReadStream(file),
-                    "options" : {
-                        contentType : mimeType
+            formData: {
+                "fileName": {
+                    "value": fs.createReadStream(file),
+                    "options": {
+                        contentType: mimeType
                     }
                 }
             }
         };
-        
-        request.post(contentUrl,options,callback);
-        
-        function callback(err,data){
-            if( err ) {
+
+        request.post(contentUrl, options, callback);
+
+        function callback(err, data) {
+            if (err) {
                 return reject({
-                    message : CONSTANTS.apiResponses.SUNBIRD_SERVICE_DOWN
+                    message: CONSTANTS.apiResponses.SUNBIRD_SERVICE_DOWN
                 });
             } else {
                 const contentData = data.body;
@@ -425,7 +425,7 @@ const uploadContent = async function ( file,contentId,token,contentType,mimeType
             }
         }
     })
-    
+
 }
 
 /**
@@ -439,7 +439,7 @@ const uploadContent = async function ( file,contentId,token,contentType,mimeType
   * @returns {JSON} - consist of sunbird service response
 */
 
-function callToSunbird(requestType,url,token,requestBody ="") {
+function callToSunbird(requestType, url, token, requestBody = "") {
 
     return new Promise(async (resolve, reject) => {
         let options = {
@@ -454,7 +454,7 @@ function callToSunbird(requestType,url,token,requestBody ="") {
             options['json'] = { request: requestBody };
         }
 
-        url =process.env.SUNBIRD_BASE_URL + url;
+        url = process.env.SUNBIRD_BASE_URL + url;
         if (requestType == "PATCH") {
             request.patch(url, options, callback);
         } else if (requestType == "GET") {
@@ -470,22 +470,22 @@ function callToSunbird(requestType,url,token,requestBody ="") {
                 });
             } else {
 
-               
-                if(data.statusCode == HTTP_STATUS_CODE.ok.status){
 
-                    if(!data.body.responseCode){
+                if (data.statusCode == HTTP_STATUS_CODE.ok.status) {
+
+                    if (!data.body.responseCode) {
                         data.body = JSON.parse(data.body);
                     }
-                    if(data.body && data.body.responseCode  && data.body.responseCode == CONSTANTS.common.OK ){
-                        if(data.body.result){
-                           return resolve(data.body.result);
+                    if (data.body && data.body.responseCode && data.body.responseCode == CONSTANTS.common.OK) {
+                        if (data.body.result) {
+                            return resolve(data.body.result);
                         }
                     }
-                }else{
-                     data.body = JSON.parse(data.body);
-                    return reject({ message:data.body.params.errmsg });
+                } else {
+                    data.body = JSON.parse(data.body);
+                    return reject({ message: data.body.params.errmsg });
                 }
-                
+
             }
         }
 
@@ -501,60 +501,52 @@ function callToSunbird(requestType,url,token,requestBody ="") {
   * @param limit - page limit for the request 
   * @param offset - page offset for the request
   * @param filters - api filters for the request 
+  * @param sortBy
   * @returns {JSON} - consist of learning resources list
 */
 
-const learningResources = function (token,limit,offset,filters = "") {
+const learningResources = function (token, limit, offset, filters = "", sortBy = "") {
     return new Promise(async (resolve, reject) => {
 
         try {
 
-        const learningResourceUrl = CONSTANTS.endpoints.GET_RESOURCES;
-        
-        let requestBody = {
-            "source": "web",
-            "name": "Resource",
-            "facets": ["board", "gradeLevel", "subject", "medium"],
-            "filters": {
-                "contentType": ["Resource"],
-            },
-            "limit": limit,
-            "mode": "soft",
-            "offset": offset -1
-          }
+            const learningResourceUrl = CONSTANTS.endpoints.GET_RESOURCES;
 
-          if(filters){
-              if(filters["board"]){
-                requestBody["filters"]["board"] =[filters["board"]];
-              }
-              if(filters["gradeLevel"]){
-                requestBody["filters"]["gradeLevel"] =[filters["gradeLevel"]];
-              }
-              if(filters["subject"]){
-                requestBody["filters"]["subject"] =[filters["subject"]];
-              }
-              if(filters["medium"]){
-                requestBody["filters"]["medium"] =[filters["medium"]];
-              }
+            let requestBody = {
+                "source": "web",
+                "name": "Resource",
+                "facets": ["board", "gradeLevel", "subject", "medium"],
+                "filters": {
+                    "contentType": ["Resource"],
+                },
+                "limit": limit,
+                "mode": "soft",
+                "offset": offset - 1
+            }
 
-              if(filters['sortBy'] && filters['sortBy']=="popular"){
-                requestBody["sort_by"]  = {
+            let keys = Object.keys(filters);
+            if (keys && keys.length > 0) {
+                keys.map(filter => {
+                    requestBody["filters"][filter] = [filters[filter]];
+                });
+            }
+            if (sortBy && sortBy == "popular") {
+                requestBody["sort_by"] = {
                     "me_totalRatings": "desc"
-                 }
-              }
+                }
+            }
 
-              if(filters['sortBy'] && filters['sortBy']=="recent"){
-                requestBody["sort_by"]  = {
+            if (sortBy && sortBy == "recent") {
+                requestBody["sort_by"] = {
                     "createdOn": "desc"
-                 }
-              }
-          }
+                }
+            }
 
-        let response = await callToSunbird("POST",learningResourceUrl,token,requestBody);
-        return resolve(response);
-    } catch (error) {
-        reject(error )
-   } 
+            let response = await callToSunbird("POST", learningResourceUrl, token, requestBody);
+            return resolve(response);
+        } catch (error) {
+            reject(error)
+        }
     })
 }
 
@@ -570,29 +562,29 @@ const filtersList = function (token) {
     return new Promise(async (resolve, reject) => {
 
         try {
-            const apiEndPoint = CONSTANTS.endpoints.FRAMEWORK_LIST; 
-            let response = await callToSunbird("GET",apiEndPoint,token);
+            const apiEndPoint = CONSTANTS.endpoints.FRAMEWORK_LIST;
+            let response = await callToSunbird("GET", apiEndPoint, token);
             return resolve(response);
 
         } catch (error) {
-             reject(error )
-        } 
-        
+            reject(error)
+        }
+
     })
 }
 
 
 
 module.exports = {
-    generateCodes : generateCodes,
-    publishCode : publishCode,
-    codeStatus : codeStatus,
-    linkContent : linkContent,
-    publishContent : publishContent,
-    getUserProfile : getUserProfile,
-    indexSync : indexSync,
-    createContent : createContent,
-    uploadContent : uploadContent,
+    generateCodes: generateCodes,
+    publishCode: publishCode,
+    codeStatus: codeStatus,
+    linkContent: linkContent,
+    publishContent: publishContent,
+    getUserProfile: getUserProfile,
+    indexSync: indexSync,
+    createContent: createContent,
+    uploadContent: uploadContent,
     learningResources: learningResources,
     filtersList: filtersList
 };

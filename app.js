@@ -53,7 +53,7 @@ fs.existsSync(process.env.LOGGER_DIRECTORY) ||
 fs.mkdirSync(process.env.LOGGER_DIRECTORY);
 
 //API documentation (apidoc)
-if (process.env.NODE_ENV == "development") {
+if (process.env.APPLICATION_ENV == "development") {
   app.use(express.static("apidoc"));
   
   app.get(process.env.APIDOC_URL, (req, res) => {

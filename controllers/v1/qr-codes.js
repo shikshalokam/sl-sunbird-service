@@ -6,7 +6,7 @@
  */
 
 // Dependencies
-let qrCodeHelper = require(MODULES_BASE_PATH+"/qr-codes/helper");
+const qrCodeHelper = require(MODULES_BASE_PATH+"/qr-codes/helper");
 
 /**
     * QrCode
@@ -103,7 +103,7 @@ module.exports = class QrCodes extends Abstract {
      * ]    
     }
 
-     * @apiParamExample {json} Request:
+     * @apiParamExample {json} Response:
      * {
      * "message": "Qr code pdfs generated successfully",
      * "status": 200,

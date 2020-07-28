@@ -46,7 +46,7 @@ module.exports = {
   COULD_NOT_RENAME_FILE: "Could not rename a file",
   COULD_NOT_ZIP_FOLDER: "Unable to zip folder",
   COULD_NOT_SAVE_ZIP_FILE: "Could not save zip file",
-  QR_CODE_DATA_SIZE: "",
+  QR_CODE_DATA_SIZE: "QR Codes cannot be an empty array.",
   KENDRA_SERVICE_DOWN: "Kendra service is down",
   AP_USER_ALLOWED: "Check if user belongs to AP organisation",
   DICTIONARY_KEYWORDS_MISSING_FILE_ERROR: "Missing keywords file",

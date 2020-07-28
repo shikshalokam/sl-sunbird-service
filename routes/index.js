@@ -6,11 +6,11 @@
  */
 
 // Dependencies
-const authenticator = require(PROJECT_ROOT_DIRECTORY + "/generics/middleware/authenticator");
-const slackClient = require(PROJECT_ROOT_DIRECTORY + "/generics/helpers/slack-communications");
-const pagination = require(PROJECT_ROOT_DIRECTORY + "/generics/middleware/pagination");
+const authenticator = require(GENERIC_MIDDLEWARE_PATH + "/authenticator");
+const slackClient = require(GENERIC_HELPERS_PATH + "/slack-communications");
+const pagination = require(GENERIC_MIDDLEWARE_PATH + "/pagination");
 const fs = require("fs");
-const inputValidator = require(PROJECT_ROOT_DIRECTORY + "/generics/middleware/validator");
+const inputValidator = require(GENERIC_MIDDLEWARE_PATH + "/validator");
 
 module.exports = function (app) {
 

@@ -126,9 +126,19 @@ let enviromentVariables = {
     "message" : "Enable/Disable slack exception log url",
     "optional" : false
   },
+  "ERROR_MESSAGE_TO_SLACK" : {
+    "message" : "Please specify the value for e.g. ON/OFF",
+    "optional" : true,
+    "default" : "ON"
+  },
   "SLACK_TOKEN" : {
-    "message" : "Required slack token",
-    "optional" : false
+    "message" : "Please specify the value for e.g. xoxp-XXXXXXXXXX-XXXXXXXXX-XXXXXXXXX-XXXXXXXXX",
+    "optional" : true,
+    "requiredIf" : {
+      "key": "SLACK_COMMUNICATIONS_ON_OFF",
+      "operator" : "EQUALS",
+      "value" : "ON"
+    }
   },
   "URL_PREFIX" : {
     "message" : "Required",

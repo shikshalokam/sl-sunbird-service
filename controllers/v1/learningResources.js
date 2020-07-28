@@ -18,12 +18,19 @@ module.exports = class LearningResources {
   }
 
   /**
-  * @api {get} /sunbird/api/v1/learningResources/list?limit=10&page=1 
+  * @api {POST} /sunbird/api/v1/learningResources/list?limit=10&page=1 
   * To get list of learning resources
   * @apiVersion 1.0.0
   * @apiGroup Learning Resources
   * @apiHeader {String} X-authenticated-user-token Authenticity token
-  * @apiSampleRequest /sunbird/api/v1/learningResources/list?limit=10&page=1
+  * @apiSampleRequest /sunbird/api/v1/learningResources/list
+  * @apiParamExample {json} Request:
+  * {
+  *     "board":["SLDEV"],
+  *     "gradeLevel":["Class 1"],
+  *     "subject:["Science"],
+  *     "medium":["kannada","English"] 
+  * }
   * @apiUse successBody
   * @apiUse errorBody
   * @apiParamExample {json} Response:
@@ -78,17 +85,20 @@ module.exports = class LearningResources {
   list(req) {
     return new Promise(async (resolve, reject) => {
       try {
+
+        
         let response = await learningResourceshelper.list(
           req.userDetails.userToken,
-          req.pageSize,
-          req.pageNo,
-          req.query.board ? req.query.board : "",
-          req.query.gradeLevel ? req.query.gradeLevel : "",
-          req.query.subject ? req.query.subject : "",
-          req.query.medium ? req.query.medium : "",
-          req.query.sortBy ? req.query.sortBy : ""
+          req.body.limit ? req.body.limit : 10,
+          req.body.page ? req.body.page : 1,
+          req.body.board ? req.body.board : [],
+          req.body.gradeLevel ? req.body.gradeLevel : [],
+          req.body.subject ? req.body.subject : [],
+          req.body.medium ? req.body.medium : [],
+          req.body.sortBy ? req.body.sortBy : ""
         );
-        return resolve(response);
+        return resolve({ result: response.data, message: response.message });
+
 
       } catch (error) {
 
@@ -187,7 +197,7 @@ module.exports = class LearningResources {
       try {
 
         let response = await learningResourceshelper.filtersList(req.userDetails.userToken);
-        return resolve(response);
+        return resolve({ result: response.data, message: response.message });
 
       } catch (error) {
 

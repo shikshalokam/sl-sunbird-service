@@ -1,5 +1,5 @@
 /**
- * name : bodh.js
+ * name : sunbird.js
  * author : Aman Jung Karki
  * Date : 11-Nov-2019
  * Description : All bodh service related information.
@@ -8,7 +8,7 @@
 //dependencies
 
 const request = require('request');
-const shikshalokamService = require(PROJECT_ROOT_DIRECTORY + "/generics/helpers/shikshalokam");
+const shikshalokamService = require(GENERIC_HELPERS_PATH + "/shikshalokam");
 const fs = require("fs");
 
 /**
@@ -452,6 +452,7 @@ function callToSunbird(requestType, url, token, requestBody = "") {
 
         if (requestType != "GET") {
             options['json'] = { request: requestBody };
+            
         }
 
         url = process.env.SUNBIRD_BASE_URL + url;
@@ -482,8 +483,8 @@ function callToSunbird(requestType, url, token, requestBody = "") {
                         }
                     }
                 } else {
-                    data.body = JSON.parse(data.body);
                     return reject({ message: data.body.params.errmsg });
+                    
                 }
 
             }
@@ -515,7 +516,6 @@ const learningResources = function (token, limit, offset, filters = "", sortBy =
             let requestBody = {
                 "source": "web",
                 "name": "Resource",
-                "facets": ["board", "gradeLevel", "subject", "medium"],
                 "filters": {
                     "contentType": ["Resource"],
                 },
@@ -524,18 +524,24 @@ const learningResources = function (token, limit, offset, filters = "", sortBy =
                 "offset": offset - 1
             }
 
+        
             let keys = Object.keys(filters);
             if (keys && keys.length > 0) {
                 keys.map(filter => {
-                    requestBody["filters"][filter] = [filters[filter]];
+                    
+                    if( filters[filter] &&  filters[filter].length > 0){
+                        requestBody["filters"][filter] = filters[filter];
+                    }
+                    
                 });
             }
+            requestBody['facets'] = keys;
             if (sortBy && sortBy == "popular") {
                 requestBody["sort_by"] = {
                     "me_totalRatings": "desc"
                 }
             }
-
+           
             if (sortBy && sortBy == "recent") {
                 requestBody["sort_by"] = {
                     "createdOn": "desc"

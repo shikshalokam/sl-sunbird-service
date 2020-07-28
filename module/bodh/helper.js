@@ -17,7 +17,7 @@ const filesHelper = require(MODULES_BASE_PATH + "/files/helper");
 const bodhContentIndex = process.env.ELASTICSEARCH_BODH_CONTENT_INDEX;
 const bodhContentIndexType = process.env.ELASTICSEARCH_BODH_CONTENT_INDEX_TYPE;
 const qrCodeHelpers = require(MODULES_BASE_PATH + "/qr-codes/helper");
-const sunbirdService = require(PROJECT_ROOT_DIRECTORY + "/generics/services/sunbird");
+const sunbirdService = require(GENERIC_SERVICES_PATH + "/sunbird");
 
 /**
     * BodhHelper

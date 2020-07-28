@@ -26,7 +26,7 @@ module.exports = class Platform {
      * @api {post} /sunbird/api/v1/bodh/platform/generate 
      * Generate qr code information.
      * @apiVersion 1.0.0
-     * @apiGroup bodhPlatform
+     * @apiGroup BodhPlatform
      * @apiHeader {String} X-authenticated-user-token Authenticity token
      * @apiSampleRequest /sunbird/api/v1/bodh/platform/generate
      * @apiUse successBody
@@ -81,7 +81,7 @@ module.exports = class Platform {
      * @api {post} /sunbird/api/v1/bodh/platform/uploadScromContent?name=:name 
      * Upload scrom content data for bodh platform.
      * @apiVersion 1.0.0
-     * @apiGroup bodhPlatform
+     * @apiGroup BodhPlatform
      * @apiHeader {String} X-authenticated-user-token Authenticity token
      * @apiSampleRequest /sunbird/api/v1/bodh/platform/uploadScromContent?name=TEST-BODH-SCROM
      * @apiUse successBody

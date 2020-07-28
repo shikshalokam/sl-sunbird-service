@@ -40,7 +40,7 @@ module.exports = class QrCodes extends Abstract {
      * @api {get} /sunbird/api/v1/qr-code/image/:uniquecode 
      * Get the image link of the qr code
      * @apiVersion 1.0.0
-     * @apiGroup qrCodes
+     * @apiGroup QrCodes
      * @apiHeader {String} X-authenticated-user-token Authenticity token
      * @apiSampleRequest /sunbird/api/v1/qr-code/image/N7W8L4
      * @apiUse successBody
@@ -91,7 +91,7 @@ module.exports = class QrCodes extends Abstract {
      * @api {Post} /sunbird/api/v1/qr-code/pdf
      * Get qr code pdfs.
      * @apiVersion 1.0.0
-     * @apiGroup qrCodes
+     * @apiGroup QrCodes
      * @apiHeader {String} X-authenticated-user-token Authenticity token
      * @apiSampleRequest /sunbird/api/v1/qr-code/pdf
      * @apiUse successBody

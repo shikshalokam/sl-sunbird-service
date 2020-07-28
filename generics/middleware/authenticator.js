@@ -80,11 +80,6 @@ module.exports = async function (req, res, next,token="") {
   if (!req.rspObj) req.rspObj = {};
   var rspObj = req.rspObj;
 
-  if (req.path.includes("slack")) {
-    next();
-    return
-  }
-
 
   // Allow search endpoints for non-logged in users.
   let guestAccessPaths = ["bodh/search","bodh/request"];
@@ -95,7 +90,7 @@ module.exports = async function (req, res, next,token="") {
     }
   }));
 
-  let internalAccessApiPaths = ["token/verify","keywords"];
+  let internalAccessApiPaths = ["keywords","token/verify"];
   let performInternalAccessTokenCheck = false;
   await Promise.all(internalAccessApiPaths.map(async function (path) {
     if (req.path.includes(path)) {
@@ -110,6 +105,27 @@ module.exports = async function (req, res, next,token="") {
     } else {
       rspObj.errCode = reqMsg.TOKEN.MISSING_CODE;
       rspObj.errMsg = reqMsg.TOKEN.MISSING_MESSAGE;
+      rspObj.responseCode = responseCode.unauthorized;
+      return res.status(HTTP_STATUS_CODE["unauthorized"].status).send(respUtil(rspObj));
+    }
+  }
+
+
+  let securedApiPaths = [];
+  let tokenAndInternalAccessTokenRequired = false;
+  await Promise.all(securedApiPaths.map(async function (path) {
+    if (req.path.includes(path)) {
+      tokenAndInternalAccessTokenRequired = true;
+    }
+  }));
+
+  if (tokenAndInternalAccessTokenRequired) {
+    if (req.headers["internal-access-token"] == process.env.INTERNAL_ACCESS_TOKEN && token) {
+      next();
+      return;
+    } else {
+      rspObj.errCode = reqMsg.TOKEN.MISSING_TOKEN_AND_INTERNAL_ACCESS_TOKEN_CODE;
+      rspObj.errMsg = reqMsg.TOKEN.MISSING_TOKEN_AND_INTERNAL_ACCESS_TOKEN_MESSAGE;
       rspObj.responseCode = responseCode.unauthorized;
       return res.status(HTTP_STATUS_CODE["unauthorized"].status).send(respUtil(rspObj));
     }

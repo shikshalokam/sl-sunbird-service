@@ -9,14 +9,8 @@
 
 const request = require('./http-request');
 const SLACK_COMMUNICATION_ON_OFF = process.env.SLACK_COMMUNICATIONS_ON_OFF;
-const SLACK_TOKEN = process.env.SLACK_TOKEN
 const SLACK_HOOK = process.env.SLACK_EXCEPTION_LOG_URL;
-const ERROR_MESSAGES_TO_SLACK = 
-(!process.env.ERROR_MESSAGE_TO_SLACK || 
-  !process.env.ERROR_MESSAGE_TO_SLACK != "OFF") ?
- "ON" : 
- "OFF";
-
+const ERROR_MESSAGES_TO_SLACK = process.env.ERROR_MESSAGE_TO_SLACK;
 /**
   * Send the error message to slack.
   * @function
@@ -29,8 +23,7 @@ let sendMessageToSlack = function (errorMessage) {
   return new Promise(async (resolve, reject) => {
     try {
 
-      if (SLACK_COMMUNICATION_ON_OFF === "ON" && 
-      ERROR_MESSAGES_TO_SLACK === "ON" && SLACK_TOKEN != "") {
+      if (SLACK_COMMUNICATION_ON_OFF === "ON" && ERROR_MESSAGES_TO_SLACK === "ON") {
 
         let reqObj = new request()
         let attachmentData = new Array

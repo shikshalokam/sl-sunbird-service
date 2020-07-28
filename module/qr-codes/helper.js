@@ -7,12 +7,12 @@
 
 // Dependencies
 
-const qrGeneratorService = require(PROJECT_ROOT_DIRECTORY+"/generics/services/qr-generator");
-const gotenbergService = require(PROJECT_ROOT_DIRECTORY+"/generics/services/gotenberg");
+const qrGeneratorService = require(GENERIC_SERVICES_PATH+"/qr-generator");
+const gotenbergService = require(GENERIC_SERVICES_PATH+"/gotenberg");
 const ejs = require('ejs');
 const fs = require("fs");
 const filesHelper = require(PROJECT_ROOT_DIRECTORY+"/module/files/helper");
-const sunbirdService = require(PROJECT_ROOT_DIRECTORY+"/generics/services/sunbird");
+const sunbirdService = require(GENERIC_SERVICES_PATH+"/sunbird");
 const BUCKET_NAME = process.env.QR_CODE_BUCKET_NAME;
 
 /**

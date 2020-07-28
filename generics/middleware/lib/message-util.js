@@ -262,7 +262,9 @@ exports.COMPOSITE = {
       MISSING_CODE: 'ERR_TOKEN_FIELD_MISSING',
       MISSING_MESSAGE: 'Required field token is missing',
       INVALID_CODE: 'ERR_TOKEN_INVALID',
-      INVALID_MESSAGE: 'Access denied'
+      INVALID_MESSAGE: 'Access denied',
+      MISSING_TOKEN_AND_INTERNAL_ACCESS_TOKEN_CODE : "ERR_REQUEST_FIELDS_MISSING",
+      MISSING_TOKEN_AND_INTERNAL_ACCESS_TOKEN_MESSAGE : "Token and Internal access token both are required field"
     }
   }
   

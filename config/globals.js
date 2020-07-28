@@ -20,6 +20,8 @@ module.exports = function () {
   global.MODULES_BASE_PATH = PROJECT_ROOT_DIRECTORY + "/module";
   global.GENERICS_FILES_PATH = PROJECT_ROOT_DIRECTORY + "/generics";
   global.GENERIC_HELPERS_PATH = GENERICS_FILES_PATH + "/helpers";
+  global.GENERIC_MIDDLEWARE_PATH = GENERICS_FILES_PATH + "/middleware";
+  global.GENERIC_SERVICES_PATH = GENERICS_FILES_PATH + "/services";
   global._ = require("lodash");
   global.UTILS = require(GENERIC_HELPERS_PATH + "/utils");
   require("./connections");

@@ -8,8 +8,8 @@
  */
 
 // Dependencies
-const apiInterceptor = require(PROJECT_ROOT_DIRECTORY + "/generics/middleware/apiInterceptor");
-const shikshalokam = require(PROJECT_ROOT_DIRECTORY + "/generics/helpers/shikshalokam");
+const apiInterceptor = require(GENERIC_MIDDLEWARE_PATH + "/apiInterceptor");
+const shikshalokam = require(GENERIC_HELPERS_PATH + "/shikshalokam");
 
 
 /**
@@ -34,8 +34,9 @@ module.exports = class TokenHelper {
                 apiInterceptor.validateToken(token, async function (err, tokenData) {
                     if (err) {
                         return resolve({
+                            success:false,
                             message: CONSTANTS.apiResponses.INVALID_TOKEN,
-                            result: {
+                            data: {
                                 isValid: false
                             }
                         });
@@ -43,16 +44,18 @@ module.exports = class TokenHelper {
                         let userDetails = await shikshalokam.userInfo(token, tokenData.userId);
                         if (userDetails.responseCode == "OK") {
                             resolve({
+                                success:true,
                                 message: CONSTANTS.apiResponses.VALID_TOKEN,
-                                result: {
+                                data: {
                                     isValid: true,
                                     userInformation: userDetails.result.response
                                 }
                             })
                         } else {
                             return resolve({
+                                success:true,
                                 message: CONSTANTS.apiResponses.INVALID_TOKEN,
-                                result: {
+                                data: {
                                     isValid: false
                                 }
                             });
@@ -61,7 +64,7 @@ module.exports = class TokenHelper {
                 });
 
             } catch (error) {
-                return reject({
+                return resolve({
                     success: false,
                     message: error.message ? error.message : HTTP_STATUS_CODE["internal_server_error"].message,
                     data: false

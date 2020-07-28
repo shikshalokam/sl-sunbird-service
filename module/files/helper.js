@@ -10,7 +10,7 @@
 const Zip = require('adm-zip');
 const fs = require('fs');
 
-const kendraService = require(PROJECT_ROOT_DIRECTORY + '/generics/services/kendra');
+const kendraService = require(GENERIC_SERVICES_PATH + '/kendra');
 
 /**
  * FilesHelper

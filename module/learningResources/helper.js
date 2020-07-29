@@ -3,7 +3,7 @@
 const sunbirdService =
     require(GENERIC_SERVICES_PATH + "/sunbird.js");
 
-const sessions = require(GENERIC_HELPERS_PATH + "/sessions.js");
+const sessionsHelper = require(GENERIC_HELPERS_PATH + "/sessions.js");
 
 /**
 * learning resource related information be here.
@@ -70,8 +70,12 @@ module.exports = class LearningResourcesHelper {
     static filtersList(token) {
         return new Promise(async (resolve, reject) => {
             try {
-                let filters = sessions.get("LearningResourcesFilters");
+                const learningResourceFilterKey = "learning-resource-filters";
+
+                let filters = sessionsHelper.get(learningResourceFilterKey);
+
                 if (!filters) {
+                    
                     filters = await sunbirdService.filtersList(token);
                     
                      let frameworkDetails = [];
@@ -99,9 +103,14 @@ module.exports = class LearningResourcesHelper {
                         });
                     }
                     filters = categories;
-                    sessions.set("LearningResourcesFilters",categories);
+                    sessionsHelper.set(learningResourceFilterKey,categories);
                 }
-                resolve({ message: CONSTANTS.apiResponses.FILTERS_FOUND, data: filters,success:true })
+
+                resolve({
+                    message: CONSTANTS.apiResponses.FILTERS_FOUND,
+                    data: filters,
+                    success:true
+                });
 
             } catch (error) {
                 return resolve({

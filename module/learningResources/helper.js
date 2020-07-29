@@ -38,15 +38,20 @@ module.exports = class LearningResourcesHelper {
                 }
                 
                 let learningResources = await sunbirdService.learningResources(token, pageSize, pageNo, filters, sortBy);
-                if (learningResources) {
+                
+                if (learningResources && learningResources.content) {
 
-                    if (learningResources.content) {
-                        resolve({ message: CONSTANTS.apiResponses.LEARNING_RESORCES_FOUND,success:true, data: { content: learningResources.content, count: learningResources.count } })
-                    } else {
-                        resolve({ message: CONSTANTS.apiResponses.LEARNING_RESORCES_NOT_FOUND,success:false,data:false });
-                    }
+                    resolve({
+                        message: CONSTANTS.apiResponses.LEARNING_RESORCES_FOUND,
+                        success:true, 
+                        data: { 
+                            content: learningResources.content,
+                            count: learningResources.count
+                        }
+                    })
+
                 } else {
-                    resolve({ message: CONSTANTS.apiResponses.LEARNING_RESORCES_NOT_FOUND,success:false,data:false });
+                    throw new Error(CONSTANTS.apiResponses.LEARNING_RESORCES_NOT_FOUND);
                 }
 
             } catch (error) {

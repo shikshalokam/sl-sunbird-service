@@ -1,6 +1,6 @@
 module.exports = {
   async up(db) {
-    global.migrationMsg = "Update elastic search index mapping of bodh content.";
+    global.migrationMsg = "Create elastic search index of bodh content and its mapping.";
 
     if(!es) {
       throw new Error("Elastic search connection not available.");
@@ -10,13 +10,7 @@ module.exports = {
       throw new Error("Invalid bodh content index name.");
     }
 
-    if(!process.env.ELASTICSEARCH_BODH_CONTENT_INDEX_TYPE || process.env.ELASTICSEARCH_BODH_CONTENT_INDEX_TYPE == "") {
-      throw new Error("Invalid bodh content index type name.");
-    }
-
     const indexName = process.env.ELASTICSEARCH_BODH_CONTENT_INDEX;
-
-    const typeName = process.env.ELASTICSEARCH_BODH_CONTENT_INDEX_TYPE;
 
     const checkIfIndexExists = await es.indices.exists({ index: indexName});
 
@@ -35,25 +29,43 @@ module.exports = {
 
     const putMapping = await es.indices.putMapping({
       index: indexName,
-      type: typeName,
       body: {
         properties: {
             suggest: {
                 type : "completion",
                 contexts: [
                     { 
-                      "name": "isACourse",
+                        "name": "channel",
+                        "type": "category"
+                    },
+                    { 
+                      "name": "contentType",
+                      "type": "category"
+                    },
+                    { 
+                      "name": "medium",
+                      "type": "category"
+                    },
+                    { 
+                      "name": "gradeLevel",
+                      "type": "category"
+                    },
+                    { 
+                      "name": "subject",
+                      "type": "category"
+                    },
+                    { 
+                      "name": "board",
                       "type": "category"
                     }
                 ]
             }
         }
-      },
-      include_type_name : true
+      }
     });
 
     if(putMapping.statusCode != 200) {
-      throw new Error("Error while updating mapping for bodh content index.");
+      throw new Error("Error while creating mapping for bodh content index.");
     }
 
     return global.migrationMsg

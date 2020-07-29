@@ -10,13 +10,7 @@ module.exports = {
       throw new Error("Invalid dictionary index name.");
     }
 
-    if(!process.env.ELASTICSEARCH_DICTIONARY_INDEX_TYPE || process.env.ELASTICSEARCH_DICTIONARY_INDEX_TYPE == "") {
-      throw new Error("Invalid dictionary index type name.");
-    }
-
     const indexName = process.env.ELASTICSEARCH_DICTIONARY_INDEX;
-
-    const typeName = process.env.ELASTICSEARCH_DICTIONARY_INDEX_TYPE;
 
     const checkIfIndexExists = await es.indices.exists({ index: indexName});
 
@@ -35,7 +29,6 @@ module.exports = {
 
     const putMapping = await es.indices.putMapping({
       index: indexName,
-      type: typeName,
       body: {
           properties: {
               words: {
@@ -44,8 +37,7 @@ module.exports = {
                   search_analyzer: "simple"
               }
           }
-      },
-      include_type_name : true
+      }
     });
 
 

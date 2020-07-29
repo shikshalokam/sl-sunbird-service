@@ -11,22 +11,17 @@
   * @name createOrUpdateDocumentInIndex
   * @param {String} id - (Non - Mandatory) Document ID.
   * @param {String} index - Index from which document is to deleted
-  * @param {String} type - Type from which document is to deleted
   * @param {Object} data - Document Data to be created.
   * @returns {Promise} returns a promise.
 */
 
-var createOrUpdateDocumentInIndex = function (index = "", type = "", id = "", data = "") {
+var createOrUpdateDocumentInIndex = function (index = "", id = "", data = "") {
 
   return new Promise(async function (resolve, reject) {
     try {
 
       if (index == "") {
         throw new Error("Index is required");
-      }
-
-      if (type == "") {
-        throw new Error("Type is required");
       }
 
       if (id == "") {
@@ -40,7 +35,6 @@ var createOrUpdateDocumentInIndex = function (index = "", type = "", id = "", da
       let documentObject = {
         id: id,
         index: index,
-        type: type,
         body: {
           doc : data,
           doc_as_upsert : true,
@@ -61,13 +55,12 @@ var createOrUpdateDocumentInIndex = function (index = "", type = "", id = "", da
 /**
   * Check for index exists or not.
   * @function
-  * @name _typeExistsOrNot
+  * @name _indexMappingExistOrNot
   * @param {String} index - name of the index for elastic search.
-  * @param {String} type - type for elastic search. 
   * @returns {Promise} returns a promise.
 */
 
-var _indexTypeMappingExistOrNot = function (index, type) {
+var _indexMappingExistOrNot = function (index) {
 
   return new Promise(async function (resolve, reject) {
     try {
@@ -76,14 +69,8 @@ var _indexTypeMappingExistOrNot = function (index, type) {
         throw "index is required";
       }
 
-      if (!type) {
-        throw "type is required";
-      }
-
       let result = await elasticsearch.client.indices.getMapping({
-        index: index,
-        type: type,
-        include_type_name : true
+        index: index
       });
 
       return resolve(result);
@@ -100,14 +87,13 @@ var _indexTypeMappingExistOrNot = function (index, type) {
   * @function
   * @name searchDocumentFromIndex
   * @param {String} index - Index from which document is to deleted
-  * @param {String} type - Type from which document is to deleted
   * @param {Object} queryObject - Query in the Lucene query string syntax
   * @param {Int} page - Page No.
   * @param {Int} size - No. of documents to return
   * @returns {Promise} returns a promise.
 */
 
-var searchDocumentFromIndex = function (index = "", type = "", queryObject = "", page = 1, size = 10) {
+var searchDocumentFromIndex = function (index = "", queryObject = "", page = 1, size = 10) {
 
   return new Promise(async function (resolve, reject) {
     try {
@@ -116,17 +102,12 @@ var searchDocumentFromIndex = function (index = "", type = "", queryObject = "",
         throw new Error("Index is required");
       }
 
-      if (type == "") {
-        throw new Error("Type is required");
-      }
-
       if (Object.keys(queryObject).length == 0) {
         throw new Error("Query Object is required");
       }
       
       let documentObject = {
         index: index,
-        type: type,
         body: queryObject,
         size : size
       }
@@ -159,11 +140,11 @@ var searchDocumentFromIndex = function (index = "", type = "", queryObject = "",
 /**
   *  Check if index exists in elastic search.
   * @function
-  * @name checkIfIndexExists
+  * @name getIndexMapping
   * @returns {Promise} returns a promise.
 */
 
-var getIndexTypeMapping = function (indexName = "", typeName = "") {
+var getIndexMapping = function (indexName = "") {
   return new Promise(async function (resolve, reject) {
     try {
 
@@ -171,18 +152,14 @@ var getIndexTypeMapping = function (indexName = "", typeName = "") {
         throw new Error("Invalid index name.");
       }
 
-      if(typeName == "") {
-        throw new Error("Invalid type name.");
-      }
-
       if (!elasticsearch.client) {
         throw new Error("Elastic search is down.");
       }
 
-      const checkIndexTypeMappingExistsOrNot = 
-      await _indexTypeMappingExistOrNot(indexName, typeName);
+      const checkIndexMappingExistsOrNot = 
+      await _indexMappingExistOrNot(indexName);
 
-      return resolve(checkIndexTypeMappingExistsOrNot);
+      return resolve(checkIndexMappingExistsOrNot);
 
     } catch (error) {
       return reject(error);
@@ -193,14 +170,13 @@ var getIndexTypeMapping = function (indexName = "", typeName = "") {
 /**
   * Set index mapping.
   * @function
-  * @name setIndexTypeMapping
+  * @name setIndexMapping
   * @param {String} index - name of the index for elastic search.
-  * @param {String} type - type for elastic search. 
   * @param {Object} mapping - mapping for elastic search. 
   * @returns {Promise} returns a promise.
 */
 
-var setIndexTypeMapping = function (index = "", type = "", mapping) {
+var setIndexMapping = function (index = "",mapping) {
 
   return new Promise(async function (resolve, reject) {
     try {
@@ -209,16 +185,10 @@ var setIndexTypeMapping = function (index = "", type = "", mapping) {
         throw new Error("Index is required");
       }
 
-      if (type == "") {
-        throw new Error("Type is required");
-      }
-
 
     const putMapping = await elasticsearch.client.indices.putMapping({
       index: index,
-      type: type,
-      body: mapping,
-      include_type_name : true
+      body: mapping
     });
 
     if(putMapping.statusCode != 200) {
@@ -270,23 +240,18 @@ var createIndex = function (index = "") {
   * @function
   * @name deleteDocumentFromIndex
   * @param {String} index - Index from which document is to deleted
-  * @param {String} type - Type from which document is to deleted
   * @param {String} id - Document ID to deleted
   * @param {Object} queryObject - Query in the Lucene query string syntax
   * @returns {Promise} returns a promise.
 */
 
-var deleteDocumentFromIndex = function (index = "", type = "", id = "", queryObject = "") {
+var deleteDocumentFromIndex = function (index = "", id = "", queryObject = "") {
 
   return new Promise(async function (resolve, reject) {
     try {
 
       if (index == "") {
         throw new Error("Index is required");
-      }
-
-      if (type == "") {
-        throw new Error("Type is required");
       }
 
       if (id == "" && Object.keys(queryObject).length == 0) {
@@ -299,7 +264,6 @@ var deleteDocumentFromIndex = function (index = "", type = "", id = "", queryObj
         result = await elasticsearch.client.delete({
           id: id,
           index: index,
-          type: type,
           refresh : true
         });
       } else if(Object.keys(queryObject).length > 0) {
@@ -310,7 +274,6 @@ var deleteDocumentFromIndex = function (index = "", type = "", id = "", queryObj
             }
           },
           index: index,
-          type: type,
           refresh : true
         });
       }
@@ -324,10 +287,10 @@ var deleteDocumentFromIndex = function (index = "", type = "", id = "", queryObj
 };
 
 module.exports = {
-  getIndexTypeMapping : getIndexTypeMapping,
+  getIndexMapping : getIndexMapping,
   createOrUpdateDocumentInIndex : createOrUpdateDocumentInIndex,
   searchDocumentFromIndex : searchDocumentFromIndex,
   createIndex : createIndex,
-  setIndexTypeMapping : setIndexTypeMapping,
+  setIndexMapping : setIndexMapping,
   deleteDocumentFromIndex : deleteDocumentFromIndex
 };

@@ -66,16 +66,8 @@ let enviromentVariables = {
     "message" : "Required dictionary index",
     "optional" : false
   },
-  "ELASTICSEARCH_DICTIONARY_INDEX_TYPE" : {
-    "message" : "Required dictionary index type",
-    "optional" : false
-  },
   "ELASTICSEARCH_BODH_CONTENT_INDEX" : {
     "message" : "Required bodh content index",
-    "optional" : false
-  },
-  "ELASTICSEARCH_BODH_CONTENT_INDEX_TYPE" : {
-    "message" : "Required bodh content type",
     "optional" : false
   },
   "INTERNAL_ACCESS_TOKEN" : {

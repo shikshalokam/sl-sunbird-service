@@ -547,7 +547,6 @@ const learningResources = function (token, limit, offset, filters = "", sortBy =
                     "createdOn": "desc"
                 }
             }
-
             let response = await callToSunbird("POST", learningResourceUrl, token, requestBody);
             return resolve(response);
         } catch (error) {

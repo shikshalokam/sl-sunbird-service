@@ -18,19 +18,12 @@ module.exports = class LearningResources {
   }
 
   /**
-  * @api {POST} /sunbird/api/v1/learningResources/list?limit=10&page=1 
+  * @api {get} /sunbird/api/v1/learningResources/list?limit=10&page=1 
   * To get list of learning resources
   * @apiVersion 1.0.0
   * @apiGroup Learning Resources
   * @apiHeader {String} X-authenticated-user-token Authenticity token
-  * @apiSampleRequest /sunbird/api/v1/learningResources/list
-  * @apiParamExample {json} Request:
-  * {
-  *     "board":["SLDEV"],
-  *     "gradeLevel":["Class 1"],
-  *     "subject:["Science"],
-  *     "medium":["kannada","English"] 
-  * }
+  * @apiSampleRequest /sunbird/api/v1/learningResources/list?limit=1&page=1&gradeLevel=class 1&board=cbse&&subject=mathematics
   * @apiUse successBody
   * @apiUse errorBody
   * @apiParamExample {json} Response:
@@ -86,16 +79,20 @@ module.exports = class LearningResources {
     return new Promise(async (resolve, reject) => {
       try {
 
-        
+        let board = req.query.board ? req.query.board.split(',') : [];
+        let gradeLevel = req.query.gradeLevel ? req.query.gradeLevel.split(',') : [];
+        let medium = req.query.medium ? req.query.medium.split(',') : [];
+        let subject = req.query.subject ? req.query.subject.split(',') : [];
+       
         let response = await learningResourceshelper.list(
           req.userDetails.userToken,
-          req.body.limit ? req.body.limit : 10,
-          req.body.page ? req.body.page : 1,
-          req.body.board ? req.body.board : [],
-          req.body.gradeLevel ? req.body.gradeLevel : [],
-          req.body.subject ? req.body.subject : [],
-          req.body.medium ? req.body.medium : [],
-          req.body.sortBy ? req.body.sortBy : ""
+          req.pageSize,
+          req.pageNo,
+          board,
+          gradeLevel,
+          subject,
+          medium,
+          req.query.sortBy ? req.query.sortBy : ""
         );
         return resolve({ result: response.data, message: response.message });
 

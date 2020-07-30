@@ -15,7 +15,6 @@ const filesHelper = require(MODULES_BASE_PATH + "/files/helper");
 
 // CONSTANTS
 const bodhContentIndex = process.env.ELASTICSEARCH_BODH_CONTENT_INDEX;
-const bodhContentIndexType = process.env.ELASTICSEARCH_BODH_CONTENT_INDEX_TYPE;
 const qrCodeHelpers = require(MODULES_BASE_PATH + "/qr-codes/helper");
 const sunbirdService = require(GENERIC_SERVICES_PATH + "/sunbird");
 
@@ -172,7 +171,6 @@ module.exports = class BodhHelper {
 
                     const addCourseToAutocomplete = await elasticSearchHelper.createOrUpdateDocumentInIndex(
                         bodhContentIndex,
-                        bodhContentIndexType,
                         eachContent.IL_UNIQUE_ID,
                         {
                             suggest: suggestContent,
@@ -190,11 +188,11 @@ module.exports = class BodhHelper {
                             const orgId = eachContent.createdFor[pointerToContentCreatedForOrganisations];
 
                             // Check if ES index for organisation content exists   
-                            const checkIfOrgIndexExists = await this.autocompleteIndexTypeMapExists(orgId);
+                            const checkIfOrgIndexExists = await this.autocompleteIndexMapExists(orgId);
 
                             if (checkIfOrgIndexExists.success && !checkIfOrgIndexExists.data) {
                                 // Create org content index in ES
-                                const createOrgIndexMapping = await this.createAutocompleteIndexTypeMap(orgId);
+                                const createOrgIndexMapping = await this.createAutocompleteIndexMap(orgId);
                                 if (createOrgIndexMapping.success && !createOrgIndexMapping.data) {
                                     throw new Error("Failed to create auto complete index mapping.")
                                 }
@@ -202,7 +200,6 @@ module.exports = class BodhHelper {
 
                             const addCourseToAutocomplete = await elasticSearchHelper.createOrUpdateDocumentInIndex(
                                 bodhContentIndex + "-" + orgId,
-                                bodhContentIndexType,
                                 eachContent.IL_UNIQUE_ID,
                                 {
                                     suggest: suggestContent,
@@ -296,12 +293,12 @@ module.exports = class BodhHelper {
     /**
      * Check if mapping for dictionary index exists in Elastic search.
      * @method
-     * @name autocompleteIndexTypeMapExists
+     * @name autocompleteIndexMapExists
      * @param {String} organisationId Query typed by user.
      * @returns {Promise} returns a promise.
     */
 
-    static autocompleteIndexTypeMapExists(organisationId = "") {
+    static autocompleteIndexMapExists(organisationId = "") {
         return new Promise(async (resolve, reject) => {
             try {
 
@@ -309,24 +306,20 @@ module.exports = class BodhHelper {
                     throw new Error("Missing bodh content index name");
                 }
 
-                if (bodhContentIndexType == "") {
-                    throw new Error("Missing bodh content index type name");
-                }
-
                 let bodhContentIndexName = bodhContentIndex;
                 if (organisationId != "") {
                     bodhContentIndexName = bodhContentIndex + "-" + organisationId;
                 }
 
-                const bodhIndexMapping = await elasticSearchHelper.getIndexTypeMapping(bodhContentIndexName, bodhContentIndexType);
+                const bodhIndexMapping = await elasticSearchHelper.getIndexMapping(bodhContentIndexName);
 
                 if (bodhIndexMapping.statusCode != HTTP_STATUS_CODE["ok"].status) {
-                    throw new Error("Bodh content index type map does not exist.");
+                    throw new Error("Bodh content index map does not exist.");
                 }
 
                 return resolve({
                     success: true,
-                    message: "Bodh content index type map exists",
+                    message: "Bodh content index map exists",
                     data: true
                 });
 
@@ -343,21 +336,17 @@ module.exports = class BodhHelper {
     /**
      * Create bodh content index in Elastic search.
      * @method
-     * @name createAutocompleteIndexTypeMap
+     * @name createAutocompleteIndexMap
      * @param {String} organisationId Query typed by user.
      * @returns {Promise} returns a promise.
     */
 
-    static createAutocompleteIndexTypeMap(organisationId = "") {
+    static createAutocompleteIndexMap(organisationId = "") {
         return new Promise(async (resolve, reject) => {
             try {
 
                 if (bodhContentIndex == "") {
                     throw new Error("Missing bodh content index name");
-                }
-
-                if (bodhContentIndexType == "") {
-                    throw new Error("Missing bodh content index type name");
                 }
 
                 let bodhContentIndexName = bodhContentIndex;
@@ -385,15 +374,15 @@ module.exports = class BodhHelper {
                     }
                 }
 
-                const bodhIndexMapping = await elasticSearchHelper.setIndexTypeMapping(bodhContentIndexName, bodhContentIndexType, autoCompleteIndexMapping);
+                const bodhIndexMapping = await elasticSearchHelper.setIndexMapping(bodhContentIndexName, autoCompleteIndexMapping);
 
                 if (bodhIndexMapping.statusCode != HTTP_STATUS_CODE["ok"].status) {
-                    throw new Error("Bodh content index type map does not exist.");
+                    throw new Error("Bodh content index map does not exist.");
                 }
 
                 return resolve({
                     success: true,
-                    message: "Bodh content index type created",
+                    message: "Bodh content index created",
                     data: true
                 });
 
@@ -458,7 +447,7 @@ module.exports = class BodhHelper {
                     bodhContentIndexName = bodhContentIndex + "-" + organisationId;
                 }
 
-                const searchResponse = await elasticSearchHelper.searchDocumentFromIndex(bodhContentIndexName, bodhContentIndexType, queryObject);
+                const searchResponse = await elasticSearchHelper.searchDocumentFromIndex(bodhContentIndexName, queryObject);
 
                 let suggestions = new Array;
 

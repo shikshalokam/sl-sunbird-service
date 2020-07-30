@@ -3,7 +3,7 @@
 const sunbirdService =
     require(GENERIC_SERVICES_PATH + "/sunbird.js");
 
-const sessions = require(GENERIC_HELPERS_PATH + "/sessions.js");
+const sessionsHelper = require(GENERIC_HELPERS_PATH + "/sessions.js");
 
 /**
 * learning resource related information be here.
@@ -36,12 +36,21 @@ module.exports = class LearningResourcesHelper {
                     subject: subject,
                     medium: medium
                 }
-                
+
                 let learningResources = await sunbirdService.learningResources(token, pageSize, pageNo, filters, sortBy);
                 if (learningResources && learningResources.content) {
-                        resolve({ message: CONSTANTS.apiResponses.LEARNING_RESORCES_FOUND,success:true, data: { content: learningResources.content, count: learningResources.count } })
+
+                    resolve({
+                        message: CONSTANTS.apiResponses.LEARNING_RESORCES_FOUND,
+                        success: true,
+                        data: {
+                            content: learningResources.content,
+                            count: learningResources.count
+                        }
+                    })
+
                 } else {
-                    resolve({ message: CONSTANTS.apiResponses.LEARNING_RESORCES_NOT_FOUND,success:false,data:false });
+                    throw new Error(CONSTANTS.apiResponses.LEARNING_RESORCES_NOT_FOUND);
                 }
 
             } catch (error) {
@@ -65,38 +74,47 @@ module.exports = class LearningResourcesHelper {
     static filtersList(token) {
         return new Promise(async (resolve, reject) => {
             try {
-                let filters = sessions.get("LearningResourcesFilters");
+                const learningResourceFilterKey = "learning-resource-filters";
+
+                let filters = sessionsHelper.get(learningResourceFilterKey);
+
                 if (!filters) {
+
                     filters = await sunbirdService.filtersList(token);
-                    
-                     let frameworkDetails = [];
-                     if(filters.framework){
+
+                    let frameworkDetails = [];
+                    if (filters.framework) {
                         frameworkDetails = filters.framework;
-                     }
+                    }
 
                     let categories = [];
-                    if( frameworkDetails && frameworkDetails.categories){
-                        frameworkDetails.categories.map(function (category){
+                    if (frameworkDetails && frameworkDetails.categories) {
+                        frameworkDetails.categories.map(function (category) {
                             let terms = [];
-                            if(category.terms){
-                                category.terms.map(function (term){
+                            if (category.terms) {
+                                category.terms.map(function (term) {
                                     terms.push({
-                                        code:term.code,
-                                        name:term.name
-                                     })
+                                        code: term.code,
+                                        name: term.name
+                                    })
                                 });
                             }
                             let categoryObject = {
-                                code:category.code,
-                                terms:terms
+                                code: category.code,
+                                terms: terms
                             }
                             categories.push(categoryObject);
                         });
                     }
                     filters = categories;
-                    sessions.set("LearningResourcesFilters",categories);
+                    sessionsHelper.set(learningResourceFilterKey, categories);
                 }
-                resolve({ message: CONSTANTS.apiResponses.FILTERS_FOUND, data: filters,success:true })
+
+                resolve({
+                    message: CONSTANTS.apiResponses.FILTERS_FOUND,
+                    data: filters,
+                    success: true
+                });
 
             } catch (error) {
                 return resolve({

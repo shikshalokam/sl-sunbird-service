@@ -11,7 +11,6 @@ const elasticSearchHelper = require(GENERIC_HELPERS_PATH + "/elastic-search");
 
 // Constants
 const dictionaryIndex = process.env.ELASTICSEARCH_DICTIONARY_INDEX;
-const dictionaryIndexType = process.env.ELASTICSEARCH_DICTIONARY_INDEX_TYPE;
 
 /**
     * DictionaryHelper
@@ -47,7 +46,7 @@ module.exports = class DictionaryHelper {
                     }
                 }
 
-                const dictionaryIndexMapping = await elasticSearchHelper.searchDocumentFromIndex(dictionaryIndex, dictionaryIndexType, queryObject);
+                const dictionaryIndexMapping = await elasticSearchHelper.searchDocumentFromIndex(dictionaryIndex, queryObject);
 
                 return resolve({
                     success : true,
@@ -68,11 +67,11 @@ module.exports = class DictionaryHelper {
      /**
       * Check if mapping for dictionary index exists in Elastic search.
       * @method
-      * @name keywordsIndexTypeMapExists
+      * @name keywordsIndexMapExists
       * @returns {Promise} returns a promise.
      */
 
-    static keywordsIndexTypeMapExists() {
+    static keywordsIndexMapExists() {
         return new Promise(async (resolve, reject) => {
             try {
 
@@ -80,19 +79,15 @@ module.exports = class DictionaryHelper {
                     throw new Error("Missing dictionary index name");
                 }
 
-                if(dictionaryIndexType == "") {
-                    throw new Error("Missing dictionary index type name");
-                }
-
-                const dictionaryIndexMapping = await elasticSearchHelper.getIndexTypeMapping(dictionaryIndex, dictionaryIndexType);
+                const dictionaryIndexMapping = await elasticSearchHelper.getIndexMapping(dictionaryIndex);
 
                 if(dictionaryIndexMapping.statusCode != HTTP_STATUS_CODE["ok"].status) {
-                    throw new Error("Keywords index type map does not exist.");
+                    throw new Error("Keywords index map does not exist.");
                 }
             
                 return resolve({
                     success : true,
-                    message : "Keywords index type map exists",
+                    message : "Keywords index map exists",
                     data : true
                 });
                 
@@ -128,7 +123,6 @@ module.exports = class DictionaryHelper {
                 const dictionaryWordRemoval = await elasticSearchHelper
                     .deleteDocumentFromIndex(
                         dictionaryIndex,
-                        dictionaryIndexType,
                         encodeURI(word)
                     );
 
@@ -173,7 +167,6 @@ module.exports = class DictionaryHelper {
 
                 const addWordToDictionary = await elasticSearchHelper.createOrUpdateDocumentInIndex(
                     dictionaryIndex,
-                    dictionaryIndexType,
                     encodeURI(word),
                     {words : word }
                 );

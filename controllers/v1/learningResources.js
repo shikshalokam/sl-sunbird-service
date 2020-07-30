@@ -18,12 +18,23 @@ module.exports = class LearningResources {
   }
 
   /**
-  * @api {get} /sunbird/api/v1/learningResources/list?limit=10&page=1 
+  * @api {POST} /sunbird/api/v1/learningResources/list?limit=10&page=1 
   * To get list of learning resources
   * @apiVersion 1.0.0
   * @apiGroup Learning Resources
   * @apiHeader {String} X-authenticated-user-token Authenticity token
-  * @apiSampleRequest /sunbird/api/v1/learningResources/list?limit=1&page=1&gradeLevel=class 1&board=cbse&&subject=mathematics
+  * @apiSampleRequest /library/api/v1/learningResources/all
+  * @apiParamExample {json} Request:
+  * {
+  *    "limit": "",
+  *    "page": "",
+  *    "filters": {
+  *     "board": ["SLDEV"],
+  *     "gradeLevel": ["Class 1"],
+  *     "medium: ["Science"],
+  *     "subject": ["kannada","English"] 
+  *    }
+  * }
   * @apiUse successBody
   * @apiUse errorBody
   * @apiParamExample {json} Response:
@@ -79,23 +90,14 @@ module.exports = class LearningResources {
     return new Promise(async (resolve, reject) => {
       try {
 
-        let board = req.query.board ? req.query.board.split(',') : [];
-        let gradeLevel = req.query.gradeLevel ? req.query.gradeLevel.split(',') : [];
-        let medium = req.query.medium ? req.query.medium.split(',') : [];
-        let subject = req.query.subject ? req.query.subject.split(',') : [];
-       
         let response = await learningResourceshelper.list(
           req.userDetails.userToken,
           req.pageSize,
           req.pageNo,
-          board,
-          gradeLevel,
-          subject,
-          medium,
+          req.body.filters ? req.body.filters : {},
           req.query.sortBy ? req.query.sortBy : ""
         );
         return resolve({ result: response.data, message: response.message });
-
 
       } catch (error) {
 

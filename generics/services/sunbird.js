@@ -512,7 +512,6 @@ const learningResources = function (token, limit, offset, filters = "", sortBy =
         try {
 
             const learningResourceUrl = CONSTANTS.endpoints.GET_RESOURCES;
-
             let requestBody = {
                 "source": "web",
                 "name": "Resource",
@@ -523,16 +522,13 @@ const learningResources = function (token, limit, offset, filters = "", sortBy =
                 "mode": "soft",
                 "offset": offset - 1
             }
-
         
             let keys = Object.keys(filters);
             if (keys && keys.length > 0) {
                 keys.map(filter => {
-                    
                     if( filters[filter] &&  filters[filter].length > 0){
                         requestBody["filters"][filter] = filters[filter];
                     }
-                    
                 });
             }
             requestBody['facets'] = keys;
@@ -547,6 +543,7 @@ const learningResources = function (token, limit, offset, filters = "", sortBy =
                     "createdOn": "desc"
                 }
             }
+            
             let response = await callToSunbird("POST", learningResourceUrl, token, requestBody);
             return resolve(response);
         } catch (error) {

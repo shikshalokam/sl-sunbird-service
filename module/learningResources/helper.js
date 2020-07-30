@@ -20,23 +20,18 @@ module.exports = class LearningResourcesHelper {
     * @param {String} token - user access token.
     * @param {String} pageSize - page size of the request
     * @param {String} pageNo - page no of the request
-    * @param {Array} board - board of the resource
-    * @param {Array} gradeLevel - gradeLevel of the resource
-    * @param {Array} subject - subject of the resource
-    * @param {Array} medium - medium of the resource
-    * @param {String} sortBy - sortBy filter of the resource
+    * @param {Object} filters - resource filters
+    * @param {Array} filters.board - board of the resource
+    * @param {Array} filters.gradeLevel - gradeLevel of the resource
+    * @param {Array} filters.subject - subject of the resource
+    * @param {Array} filters.medium - medium of the resource
+    * @param {String} sortBy - sortBy filter of the resources
     * @returns {json} Response consists of list of learning resources
     */
-    static list(token, pageSize, pageNo, board, gradeLevel, subject, medium, sortBy) {
+    static list(token, pageSize, pageNo, filters, sortBy) {
         return new Promise(async (resolve, reject) => {
             try {
-                let filters = {
-                    board: board,
-                    gradeLevel: gradeLevel,
-                    subject: subject,
-                    medium: medium
-                }
-
+               
                 let learningResources = await sunbirdService.learningResources(token, pageSize, pageNo, filters, sortBy);
                 if (learningResources && learningResources.content) {
 

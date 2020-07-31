@@ -1,2 +1,2 @@
-# sl-sunbird-service
+# sl-Sunbird-service
 SL Sunbird Service

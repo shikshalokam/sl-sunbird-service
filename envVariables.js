@@ -98,6 +98,10 @@ let enviromentVariables = {
     "message" : "Required sunbird cache ttl",
     "optional" : false
   },
+  "SUNBIRD_FRAMEWORK" : {
+    "message" : "Required sunbird framework name",
+    "optional" : false
+  },
   "MIGRATION_COLLECTION" : {
     "message" : "Required migrations collection name",
     "optional" : false

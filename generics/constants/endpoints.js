@@ -7,7 +7,7 @@
 
 module.exports = {
     GET_RESOURCES: "/api/content/v1/search",
-    FRAMEWORK_LIST: "/api/framework/v1/read/SLDEV",
+    FRAMEWORK_LIST: "/api/framework/v1/read",
     SUNBIRD_GENERATE_DIALCODE: "/api/dialcode/v1/generate",
     SUNBIRD_PUBLISH_DIALCODE: "/api/dialcode/v1/publish",
     SUNBIRD_DIALCODE_STATUS: "/api/dialcode/v1/read",

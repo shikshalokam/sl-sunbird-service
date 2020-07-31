@@ -564,7 +564,7 @@ const filtersList = function (token) {
     return new Promise(async (resolve, reject) => {
 
         try {
-            const apiEndPoint = CONSTANTS.endpoints.FRAMEWORK_LIST;
+            const apiEndPoint = CONSTANTS.endpoints.FRAMEWORK_LIST + process.env.SUNBIRD_FRAMEWORK;
             let response = await callToSunbird("GET", apiEndPoint, token);
             return resolve(response);
 

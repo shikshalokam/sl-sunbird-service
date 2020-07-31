@@ -26,8 +26,6 @@ module.exports = class LearningResources {
   * @apiSampleRequest /library/api/v1/learningResources/all
   * @apiParamExample {json} Request:
   * {
-  *    "limit": "",
-  *    "page": "",
   *    "filters": {
   *     "board": ["SLDEV"],
   *     "gradeLevel": ["Class 1"],

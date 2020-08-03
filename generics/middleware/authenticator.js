@@ -82,15 +82,15 @@ module.exports = async function (req, res, next, token = "") {
 
 
   // Allow search endpoints for non-logged in users.
-  let gestAccess = false;
+  let guestAccess = false;
   let guestAccessPaths = ["bodh/search", "bodh/request"];
   await Promise.all(guestAccessPaths.map(async function (path) {
     if (req.path.includes(path)) {
-      gestAccess = true;
+      guestAccess = true;
     }
   }));
 
-  if (gestAccess == true) {
+  if (guestAccess == true) {
     next();
     return;
   }

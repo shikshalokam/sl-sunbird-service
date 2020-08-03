@@ -23,6 +23,7 @@ module.exports = class Token {
   * To verify the access token
   * @apiVersion 1.0.0
   * @apiGroup Token
+  * @apiHeader {String} internal-access-token Internal access token
   * @apiBody {String} token Authenticity token to verifyy
   * @apiSampleRequest /sunbird/api/v1/token/verify
   * @apiUse successBody

@@ -29,14 +29,14 @@ var respUtil = function (resp) {
 var tokenAuthenticationFailureMessageToSlack = function (req, token, msg) {
   let jwtInfomration = jwtDecode(token)
   jwtInfomration["x-authenticated-user-token"] = token
-  const tokenByPassAllowedLog = { 
-    method: req.method, 
-    url: req.url, 
-    headers: req.headers, 
+  const tokenByPassAllowedLog = {
+    method: req.method,
+    url: req.url,
+    headers: req.headers,
     body: req.body,
-    errorMsg: msg, 
-    customFields: 
-    jwtInfomration, 
+    errorMsg: msg,
+    customFields:
+      jwtInfomration,
     slackErrorName: process.env.SLACK_ERROR_NAME,
     color: process.env.SLACK_ERROR_MESSAGE_COLOR
   }
@@ -70,7 +70,7 @@ async function getAllRoles(obj) {
 
 
 
-module.exports = async function (req, res, next,token="") {
+module.exports = async function (req, res, next, token = "") {
 
   removedHeaders.forEach(function (e) {
     delete req.headers[e];
@@ -82,15 +82,20 @@ module.exports = async function (req, res, next,token="") {
 
 
   // Allow search endpoints for non-logged in users.
-  let guestAccessPaths = ["bodh/search","bodh/request"];
+  let guestAccess = false;
+  let guestAccessPaths = ["bodh/search", "bodh/request"];
   await Promise.all(guestAccessPaths.map(async function (path) {
     if (req.path.includes(path)) {
-      next();
-      return;
+      guestAccess = true;
     }
   }));
 
-  let internalAccessApiPaths = ["keywords","token/verify"];
+  if (guestAccess == true) {
+    next();
+    return;
+  }
+
+  let internalAccessApiPaths = ["keywords", "token/verify"];
   let performInternalAccessTokenCheck = false;
   await Promise.all(internalAccessApiPaths.map(async function (path) {
     if (req.path.includes(path)) {
@@ -145,7 +150,7 @@ module.exports = async function (req, res, next,token="") {
       rspObj.errCode = reqMsg.TOKEN.INVALID_CODE;
       rspObj.errMsg = reqMsg.TOKEN.INVALID_MESSAGE;
       rspObj.responseCode = responseCode.UNAUTHORIZED_ACCESS;
-      
+
       tokenAuthenticationFailureMessageToSlack(
         req,
         token, "TOKEN VERIFICATION WITH KEYCLOAK FAILED"
@@ -169,8 +174,8 @@ module.exports = async function (req, res, next,token="") {
             next();
           } else {
             tokenAuthenticationFailureMessageToSlack(
-              req, 
-              token, 
+              req,
+              token,
               "TOKEN VERIFICATION - FAILED TO GET USER DETAIL FROM Kendra SERVICE"
             );
 
@@ -182,8 +187,8 @@ module.exports = async function (req, res, next,token="") {
         })
         .catch(error => {
           tokenAuthenticationFailureMessageToSlack(
-            req, 
-            token, 
+            req,
+            token,
             "TOKEN VERIFICATION - ERROR FETCHING USER DETAIL FROM Kendra SERVICE"
           );
 

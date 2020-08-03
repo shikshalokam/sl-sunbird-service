@@ -116,7 +116,7 @@ module.exports = async function (req, res, next, token = "") {
   }
 
 
-  let securedApiPaths = [];
+  let securedApiPaths = ["learningResources/"];
   let tokenAndInternalAccessTokenRequired = false;
   await Promise.all(securedApiPaths.map(async function (path) {
     if (req.path.includes(path)) {

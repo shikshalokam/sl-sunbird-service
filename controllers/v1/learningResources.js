@@ -29,7 +29,7 @@ module.exports = class LearningResources {
   *    "filters": {
   *     "board": ["SLDEV"],
   *     "gradeLevel": ["Class 1"],
-  *     "medium: ["Science"],
+  *     "medium": ["Science"],
   *     "subject": ["kannada","English"] 
   *    }
   * }

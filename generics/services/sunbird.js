@@ -452,10 +452,11 @@ function callToSunbird(requestType, url, token, requestBody = "") {
 
         if (requestType != "GET") {
             options['json'] = { request: requestBody };
-            
+
         }
 
         url = process.env.SUNBIRD_BASE_URL + url;
+
         if (requestType == "PATCH") {
             request.patch(url, options, callback);
         } else if (requestType == "GET") {
@@ -471,7 +472,6 @@ function callToSunbird(requestType, url, token, requestBody = "") {
                 });
             } else {
 
-
                 if (data.statusCode == HTTP_STATUS_CODE.ok.status) {
 
                     if (!data.body.responseCode) {
@@ -483,8 +483,8 @@ function callToSunbird(requestType, url, token, requestBody = "") {
                         }
                     }
                 } else {
-                    return reject({ message: data.body.params.errmsg });
-                    
+                    return resolve({ message: data.body.params.errmsg });
+
                 }
 
             }
@@ -522,11 +522,11 @@ const learningResources = function (token, limit, offset, filters = "", sortBy =
                 "mode": "soft",
                 "offset": offset - 1
             }
-        
+
             let keys = Object.keys(filters);
             if (keys && keys.length > 0) {
                 keys.map(filter => {
-                    if( filters[filter] &&  filters[filter].length > 0){
+                    if (filters[filter] && filters[filter].length > 0) {
                         requestBody["filters"][filter] = filters[filter];
                     }
                 });
@@ -537,13 +537,13 @@ const learningResources = function (token, limit, offset, filters = "", sortBy =
                     "me_totalRatings": "desc"
                 }
             }
-           
+
             if (sortBy && sortBy == "recent") {
                 requestBody["sort_by"] = {
                     "createdOn": "desc"
                 }
             }
-            
+
             let response = await callToSunbird("POST", learningResourceUrl, token, requestBody);
             return resolve(response);
         } catch (error) {
@@ -575,6 +575,121 @@ const filtersList = function (token) {
     })
 }
 
+/**
+  * create user
+  * @function
+  * @name createUser
+  * @param requestBody - body data for creating user.
+  * @param token - Logged in user token.
+  * @returns {json} response consist of created user details
+*/
+
+const createUser = async function (userInputData, token) {
+    return new Promise(async (resolve, reject) => {
+
+        const createUserUrl = CONSTANTS.endpoints.SUNBIRD_CREATE_USER;
+
+        let createUser = {
+            firstName: userInputData.firstName,
+            lastName: userInputData.lastName,
+            phoneNumber: userInputData.phoneNumber,
+            userName: userInputData.userName,
+            password: userInputData.password,
+            gender: userInputData.gender ? userInputData.gender.value : ""
+        }
+
+        if (userInputData.dateOfBirth) {
+            createUser['dob'] = userInputData.dateOfBirth;
+        }
+
+        if (userInputData.email) {
+            createUser['email'] = userInputData.email;
+            createUser['emailVerified'] = true;
+        }
+        if (userInputData.phoneNumber) {
+            createUser['phone'] = userInputData.phoneNumber;
+            createUser['phoneVerified'] = true;
+        }
+        if (userInputData.address) {
+            createUser['address'] = [{
+                "addressLine1": address,
+                "city": address
+            }]
+        }
+
+        let response = await callToSunbird("POST", createUserUrl, token, createUser);
+        return resolve(response);
+    })
+
+}
+
+
+/**
+  * Add user to organisation
+  * @function
+  * @name addUserToOrganisation
+  * @param requestBody - body data for creating user.
+  * @param token - Logged in user token.
+  * @returns {json} response consist of sunbird api response details 
+*/
+
+const addUserToOrganisation = async function (requestBody, token) {
+    return new Promise(async (resolve, reject) => {
+
+        const adduserToOrgUrl = CONSTANTS.endpoints.SUNBIRD_ADD_USER_TO_ORG;
+        let response = await callToSunbird("POST", adduserToOrgUrl, token, requestBody);
+        return resolve(response);
+    })
+
+}
+
+
+/**
+  * To inactivate the user
+  * @function
+  * @name inactivate
+  * @param userId -  user Id of the user.
+  * @param token - Logged in user token.
+  * @returns {JSON} - response consist of success or failure of the api.
+*/
+
+const inactivate = function (userId, token) {
+    return new Promise(async (resolve, reject) => {
+
+        let inActivateUserAPI = CONSTANTS.endpoints.SUNBIRD_BLOCK_USER;
+
+        let requestBody = {
+            userId: userId
+        }
+        let response = await callToSunbird("POST", inActivateUserAPI, token, requestBody);
+        return resolve(response);
+
+    })
+}
+
+/**
+  * To activate the user
+  * @function
+  * @name activate
+  * @param userId -  user Id of the user.
+  * @param token - Logged in user token.
+  * @returns {JSON} - response consist of success or failure of the api.
+*/
+
+const activate = function (userId, token) {
+    return new Promise(async (resolve, reject) => {
+
+        let activateUserAPI = CONSTANTS.endpoints.SUNBIRD_UNBLOCK_USER;
+        let requestBody = {
+            userId: userId
+        }
+        let response = await callToSunbird("POST", activateUserAPI, token, requestBody);
+        return resolve(response);
+
+    })
+}
+
+
 
 
 module.exports = {
@@ -588,5 +703,9 @@ module.exports = {
     createContent: createContent,
     uploadContent: uploadContent,
     learningResources: learningResources,
-    filtersList: filtersList
+    filtersList: filtersList,
+    addUserToOrganisation: addUserToOrganisation,
+    createUser: createUser,
+    activate: activate,
+    inactivate: inactivate
 };

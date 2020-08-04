@@ -18,4 +18,9 @@ module.exports = {
     FORM_DATA_CONTENT_TYPE: "application/x-www-form-urlencoded",
     UPLOAD_FOLDER_PATH: "/public/upload",
     BODH_DIAL_CODE_LIVE_STATUS: "Live",
+     TRUE: true,
+    FALSE: false,
+    RESPONSE_OK: "OK",
+    SUNBIRD_SUCCESS:"SUCCESS"
+    
 };

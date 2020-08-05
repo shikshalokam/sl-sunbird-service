@@ -1,3 +1,9 @@
+/**
+ * name : learningResources/helper.js
+ * author : Akash Shah
+ * created-date : 03-Jan-2020
+ * Description : All learning resources module helper functions.
+ */
 
 
 const sunbirdService =
@@ -6,7 +12,7 @@ const sunbirdService =
 const sessionsHelper = require(GENERIC_HELPERS_PATH + "/sessions.js");
 
 /**
-* learning resource related information be here.
+* All learning resources module helper functions.
 * @method
 * @class  LearningResourcesHelper
 */

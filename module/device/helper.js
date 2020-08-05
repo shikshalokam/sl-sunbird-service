@@ -32,10 +32,15 @@ module.exports = class DeviceHelper {
 
                 deviceInformation.id = deviceId;
 
-                const deviceData = 
-                await cassandraDatabase.models.device.saveAsync(
-                    deviceInformation
-                );
+                console.log(deviceInformation);
+
+                // const deviceData = 
+                // await cassandraDatabase.models.devices.saveAsync(
+                //     deviceInformation
+                // );
+                let deviceInformationSave= new cassandraDatabase.models.devices(deviceInformation);
+                
+                deviceInformationSave.saveAsync()
 
                 return resolve({
                     success : true,
@@ -67,18 +72,16 @@ module.exports = class DeviceHelper {
         try {
 
             const deviceData = 
-            await cassandraDatabase.models.device.findOneAsync(
+            await cassandraDatabase.models.devices.findOneAsync(
                 {
                     id : deviceId
-                },{
-                    allow_filtering: true
                 }
             );
 
             return resolve({
                 success : true,
                 message : CONSTANTS.apiResponses.DEVICE_PROFILE_FETCH_SUCCESSFUL,
-                data : deviceData
+                data : deviceData ? deviceData : []
             })
 
         } catch (error) {

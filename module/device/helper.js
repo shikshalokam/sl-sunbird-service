@@ -28,33 +28,28 @@ module.exports = class DeviceHelper {
 
     static register(deviceId, deviceInformation) {
         return new Promise(async (resolve, reject) => {
-            try {
 
                 deviceInformation.id = deviceId;
 
-                console.log(deviceInformation);
-
-                // const deviceData = 
-                // await cassandraDatabase.models.devices.saveAsync(
-                //     deviceInformation
-                // );
-                let deviceInformationSave= new cassandraDatabase.models.devices(deviceInformation);
+                let deviceInformationSave = new cassandraDatabase.models.devices(deviceInformation);
                 
                 deviceInformationSave.saveAsync()
+                .then(function() {
 
-                return resolve({
-                    success : true,
-                    message : CONSTANTS.apiResponses.DEVICE_REGISTER_SUCCESSFUL,
-                    data : true
+                    return resolve({
+                        success : true,
+                        message : CONSTANTS.apiResponses.DEVICE_REGISTER_SUCCESSFUL,
+                        data : true
+                    })
                 })
-
-            } catch (error) {
-                return resolve({
-                    success: false,
-                    message: error.message ? error.message : HTTP_STATUS_CODE["internal_server_error"].message,
-                    data: false
+                .catch(function(error) {
+                    return resolve({
+                        success: false,
+                        message: error.message ? error.message : HTTP_STATUS_CODE["internal_server_error"].message,
+                        data: false
+                    });
                 });
-            }
+    
         })
     }
 

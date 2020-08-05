@@ -4,12 +4,12 @@ module.exports = {
             id : "text",
             dspec : {
                 type: "map",
-                typeDef: "<text,text>"
+                typeDef: "<varchar,varchar>"
             },
             channel : "text",
             fcmToken : "text",
             producer : "text",
-            first_access : "bigint",
+            first_access : "timestamp",
             userDeclaredLocation : {
                 type: "map",
                 typeDef: "<text,text>"

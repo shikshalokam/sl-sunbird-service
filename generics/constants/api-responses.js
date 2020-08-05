@@ -52,4 +52,13 @@ module.exports = {
   DICTIONARY_KEYWORDS_MISSING_FILE_ERROR: "Missing keywords file",
   DICTIONARY_KEYWORDS_MAPPING_MISSING_ERROR: "Dictionary keywords mapping is missing.",
   DICTIONARY_KEYWORDS_UPDATE_SUCCESS: "Content keywords updated successfully.",
+  USER_PROFILE_NOT_FOUND: "User profile is not found",
+  USER_UPDATED: "User updated successfully",
+  USER_CREATED: "User created successfully",
+  USER_BLOCKED: "User deactivated successfully",
+  USER_UNBLOCKED: "User activated successfully",
+  FAILED_TO_UPDATE: "Failed to update the status",
+  USER_PROFILE: "Platform user profile fetched successfully",
+  USER_ADDED: "User added to organisation successfully"
+  
 };

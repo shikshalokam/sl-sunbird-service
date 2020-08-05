@@ -5,7 +5,7 @@ module.exports = (req) => {
         middleware: function () {
             req.checkBody('url').exists()
             .notEmpty()
-            .custom((value) => (value) ? gen.utils.checkIfURLIsSunbirdAPI(value) : false)
+            .custom((value) => (value) ? UTILS.checkIfURLIsSunbirdAPI(value) : false)
             .withMessage("required valid url");
             req.checkBody('headers').exists().withMessage("required headers");
             req.checkBody('body').exists().withMessage("required body");

@@ -1030,7 +1030,7 @@ module.exports = class BodhHelper {
                 }
 
                 let contentCreateData = {
-                    code: gen.utils.generateUniqueId(),
+                    code: UTILS.generateUniqueId(),
                     contentType: CONSTANTS.common.BODH_CONTENT_TYPE,
                     name: name,
                     mimeType: CONSTANTS.common.BODH_MIME_TYPE,

@@ -42,7 +42,7 @@ module.exports = class FilesHelper {
             fs.mkdirSync(`${PROJECT_ROOT_DIRECTORY}${tempPath}`)
           }
 
-          let uniqueId = gen.utils.generateUniqueId();
+          let uniqueId = UTILS.generateUniqueId();
           let fileName = uniqueId + file.name;
           filePath = `${PROJECT_ROOT_DIRECTORY}${tempPath}` + '/' + fileName;
           fs.writeFileSync(filePath, file.data);

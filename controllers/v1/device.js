@@ -84,7 +84,6 @@ module.exports = class Device {
     });
   }
 
-
   /**
   * @api {get} /sunbird/api/v1/device/profile/{{deviceId}}
   * To fetch a device profile.

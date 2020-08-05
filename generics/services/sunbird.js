@@ -442,6 +442,10 @@ const uploadContent = async function (file, contentId, token, contentType, mimeT
 function callToSunbird(requestType, url, token, requestBody = "") {
 
     return new Promise(async (resolve, reject) => {
+
+        try {
+            
+       
         let options = {
             "headers": {
                 "content-type": "application/json",
@@ -454,9 +458,7 @@ function callToSunbird(requestType, url, token, requestBody = "") {
             options['json'] = { request: requestBody };
 
         }
-
         url = process.env.SUNBIRD_BASE_URL + url;
-
         if (requestType == "PATCH") {
             request.patch(url, options, callback);
         } else if (requestType == "GET") {
@@ -471,7 +473,6 @@ function callToSunbird(requestType, url, token, requestBody = "") {
                     message: CONSTANTS.apiResponses.SUNBIRD_SERVICE_DOWN
                 });
             } else {
-
                 if (data.statusCode == HTTP_STATUS_CODE.ok.status) {
 
                     if (!data.body.responseCode) {
@@ -489,6 +490,10 @@ function callToSunbird(requestType, url, token, requestBody = "") {
 
             }
         }
+
+    } catch (error) {
+        return reject({ message:error.message });      
+    }
 
     });
 }
@@ -689,6 +694,172 @@ const activate = function (userId, token) {
     })
 }
 
+/**
+  * To search the organisation 
+  * @function
+  * @name searchOrganisation
+  * @param searchDetails - search details.
+  * @param token - Logged in user token.
+  * @returns {JSON} - All users data.
+*/
+
+const searchOrganisation = function (searchDetails, token) {
+    return new Promise(async (resolve, reject) => {
+
+        const searchOrgUrl = CONSTANTS.endpoints.SUNBIRD_SEARCH_ORG;
+        let response = await callToSunbird("POST", searchOrgUrl, token, searchDetails);
+        return resolve(response);
+
+    });
+}
+
+/**
+  * Get users.
+  * @function
+  * @name users
+  * @param token - keyclock user access token
+  * @param  {Object} apiRequest - apiRequest
+  * @returns {JSON} - All users data.
+*/
+
+const users = function (token, apiRequest) {
+    return new Promise(async (resolve, reject) => {
+
+        const userSearchAPI = CONSTANTS.endpoints.SUNBIRD_SEARCH_USER;
+
+        let response = await callToSunbird("POST", userSearchAPI, token, apiRequest);
+        return resolve(response);
+    })
+}
+
+/**
+  * For creating organisation
+  * @function
+  * @name createOrganisation
+  * @param  {Object} organisationDetails - organisation details object
+  * @param {String} organisationDetails.description - description for the organisation
+  * @param {String} organisationDetails.externalId - externalId
+  * @param {String} organisationDetails.name - name of the organisation
+  * @param {String} organisationDetails.address - address of the organisation
+  * @param {String} organisationDetails.email - email id
+  * @param  {String} token - keyclock access token
+  * @returns {JSON} - created organisation info.
+*/
+
+const createOrganisation = function (organisationDetails, token) {
+    return new Promise(async (resolve, reject) => {
+
+        const createOrganisationUrl = CONSTANTS.endpoints.SUNBIRD_CREATE_ORG;
+        let response = await callToSunbird("POST", createOrganisationUrl, token, organisationDetails);
+        return resolve(response);
+
+    });
+}
+
+
+/**
+  * For updating organisation details
+  * @function
+  * @name updateOrganisationDetails
+  * @param  {Object} organisationDetails - organisation details object
+  * @param {String} organisationDetails.description - description for the organisation
+  * @param {String} organisationDetails.externalId - externalId
+  * @param {String} organisationDetails.name - name of the organisation
+  * @param {String} organisationDetails.address - address of the organisation
+  * @param {String} organisationDetails.email - email id
+  * @param {String} organisationDetails.organisationId - organisation id
+  * @param  {String} token - keyclock access token
+  * @returns {JSON} - return updated organisation details
+*/
+const updateOrganisationDetails = function (organisationDetails, token) {
+    return new Promise(async (resolve, reject) => {
+
+        const updateOrgDetails = CONSTANTS.endpoints.SUNBIRD_UPDATE_ORG;
+        let response = await callToSunbird("PATCH", updateOrgDetails, token, organisationDetails);
+        return resolve(response);
+
+    });
+}
+
+/**
+  * To get organisational details
+  * @function
+  * @name getOrganisationDetails
+  * @param organisationDetails - organisation details .
+  * @param organisationDetails.organisationId - organisation id
+  * @param token - keyclock access token.
+  * @returns {JSON} - return updated organisation details
+*/
+const getOrganisationDetails = function (requestBody, token) {
+    return new Promise(async (resolve, reject) => {
+
+        const OrgDetailsURL = CONSTANTS.endpoints.SUNBIRD_READ_ORG;
+        let response = await callToSunbird("POST", OrgDetailsURL, token, requestBody);
+        return resolve(response);
+    });
+}
+
+/**
+  * For updating organisation status
+  * @function
+  * @name updateOrgStatus
+  * @param {Object} organisationDetails - organisation details object
+  * @param {String} organisationDetails.organisationId - organisation id
+  * @param {String} organisationDetails.status - status code
+  * @param  {token} token  - keyclock access token
+  * @returns {JSON} - return updated organisation status
+*/
+const updateOrgStatus = function (organisationDetails, token) {
+    return new Promise(async (resolve, reject) => {
+
+        const updateOrgStatusUrl = CONSTANTS.endpoints.SUNBIRD_ORG_STATUS_UPDATE;
+
+        let response = await callToSunbird("PATCH", updateOrgStatusUrl, token, organisationDetails);
+        return resolve(response);
+    });
+}
+
+/**
+  * For remove user from the organisation
+  * @function
+  * @name removeUser
+  * @param {Object} userDetails - organisation user details 
+  * @param {String} userDetails.organisationId - organisation id
+  * @param {String} userDetails.userId - keyclock user id
+  * @param  {token} token  - user access token
+  * @returns {JSON} - response consist of removed user details
+*/
+const removeUser = function (userDetails, token) {
+    return new Promise(async (resolve, reject) => {
+
+        const userRemoveApi = CONSTANTS.endpoints.SUNBIRD_REMOVE_USER_FROM_ORG;
+        let response = await callToSunbird("POST", userRemoveApi, token, userDetails);
+        return resolve(response);
+
+    });
+}
+
+/**
+  * To assign roles to user for a organisation.
+  * @function
+  * @name assignRoles
+  * @param {Object} orgnisationInfo  - organisation object 
+  * @param {String} orgnisationInfo.userId - userId
+  * @param {String} orgnisationInfo.organisationId - organisationId
+  * @param {Array} orgnisationInfo.roles - array of roles 
+  * @param {String} token - keyclock access token
+  * @returns {JSON} - assign roles information
+*/
+
+const assignRoles = function (orgnisationInfo, token) {
+    return new Promise(async (resolve, reject) => {
+
+        const assignRolesToOrgApiUrl = CONSTANTS.endpoints.SUNBIRD_ASSIGN_ROLES_TO_ORG;
+        let response = await callToSunbird("POST", assignRolesToOrgApiUrl, token, orgnisationInfo);
+        return resolve(response);
+
+    })
+}
 
 
 
@@ -707,5 +878,13 @@ module.exports = {
     addUserToOrganisation: addUserToOrganisation,
     createUser: createUser,
     activate: activate,
-    inactivate: inactivate
+    inactivate: inactivate,
+    searchOrganisation: searchOrganisation,
+    users: users,
+    createOrganisation: createOrganisation,
+    removeUser: removeUser,
+    updateOrgStatus: updateOrgStatus,
+    getOrganisationDetails: getOrganisationDetails,
+    updateOrganisationDetails: updateOrganisationDetails,
+    assignRoles: assignRoles
 };

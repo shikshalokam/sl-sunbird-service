@@ -59,6 +59,17 @@ module.exports = {
   USER_UNBLOCKED: "User activated successfully",
   FAILED_TO_UPDATE: "Failed to update the status",
   USER_PROFILE: "Platform user profile fetched successfully",
-  USER_ADDED: "User added to organisation successfully"
-  
+  USER_ADDED: "User added to organisation successfully",
+  ORG_INFO_FETCHED: "Organisation list fetched successfully",
+  LIST_OF_ORG_USERS: "Organisation users list fetched successfully",
+  USER_LIST_NOT_FOUND: "User List Not Found",
+  ORG_CREATED: "Organisation Created Successfully",
+  ASSIGNED_ROLE_SUCCESSFULLY: "User roles added to organisation  successfully",
+  ORG_UPDATED: "Organisation Details Updated Successfully",
+  ORG_DETAILS_FOUND: "Organisation Details Found",
+  ORG_ACTIVATED: "Organisation Activated Successfully",
+  ORG_DEACTIVATED: "Organisation Deactivated Successfully",
+  ROLES_REMOVED: "Roles removed successfully",
+  USER_REMOVED: "User Removed From Organisation Successfully",
+
 };

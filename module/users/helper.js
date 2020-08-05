@@ -1,8 +1,14 @@
-let sunbirdService =
-    require(GENERIC_SERVICES_PATH + "/sunbird");
+/**
+ * name : users/helper.js
+ * author : Akash Shah
+ * created-date : 03-Jan-2020
+ * Description : All User module helper functions.
+ */
+
+const sunbirdService = require(GENERIC_SERVICES_PATH + "/sunbird");
 
 /**
-* user related information be here.
+* All User module helper functions.
 * @method
 * @class  UsersHelper
 */
@@ -14,7 +20,7 @@ module.exports = class UsersHelper {
     * To get user profile details
     * @method
     * @name  getProfile
-    * @param {String}  userId - Logged in user details.
+    * @param {String}  userId - Keycloak userId.
     * @param {String} token - user access token.
     * @returns {json} Response consists of user profile details.
     */
@@ -24,7 +30,7 @@ module.exports = class UsersHelper {
 
                 let response = await sunbirdService.getUserProfile(token, userId);
                 if (response && response.responseCode == CONSTANTS.common.RESPONSE_OK) {
-                    return resolve({ data: response.result, message: CONSTANTS.apiResponses.USER_PROFILE });
+                    return resolve({ data: response.result, message: CONSTANTS.apiResponses.USER_PROFILE, success : true });
                 } else {
                     throw new Error(response.message);
                 }
@@ -45,17 +51,16 @@ module.exports = class UsersHelper {
     * Create a new user.
     * @method
     * @name  create
-    * @param {String} request - consist of new user details
-    * @param {String} token - user access token
-    * @param {String} userId  - logged in userId.
+    * @param {String} userDetails - User details
+    * @param {String} token - User access token
     * @returns {json} Response consists of created user details.
     */
-    static create(request, token, userId) {
+    static create(userDetails, token) {
         return new Promise(async (resolve, reject) => {
             try {
-                let response = await sunbirdService.createUser(request, token);
+                let response = await sunbirdService.createUser(userDetails, token);
                 if (response && response.response == CONSTANTS.common.SUNBIRD_SUCCESS) {
-                    return resolve({ data: response, message: CONSTANTS.apiResponses.USER_CREATED });
+                    return resolve({ data: response, message: CONSTANTS.apiResponses.USER_CREATED, success : true });
                 } else {
                     throw new Error(response.message);
                 }
@@ -74,16 +79,16 @@ module.exports = class UsersHelper {
     * Add user to organisation
     * @method
     * @name  addUser
-    * @param {String} request - consist of new user details
+    * @param {String} userOrganisationRoleDetails - Consist of user roles by organisation
     * @param {String} token - user access token
-    * @returns {json} Response consists of created user details.
+    * @returns {json} Response consists of user details.
     */
-   static addUserToOrganisation(request, token) {
+   static addUserToOrganisation(userOrganisationRoleDetails, token) {
     return new Promise(async (resolve, reject) => {
         try {
-            let response = await sunbirdService.addUserToOrganisation(request, token);
+            let response = await sunbirdService.addUserToOrganisation(userOrganisationRoleDetails, token);
             if (response && response.response == CONSTANTS.common.SUNBIRD_SUCCESS) {
-                return resolve({ result: response.result, message: CONSTANTS.apiResponses.USER_ADDED });
+                return resolve({ result: response.result, message: CONSTANTS.apiResponses.USER_ADDED, success : true });
             } else {
                 throw new Error(response.message);
             }
@@ -112,7 +117,7 @@ module.exports = class UsersHelper {
 
                 let response = await sunbirdService.activate(userId, token);
                 if (response && response.response == CONSTANTS.common.SUNBIRD_SUCCESS) {
-                    resolve({ result: response.result, message: CONSTANTS.apiResponses.USER_UNBLOCKED });
+                    resolve({ result: response.result, message: CONSTANTS.apiResponses.USER_UNBLOCKED, success : true });
                 } else {
                     throw new Error(response.message);
                 }
@@ -140,7 +145,7 @@ module.exports = class UsersHelper {
 
                 let response = await sunbirdService.inactivate(userId, token);
                 if (response && response.response == CONSTANTS.common.SUNBIRD_SUCCESS) {
-                    resolve({ success: true, data: response.result, message: CONSTANTS.apiResponses.USER_BLOCKED });
+                    resolve({ success: true, data: response.result, message: CONSTANTS.apiResponses.USER_BLOCKED, success : true });
                 } else {
                     throw new Error(response.message);
                 }

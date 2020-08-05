@@ -46,8 +46,9 @@ module.exports = class Users {
   * @api {get} /sunbird/api/v1/users/getProfile/{{userId}} Get user profile
   * @apiVersion 1.0.0
   * @apiName Get user profile
-  * @apiGroup User Extension
+  * @apiGroup Users
   * @apiHeader {String} X-authenticated-user-token Authenticity token
+  * @apiHeader {String} internal-access-token Internal access token
   * @apiSampleRequest /sunbird/api/v1/users/getProfile/e97b5582-471c-4649-8401-3cc4249359bb
   * @apiUse successBody
   * @apiUse errorBody
@@ -193,10 +194,12 @@ module.exports = class Users {
 
 
     /**
-  * @api {post} /sunbird/api/v1/users/create add User
+  * @api {post} /sunbird/api/v1/users/create Create User 
   * @apiVersion 1.0.0
   * @apiName Create User 
-  * @apiGroup User Extension
+  * @apiGroup Users
+  * @apiHeader {String} X-authenticated-user-token Authenticity token
+  * @apiHeader {String} internal-access-token Internal access token
   * @apiParam {reqeuestBody} consist of body of the request
   * @apiSampleRequest /sunbird/api/v1/users/create
   * @apiParamExample {json} Request:
@@ -249,10 +252,12 @@ module.exports = class Users {
   }
 
   /**
-  * @api {post} /sunbird/api/v1/users/addUserToOrganisation 
+  * @api {post} /sunbird/api/v1/users/addUserToOrganisation Add user to the organisation
   * @apiVersion 1.0.0
   * @apiName Add user to the organisation
-  * @apiGroup User Extension
+  * @apiGroup Users
+  * @apiHeader {String} X-authenticated-user-token Authenticity token
+  * @apiHeader {String} internal-access-token Internal access token
   * @apiParam {reqeuestBody} consist of body of the request
   * @apiSampleRequest /sunbird/api/v1/users/addUserToOrganisation
   * @apiParamExample {json} Request:
@@ -296,10 +301,12 @@ module.exports = class Users {
 
 
    /**
-   * @api {post} /sunbird/api/v1/users/activate
+   * @api {post} /sunbird/api/v1/users/activate Activate user
    * @apiVersion 1.0.0
-   * @apiName To activate user
-   * @apiGroup User Extension
+   * @apiName Activate user
+   * @apiGroup Users
+   * @apiHeader {String} X-authenticated-user-token Authenticity token
+   * @apiHeader {String} internal-access-token Internal access token
    * @apiParam {reqeuestBody} consist of body of the request
    * @apiSampleRequest /sunbird/api/v1/users/activate
    * {
@@ -321,8 +328,8 @@ module.exports = class Users {
 
       try {
 
-        let userBlockInfo = await usersHelper.activate(req.body.userId, req.userDetails.userToken);
-        return resolve({ result: userBlockInfo.data, message: userBlockInfo.message });
+        let userStatusResponse = await usersHelper.activate(req.body.userId, req.userDetails.userToken);
+        return resolve({ result: userStatusResponse.data, message: userStatusResponse.message });
 
     } catch (error) {
 
@@ -340,10 +347,12 @@ module.exports = class Users {
   }
 
   /**
-   * @api {post} /sunbird/api/v1/users/inactivate
+   * @api {post} /sunbird/api/v1/users/inactivate Inactivate user
    * @apiVersion 1.0.0
-   * @apiName To inactivate user
-   * @apiGroup User Extension
+   * @apiName Inactivate user
+   * @apiGroup Users
+   * @apiHeader {String} X-authenticated-user-token Authenticity token
+   * @apiHeader {String} internal-access-token Internal access token
    * @apiParam {reqeuestBody} consist of body of the request
    * @apiSampleRequest /sunbird/api/v1/users/inactivate
    * {
@@ -364,8 +373,8 @@ module.exports = class Users {
     return new Promise(async (resolve, reject) => {
       try {
 
-        let userBlockInfo = await usersHelper.inactivate(req.body.userId, req.userDetails.userToken);
-        return resolve({ result: userBlockInfo.data, message: userBlockInfo.message });
+        let userStatusResponse = await usersHelper.inactivate(req.body.userId, req.userDetails.userToken);
+        return resolve({ result: userStatusResponse.data, message: userStatusResponse.message });
 
     } catch (error) {
 

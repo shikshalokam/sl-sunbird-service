@@ -12,7 +12,11 @@ const deviceHelper = require(MODULES_BASE_PATH + "/device/helper.js");
    * Device 
    * @class
 */
-module.exports = class Device {
+module.exports = class Device extends Abstract{
+
+  constructor() {
+    super("devices");
+  }
 
   static get name() {
     return "device";
@@ -83,7 +87,6 @@ module.exports = class Device {
       }
     });
   }
-
 
   /**
   * @api {get} /sunbird/api/v1/device/profile/{{deviceId}}

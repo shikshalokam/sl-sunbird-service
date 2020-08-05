@@ -11,8 +11,8 @@ module.exports = (req) => {
         
         register: function () {
             req.checkParams('_id').exists().withMessage("required device id");
-            req.checkBody('channel').exists().notEmpty().withMessage("required channel");
-            req.checkBody('producer').exists().notEmpty().withMessage("required producer");
+            req.checkBody('request.channel').exists().notEmpty().withMessage("required channel");
+            req.checkBody('request.producer').exists().notEmpty().withMessage("required producer");
         },
 
         profile: function () {

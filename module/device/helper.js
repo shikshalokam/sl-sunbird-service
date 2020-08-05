@@ -31,6 +31,14 @@ module.exports = class DeviceHelper {
 
                 deviceInformation.id = deviceId;
 
+                if(Object.keys(deviceInformation.dspec).length > 0) {
+                    Object.keys(deviceInformation.dspec).forEach( dspecKey => {
+                        if (typeof(deviceInformation.dspec[dspecKey]) !== 'string'){
+                            deviceInformation.dspec[dspecKey] = deviceInformation.dspec[dspecKey].toString();
+                         }
+                    })
+                }
+
                 let deviceInformationSave = new cassandraDatabase.models.devices(deviceInformation);
                 
                 deviceInformationSave.saveAsync()

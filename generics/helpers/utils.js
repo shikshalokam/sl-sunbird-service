@@ -85,7 +85,7 @@ function checkIfStringIsUrl(str) {
 */
 
 function checkIfURLIsSunbirdAPI(url) {
-  return (url.startsWith(process.env.sunbird_url)) ? true : false;
+  return (url.startsWith(process.env.SUNBIRD_BASE_URL)) ? true : false;
 }
 
 module.exports = {

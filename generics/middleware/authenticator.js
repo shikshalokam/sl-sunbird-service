@@ -103,6 +103,7 @@ module.exports = async function (req, res, next, token = "") {
     }
   }));
 
+  
   if (performInternalAccessTokenCheck) {
     if (req.headers["internal-access-token"] == process.env.INTERNAL_ACCESS_TOKEN) {
       next();
@@ -116,7 +117,7 @@ module.exports = async function (req, res, next, token = "") {
   }
 
 
-  let securedApiPaths = ["learningResources/"];
+  let securedApiPaths = ["learningResources/","users/"];
   let tokenAndInternalAccessTokenRequired = false;
   await Promise.all(securedApiPaths.map(async function (path) {
     if (req.path.includes(path)) {
@@ -126,6 +127,8 @@ module.exports = async function (req, res, next, token = "") {
 
   if (tokenAndInternalAccessTokenRequired) {
     if (req.headers["internal-access-token"] == process.env.INTERNAL_ACCESS_TOKEN && token) {
+      req.userDetails = {};
+      req.userDetails.userToken = token;
       next();
       return;
     } else {

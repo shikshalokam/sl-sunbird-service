@@ -23,7 +23,7 @@ module.exports = class Device {
   * To register a device profile.
   * @apiVersion 1.0.0
   * @apiGroup Device
-  * @apiSampleRequest /sunbird/api/v1/token/verify/b5929a4f5389bb4d3eb1c84fc75670677dcac4c0
+  * @apiSampleRequest /sunbird/api/v1/device/register/b5929a4f5389bb4d3eb1c84fc75670677dcac4c0
   * @apiUse successBody
   * @apiUse errorBody
   * @apiParamExample {json} Request:
@@ -66,7 +66,7 @@ module.exports = class Device {
     return new Promise(async (resolve, reject) => {
       try {
 
-        let deviceRegistrationResponse = await deviceHelper.register(req.body.request);
+        let deviceRegistrationResponse = await deviceHelper.register(req.params._id,req.body.request);
         return resolve({ result:deviceRegistrationResponse.data,message:deviceRegistrationResponse.message });
         
       } catch (error) {
@@ -87,10 +87,10 @@ module.exports = class Device {
 
   /**
   * @api {get} /sunbird/api/v1/device/profile/{{deviceId}}
-  * To register a device profile.
+  * To fetch a device profile.
   * @apiVersion 1.0.0
   * @apiGroup Device
-  * @apiSampleRequest /sunbird/api/v1/token/profile/b5929a4f5389bb4d3eb1c84fc75670677dcac4c0
+  * @apiSampleRequest /sunbird/api/v1/device/profile/b5929a4f5389bb4d3eb1c84fc75670677dcac4c0
   * @apiUse successBody
   * @apiUse errorBody
   * @apiParamExample {json} Response:
@@ -119,7 +119,7 @@ module.exports = class Device {
   **/
 
   /**
-   * To get a deivce profile
+   * To fetch a device profile.
    * @method
    * @name profile
    * @param  {req}  - requested data.

@@ -4,7 +4,7 @@ module.exports = {
             id : "text",
             dspec : {
                 type: "map",
-                typeDef: "<varchar,varchar>"
+                typeDef: "<text,text>"
             },
             channel : "text",
             fcmToken : "text",

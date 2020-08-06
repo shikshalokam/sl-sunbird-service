@@ -3,8 +3,7 @@
  * name : token/helper.js
  * author : Rakesh Kumar
  * created-date : 21-july-2020
- * Description : Related to user token validation
- * to cloud service.
+ * Description : Helper functions of token module
  */
 
 // Dependencies
@@ -13,7 +12,7 @@ const shikshalokam = require(GENERIC_HELPERS_PATH + "/shikshalokam");
 
 
 /**
-* learning resource related information be here.
+* Helper functions of token module
 * @method
 * @class  TokenHelper
 */

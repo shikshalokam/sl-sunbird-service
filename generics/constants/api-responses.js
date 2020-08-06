@@ -52,6 +52,8 @@ module.exports = {
   DICTIONARY_KEYWORDS_MISSING_FILE_ERROR: "Missing keywords file",
   DICTIONARY_KEYWORDS_MAPPING_MISSING_ERROR: "Dictionary keywords mapping is missing.",
   DICTIONARY_KEYWORDS_UPDATE_SUCCESS: "Content keywords updated successfully.",
+  DEVICE_PROFILE_FETCH_SUCCESSFUL: "Device profile fetched successfully.",
+  DEVICE_REGISTER_SUCCESSFUL : "Device registered successfully.",
   USER_PROFILE_NOT_FOUND: "User profile is not found",
   USER_UPDATED: "User updated successfully",
   USER_CREATED: "User created successfully",

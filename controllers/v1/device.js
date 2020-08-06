@@ -45,6 +45,14 @@ module.exports = class Device extends Abstract{
                 "sims": -1,
                 "webview": "74.0.3729.185"
             },
+            "userDeclaredLocation": {
+                "state": "Karnataka",
+                "district": "Bengaluru Urban"
+            },
+            "ipLocation": {
+                "state": "Karnataka",
+                "district":"Bengaluru Urban"
+            },
             "channel": "01305447637218918413",
             "fcmToken": "dWquWc00sS8:APA91bEsVm5sR_j1ojaIHt1nVDAgjzrnpTgqaZrhB3gZWGkUPojsSJz_mkp7Jtk3tJA7Cjo__agZp1ypGeElqxUEU6TRcVzD8e3phWeCRJ6dx-6gOgrfCq3Y0r-RbEwMd5cFtOhKcJr_",
             "producer": "org.shikshalokam.bodh.dev",

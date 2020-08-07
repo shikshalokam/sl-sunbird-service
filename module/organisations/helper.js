@@ -102,7 +102,7 @@ module.exports = class OrganisationsHelper {
                 let usersList =
                     await sunbirdService.users(token, apiRequest);
                 if (usersList.response && usersList.response.content) {
-                    return resolve({ data: usersList.response, success: true, message: CONSTANTS.apiResponses.LIST_OF_ORG_USERS });
+                    return resolve({ data: usersList.response, success: true, message: CONSTANTS.apiResponses.LIST_OF_ORG_USERS,success: true });
                 } else {
                     throw new Error(usersList.message);
                 }
@@ -124,19 +124,17 @@ module.exports = class OrganisationsHelper {
       * To assign roles to organisation for a user
       * @method
       * @name  assignRoles
-      * @param {Object} orgnisationInfo  - organisation object 
-      * @param {String} orgnisationInfo.userId - userId
-      * @param {String} orgnisationInfo.organisationId - organisationId
-      * @param {Array} orgnisationInfo.roles - array of roles 
+      * @param {Object} organisationInfo  - organisation object 
+      * @param {String} organisationInfo.userId - userId
+      * @param {String} organisationInfo.organisationId - organisationId
+      * @param {Array} organisationInfo.roles - array of roles 
       * @param {String} token - keyclock access token
       * @returns {json} Response consists of assign role information.
       */
-    static assignRoles(orgnisationInfo, token) {
+    static assignRoles(organisationInfo, token) {
         return new Promise(async (resolve, reject) => {
             try {
-
-
-                let assignRolesDetails = await sunbirdService.assignRoles(orgnisationInfo, token);
+                let assignRolesDetails = await sunbirdService.assignRoles(organisationInfo, token);
 
                 if (assignRolesDetails && assignRolesDetails.response == CONSTANTS.common.SUNBIRD_SUCCESS) {
                     resolve({ data: response.result, message: CONSTANTS.apiResponses.ASSIGNED_ROLE_SUCCESSFULLY, success: false });
@@ -214,7 +212,7 @@ module.exports = class OrganisationsHelper {
     * @param {String} organisationDetails.email - email id
     * @param {String} organisationDetails.organisationId - organisation id
     * @param  {String} token - keyclock access token
-    * @returns {json} Response consists of organisation creation form.
+    * @returns {json} Response consists of organisation update details.
     */
 
     static update(organisationDetails, token) {
@@ -258,9 +256,9 @@ module.exports = class OrganisationsHelper {
     * To get the organisational details
     * @method
     * @name  details
-    * @param organisationId - organisation id
+    * @param  {String} organisationId - organisation id
     * @param  {String} token - keyclock access token
-    * @returns {json} Response consists of organisation creation form.
+    * @returns {json} Response consists oforganisation details
     */
 
     static details(organisationId, token) {
@@ -293,7 +291,7 @@ module.exports = class OrganisationsHelper {
     * @param {String} organisationDetails.organisationId - organisation id
     * @param {String} organisationDetails.status - status code
     * @param  {token} token  - keyclock access token
-    * @returns {json} Response consists of organisation creation form.
+    * @returns {json} Response consists of organisation update status info
     */
 
     static updateStatus(organisationDetails, token) {
@@ -330,7 +328,7 @@ module.exports = class OrganisationsHelper {
     * @param {String} organisationDetails.organisationId - organisation id
     * @param {String} organisationDetails.userId - keyclock user id
     * @param  {token} token  - user access token
-    * @returns {json} Response consists of organisation creation form.
+    * @returns {json} Response consists of organisation removed user info
     */
 
     static removeUser(organisationDetails, token) {

@@ -267,15 +267,15 @@ const getUserProfile = async function (token, userId) {
             request.get(userProfileUrl, options, callback);
 
             function callback(err, data) {
+
                 if (err) {
                     throw {
-                        message:
-                            CONSTANTS.apiResponses.SUNBIRD_SERVICE_DOWN
+                        message:CONSTANTS.apiResponses.SUNBIRD_SERVICE_DOWN
                     };
                 } else {
                     if (data.statusCode != 200) {
                         return resolve({
-                            responseCode: "SUNBIRD_SERVICE_ERROR"
+                            message: data.body.params.errmsg
                         })
                     } else {
                         const userProfileInformationData = data.body;

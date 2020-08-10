@@ -484,7 +484,13 @@ function callToSunbird(requestType, url, token, requestBody = "") {
                         }
                     }
                 } else {
-                    return resolve({ message: data.body.params.errmsg });
+                    let message= "";
+                    if(data.body && data.body.message){
+                        message = data.body.message;
+                    }else{
+                        message = data.body.params.errmsg;
+                    }
+                    return resolve({ message: message });
 
                 }
 

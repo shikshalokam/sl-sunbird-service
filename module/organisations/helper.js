@@ -98,13 +98,13 @@ module.exports = class OrganisationsHelper {
                 if (status) {
                     apiRequest['filters']['status'] = status;
                 }
-            
+
                 let usersList =
                     await sunbirdService.users(token, apiRequest);
 
-            
+
                 if (usersList.response && usersList.response.content) {
-                    return resolve({ data: usersList.response, success: true, message: CONSTANTS.apiResponses.LIST_OF_ORG_USERS,success: true });
+                    return resolve({ data: usersList.response, success: true, message: CONSTANTS.apiResponses.LIST_OF_ORG_USERS, success: true });
                 } else {
                     throw new Error(usersList.message);
                 }
@@ -268,6 +268,7 @@ module.exports = class OrganisationsHelper {
             try {
 
                 let organisationDetails = await sunbirdService.getOrganisationDetails({ organisationId: organisationId }, token);
+
                 if (organisationDetails && organisationDetails.response) {
                     resolve({ data: organisationDetails.response, message: CONSTANTS.apiResponses.ORG_DETAILS_FOUND, success: true });
                 } else {

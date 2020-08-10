@@ -140,7 +140,7 @@ module.exports = class Organisations {
           req.body.organisationId,
           req.pageSize, 
           req.pageNo,
-          req.body.searchText ? pageNo.body.searchText : "",
+          req.body.query ? req.body.query : "",
           req.body.status ? req.body.status : ""
         );
         return resolve({ result: usersList.data, message: usersList.message });

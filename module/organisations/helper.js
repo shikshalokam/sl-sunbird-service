@@ -84,7 +84,7 @@ module.exports = class OrganisationsHelper {
                 }
 
                 if (pageNo) {
-                    apiRequest['offset'] = pageNo;
+                    apiRequest['offset'] = pageNo - 1;
                 }
                 if (pageSize) {
                     apiRequest['limit'] = pageSize;
@@ -98,9 +98,11 @@ module.exports = class OrganisationsHelper {
                 if (status) {
                     apiRequest['filters']['status'] = status;
                 }
-
+            
                 let usersList =
                     await sunbirdService.users(token, apiRequest);
+
+            
                 if (usersList.response && usersList.response.content) {
                     return resolve({ data: usersList.response, success: true, message: CONSTANTS.apiResponses.LIST_OF_ORG_USERS,success: true });
                 } else {

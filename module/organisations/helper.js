@@ -139,7 +139,7 @@ module.exports = class OrganisationsHelper {
                 let assignRolesDetails = await sunbirdService.assignRoles(organisationInfo, token);
 
                 if (assignRolesDetails && assignRolesDetails.response == CONSTANTS.common.SUNBIRD_SUCCESS) {
-                    resolve({ data: response.result, message: CONSTANTS.apiResponses.ASSIGNED_ROLE_SUCCESSFULLY, success: false });
+                    resolve({ data: assignRolesDetails.response, message: CONSTANTS.apiResponses.ASSIGNED_ROLE_SUCCESSFULLY, success: false });
                 } else {
                     throw new Error(assignRolesDetails.message);
                 }

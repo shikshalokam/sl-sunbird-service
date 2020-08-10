@@ -480,6 +480,7 @@ function callToSunbird(requestType, url, token, requestBody = "") {
                     }
                     if (data.body && data.body.responseCode && data.body.responseCode == CONSTANTS.common.OK) {
                         if (data.body.result) {
+
                             return resolve(data.body.result);
                         }
                     }

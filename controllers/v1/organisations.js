@@ -141,7 +141,8 @@ module.exports = class Organisations {
           req.pageSize, 
           req.pageNo,
           req.body.query ? req.body.query : "",
-          req.body.status ? req.body.status : ""
+          req.body.status ? req.body.status : "",
+          req.body.userIds ? req.body.userIds : [] 
         );
         return resolve({ result: usersList.data, message: usersList.message });
 

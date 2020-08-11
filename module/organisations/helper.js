@@ -27,6 +27,10 @@ module.exports = class OrganisationsHelper {
         return new Promise(async (resolve, reject) => {
             try {
 
+                if(pageNo >0){
+                    pageNo = pageNo -1;
+                }
+
                 let request = {
                     "filters": {
                     },

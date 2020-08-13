@@ -191,4 +191,48 @@ module.exports = class DictionaryHelper {
         })
     }
 
+    /**
+      * Check if mapping for dictionary index exists in Elastic search.
+      * @method
+      * @name keywordsIndexTypeMapExists
+      * @returns {Promise} returns a promise.
+     */
+
+    static keywordsIndexTypeMapExists() {
+        return new Promise(async (resolve, reject) => {
+            try {
+
+                if(dictionaryIndex == "") {
+                    throw new Error("Missing dictionary index name");
+                }
+
+                if(dictionaryIndexType == "") {
+                    throw new Error("Missing dictionary index type name");
+                }
+
+                const dictionaryIndexMapping = await elasticSearchHelper.getIndexTypeMapping(dictionaryIndex, dictionaryIndexType);
+
+                if(dictionaryIndexMapping.statusCode != httpStatusCode["ok"].status) {
+                    throw new Error("Keywords index type map does not exist.");
+                }
+            
+                return resolve({
+                    success : true,
+                    message : "Keywords index type map exists",
+                    data : true
+                });
+                
+            } catch (error) {
+                return resolve({
+                    success : true,
+                    message : error.message,
+                    data : false
+                });
+            }
+        })
+    }
+
+
+
+
 };

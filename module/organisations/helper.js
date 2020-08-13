@@ -26,16 +26,12 @@ module.exports = class OrganisationsHelper {
     static list(token, pageSize, pageNo, searchText, status) {
         return new Promise(async (resolve, reject) => {
             try {
-
-                if(pageNo >0){
-                    pageNo = pageNo -1;
-                }
-
+                
                 let request = {
                     "filters": {
                     },
                     "limit": pageSize,
-                    "offset": pageNo
+                    "offset": pageNo -1
                 }
 
                 if (searchText) {
@@ -291,7 +287,7 @@ module.exports = class OrganisationsHelper {
 
 
     /**
-    * To\update organisation status
+    * To update organisation status
     * @method
     * @name  updateStatus
     * @param {Object} organisationDetails - organisation details object
@@ -328,7 +324,7 @@ module.exports = class OrganisationsHelper {
     }
 
     /**
-    * remove user from the organisation
+    * Remove user from the organisation
     * @method
     * @name  removeUser
     * @param {Object} organisationDetails - organisation user details 

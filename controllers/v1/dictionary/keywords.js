@@ -61,14 +61,14 @@ module.exports = class Keywords {
             try {
 
                 if (!req.files || !req.files.keywords) {
-                    throw { message: constants.apiResponses.DICTIONARY_KEYWORDS_MISSING_FILE_ERROR };
+                    throw { message: CONSTANTS.apiResponses.DICTIONARY_KEYWORDS_MISSING_FILE_ERROR };
                 }
 
                 const checkIfKeywordsCanBeUploaded = await dictionaryHelper
-                .keywordsIndexTypeMapExists();
+                .keywordsIndexMapExists();
                 
                 if(!checkIfKeywordsCanBeUploaded.data) {
-                    throw { message: constants.apiResponses.DICTIONARY_KEYWORDS_MAPPING_MISSING_ERROR }
+                    throw { message: CONSTANTS.apiResponses.DICTIONARY_KEYWORDS_MAPPING_MISSING_ERROR }
                 }
 
                 let keywordsData = 
@@ -90,7 +90,7 @@ module.exports = class Keywords {
                     pointerToKeywordsData < keywordsData.length;
                     pointerToKeywordsData++) {
                         const row = keywordsData[pointerToKeywordsData];
-                        row.status = constants.common.FAILED;
+                        row.status = CONSTANTS.common.FAILED;
                         if(row.word && row.word != "") {
                             let addOrRemoveOperation
                             if(row.action == "remove") {
@@ -99,9 +99,9 @@ module.exports = class Keywords {
                                 addOrRemoveOperation = await dictionaryHelper.addWordToDictionary(row.word);
                             }
                             if(!addOrRemoveOperation.data) {
-                                row.status = constants.common.FAILED;
+                                row.status = CONSTANTS.common.FAILED;
                             } else {
-                                row.status = constants.common.SUCCESS;
+                                row.status = CONSTANTS.common.SUCCESS;
                             }
                         }
                         input.push(row);
@@ -113,10 +113,10 @@ module.exports = class Keywords {
 
                 return reject({
                     status: 
-                    error.status || httpStatusCode["internal_server_error"].status,
+                    error.status || HTTP_STATUS_CODE["internal_server_error"].status,
 
                     message: 
-                    error.message || httpStatusCode["internal_server_error"].message,
+                    error.message || HTTP_STATUS_CODE["internal_server_error"].message,
 
                     errorObject: error
                 });
@@ -161,10 +161,10 @@ module.exports = class Keywords {
             try {
 
                 const checkIfKeywordsCanBeUploaded = await dictionaryHelper
-                .keywordsIndexTypeMapExists();
+                .keywordsIndexMapExists();
                 
                 if(!checkIfKeywordsCanBeUploaded.data) {
-                    throw { message: constants.apiResponses.DICTIONARY_KEYWORDS_MAPPING_MISSING_ERROR }
+                    throw { message: CONSTANTS.apiResponses.DICTIONARY_KEYWORDS_MAPPING_MISSING_ERROR }
                 }
 
                 let keywordsData = req.body.keywords;
@@ -175,14 +175,14 @@ module.exports = class Keywords {
                     pointerToKeywordsData < keywordsData.length;
                     pointerToKeywordsData++) {
                         const keyword = keywordsData[pointerToKeywordsData];
-                        let status = constants.common.FAILED;
+                        let status = CONSTANTS.common.FAILED;
                         if(keyword != "") {
                             let addOrUpdateKeyword = await dictionaryHelper.addWordToDictionary(keyword);
                             
                             if(!addOrUpdateKeyword.data) {
-                                status = constants.common.FAILED;
+                                status = CONSTANTS.common.FAILED;
                             } else {
-                                status = constants.common.SUCCESS;
+                                status = CONSTANTS.common.SUCCESS;
                             }
                         }
                         keywordsUpdateResult.push({
@@ -193,17 +193,17 @@ module.exports = class Keywords {
 
                 return resolve({
                     result: keywordsUpdateResult,
-                    message: constants.apiResponses.DICTIONARY_KEYWORDS_UPDATE_SUCCESS
+                    message: CONSTANTS.apiResponses.DICTIONARY_KEYWORDS_UPDATE_SUCCESS
                 });
 
             } catch (error) {
 
                 return reject({
                     status: 
-                    error.status || httpStatusCode["internal_server_error"].status,
+                    error.status || HTTP_STATUS_CODE["internal_server_error"].status,
 
                     message: 
-                    error.message || httpStatusCode["internal_server_error"].message,
+                    error.message || HTTP_STATUS_CODE["internal_server_error"].message,
 
                     errorObject: error
                 });

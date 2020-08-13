@@ -28,5 +28,17 @@ module.exports = {
     SUNBIRD_ADD_USER_TO_ORG: "/api/org/v1/member/add",
     SUNBIRD_USER_READ: "/api/user/v1/read",
     SUNBIRD_BLOCK_USER: "/api/user/v1/block",
-    SUNBIRD_UNBLOCK_USER: "/api/user/v1/unblock"
+    SUNBIRD_UNBLOCK_USER: "/api/user/v1/unblock",
+    SUNBIRD_SEARCH_USER: "/api/user/v1/search",
+    SUNBIRD_SEARCH_ORG: "/api/org/v1/search",
+    SUNBIRD_CREATE_ORG: "/api/org/v1/create",
+    SUNBIRD_UPDATE_ORG: "/api/org/v1/update",
+    SUNBIRD_READ_ORG: "/api/org/v1/read",
+    SUNBIRD_ORG_STATUS_UPDATE: "/api/org/v1/status/update",
+    SUNBIRD_REMOVE_USER_FROM_ORG: "/api/org/v1/member/remove",
+    SUNBIRD_ASSIGN_ROLES_TO_ORG: "/api/user/v1/role/assign",
+    SUNBIRD_REMOVE_USER_FROM_ORG: "/api/org/v1/member/remove",
+   
+   
+    
 };

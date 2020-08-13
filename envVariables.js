@@ -148,6 +148,27 @@ let enviromentVariables = {
     "message" : "Please specify the value for e.g. ON/OFF",
     "optional" : false
   },
+  "HEALTH_CHECK_URL" : {
+    "message" : "Please specify the value for Health check url",
+    "optional" : true,
+    "default" : "/ping"
+  },
+  "LOGGER_DIRECTORY" : {
+    "message" : "Please specify the value for logger directory",
+    "optional" : true,
+    "default": "logs"
+  },
+  "SUNBIRD_PROVIDER" : {
+    "message" : "Please specify the value",
+    "optional" : true,
+    "default": "SHIKSHALOKAM"
+  },
+  "SUNBIRD_CHANNEL" : {
+    "message" : "Please specify the value",
+    "optional" : true,
+    "default": "SHIKSHALOKAM"
+  }
+
 }
 
 

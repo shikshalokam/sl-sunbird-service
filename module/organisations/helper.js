@@ -342,7 +342,7 @@ module.exports = class OrganisationsHelper {
         return new Promise(async (resolve, reject) => {
             try {
 
-                let removeUser = await sunbirdService.removeUser(organisationDetails, token);
+                let removeUser = await sunbirdService.removeUserFromOrganisation(organisationDetails, token);
                 if (removeUser && removeUser.response && removeUser.response == CONSTANTS.common.SUNBIRD_SUCCESS) {
                     resolve({ data: removeUser, message: CONSTANTS.apiResponses.USER_REMOVED, success: true });
                 } else {

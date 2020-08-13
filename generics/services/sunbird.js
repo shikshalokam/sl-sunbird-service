@@ -829,14 +829,14 @@ const updateOrgStatus = function (organisationDetails, token) {
 /**
   * For remove user from the organisation
   * @function
-  * @name removeUser
+  * @name removeUserFromOrganisation
   * @param {Object} userDetails - organisation user details 
   * @param {String} userDetails.organisationId - organisation id
   * @param {String} userDetails.userId - keyclock user id
   * @param  {token} token  - user access token
   * @returns {JSON} - response consist of removed user details
 */
-const removeUser = function (userDetails, token) {
+const removeUserFromOrganisation = function (userDetails, token) {
     return new Promise(async (resolve, reject) => {
 
         const userRemoveApi = CONSTANTS.endpoints.SUNBIRD_REMOVE_USER_FROM_ORG;
@@ -889,7 +889,7 @@ module.exports = {
     searchOrganisation: searchOrganisation,
     users: users,
     createOrganisation: createOrganisation,
-    removeUser: removeUser,
+    removeUserFromOrganisation: removeUserFromOrganisation,
     updateOrgStatus: updateOrgStatus,
     getOrganisationDetails: getOrganisationDetails,
     updateOrganisationDetails: updateOrganisationDetails,

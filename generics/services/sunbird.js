@@ -577,7 +577,7 @@ const filtersList = function (token) {
 
         try {
             const apiEndPoint = CONSTANTS.endpoints.FRAMEWORK_LIST + "/" + process.env.SUNBIRD_FRAMEWORK;
-            let response = await callToSunbird("GET", apiEndPoint, token);
+            const response = await callToSunbird("GET", apiEndPoint, token);
             return resolve(response);
 
         } catch (error) {
@@ -665,15 +665,15 @@ const addUserToOrganisation = async function (requestBody, token) {
   * @returns {JSON} - response consist of success or failure of the api.
 */
 
-const inactivate = function (userId, token) {
+const inactivateUser = function (userId, token) {
     return new Promise(async (resolve, reject) => {
 
-        let inActivateUserAPI = CONSTANTS.endpoints.SUNBIRD_BLOCK_USER;
+        const inActivateUserAPI = CONSTANTS.endpoints.SUNBIRD_BLOCK_USER;
 
-        let requestBody = {
+        const requestBody = {
             userId: userId
         }
-        let response = await callToSunbird("POST", inActivateUserAPI, token, requestBody);
+        const response = await callToSunbird("POST", inActivateUserAPI, token, requestBody);
         return resolve(response);
 
     })
@@ -682,20 +682,20 @@ const inactivate = function (userId, token) {
 /**
   * To activate the user
   * @function
-  * @name activate
+  * @name activateUser
   * @param userId -  user Id of the user.
   * @param token - Logged in user token.
   * @returns {JSON} - response consist of success or failure of the api.
 */
 
-const activate = function (userId, token) {
+const activateUser = function (userId, token) {
     return new Promise(async (resolve, reject) => {
 
-        let activateUserAPI = CONSTANTS.endpoints.SUNBIRD_UNBLOCK_USER;
-        let requestBody = {
+        const activateUserAPI = CONSTANTS.endpoints.SUNBIRD_UNBLOCK_USER;
+        const requestBody = {
             userId: userId
         }
-        let response = await callToSunbird("POST", activateUserAPI, token, requestBody);
+        const response = await callToSunbird("POST", activateUserAPI, token, requestBody);
         return resolve(response);
 
     })
@@ -714,7 +714,7 @@ const searchOrganisation = function (searchDetails, token) {
     return new Promise(async (resolve, reject) => {
 
         const searchOrgUrl = CONSTANTS.endpoints.SUNBIRD_SEARCH_ORG;
-        let response = await callToSunbird("POST", searchOrgUrl, token, searchDetails);
+        const response = await callToSunbird("POST", searchOrgUrl, token, searchDetails);
         return resolve(response);
 
     });
@@ -734,7 +734,7 @@ const users = function (token, apiRequest) {
 
         const userSearchAPI = CONSTANTS.endpoints.SUNBIRD_SEARCH_USER;
 
-        let response = await callToSunbird("POST", userSearchAPI, token, apiRequest);
+        const response = await callToSunbird("POST", userSearchAPI, token, apiRequest);
         return resolve(response);
     })
 }
@@ -757,7 +757,7 @@ const createOrganisation = function (organisationDetails, token) {
     return new Promise(async (resolve, reject) => {
 
         const createOrganisationUrl = CONSTANTS.endpoints.SUNBIRD_CREATE_ORG;
-        let response = await callToSunbird("POST", createOrganisationUrl, token, organisationDetails);
+        const response = await callToSunbird("POST", createOrganisationUrl, token, organisationDetails);
         return resolve(response);
 
     });
@@ -782,7 +782,7 @@ const updateOrganisationDetails = function (organisationDetails, token) {
     return new Promise(async (resolve, reject) => {
 
         const updateOrgDetails = CONSTANTS.endpoints.SUNBIRD_UPDATE_ORG;
-        let response = await callToSunbird("PATCH", updateOrgDetails, token, organisationDetails);
+        const response = await callToSunbird("PATCH", updateOrgDetails, token, organisationDetails);
         return resolve(response);
 
     });
@@ -800,8 +800,8 @@ const updateOrganisationDetails = function (organisationDetails, token) {
 const getOrganisationDetails = function (requestBody, token) {
     return new Promise(async (resolve, reject) => {
 
-        const OrgDetailsURL = CONSTANTS.endpoints.SUNBIRD_READ_ORG;
-        let response = await callToSunbird("POST", OrgDetailsURL, token, requestBody);
+        const orgDetailsURL = CONSTANTS.endpoints.SUNBIRD_READ_ORG;
+        const response = await callToSunbird("POST", orgDetailsURL, token, requestBody);
         return resolve(response);
     });
 }
@@ -821,7 +821,7 @@ const updateOrgStatus = function (organisationDetails, token) {
 
         const updateOrgStatusUrl = CONSTANTS.endpoints.SUNBIRD_ORG_STATUS_UPDATE;
 
-        let response = await callToSunbird("PATCH", updateOrgStatusUrl, token, organisationDetails);
+        const response = await callToSunbird("PATCH", updateOrgStatusUrl, token, organisationDetails);
         return resolve(response);
     });
 }
@@ -840,7 +840,7 @@ const removeUser = function (userDetails, token) {
     return new Promise(async (resolve, reject) => {
 
         const userRemoveApi = CONSTANTS.endpoints.SUNBIRD_REMOVE_USER_FROM_ORG;
-        let response = await callToSunbird("POST", userRemoveApi, token, userDetails);
+        const response = await callToSunbird("POST", userRemoveApi, token, userDetails);
         return resolve(response);
 
     });
@@ -862,7 +862,7 @@ const assignRoles = function (orgnisationInfo, token) {
     return new Promise(async (resolve, reject) => {
 
         const assignRolesToOrgApiUrl = CONSTANTS.endpoints.SUNBIRD_ASSIGN_ROLES_TO_ORG;
-        let response = await callToSunbird("POST", assignRolesToOrgApiUrl, token, orgnisationInfo);
+        const response = await callToSunbird("POST", assignRolesToOrgApiUrl, token, orgnisationInfo);
         return resolve(response);
 
     })
@@ -884,8 +884,8 @@ module.exports = {
     filtersList: filtersList,
     addUserToOrganisation: addUserToOrganisation,
     createUser: createUser,
-    activate: activate,
-    inactivate: inactivate,
+    activateUser: activateUser,
+    inactivateUser: inactivateUser,
     searchOrganisation: searchOrganisation,
     users: users,
     createOrganisation: createOrganisation,

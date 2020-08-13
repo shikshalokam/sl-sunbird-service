@@ -120,7 +120,7 @@ module.exports = class UsersHelper {
         return new Promise(async (resolve, reject) => {
             try {
 
-                let response = await sunbirdService.activate(userId, token);
+                let response = await sunbirdService.activateUser(userId, token);
                 if (response && response.response == CONSTANTS.common.SUNBIRD_SUCCESS) {
                     resolve({ result: response.result, message: CONSTANTS.apiResponses.USER_UNBLOCKED, success : true });
                 } else {
@@ -148,7 +148,7 @@ module.exports = class UsersHelper {
         return new Promise(async (resolve, reject) => {
             try {
 
-                let response = await sunbirdService.inactivate(userId, token);
+                let response = await sunbirdService.inactivateUser(userId, token);
                 if (response && response.response == CONSTANTS.common.SUNBIRD_SUCCESS) {
                     resolve({ success: true, data: response.result, message: CONSTANTS.apiResponses.USER_BLOCKED, success : true });
                 } else {

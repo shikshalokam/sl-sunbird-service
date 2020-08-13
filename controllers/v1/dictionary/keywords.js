@@ -65,7 +65,7 @@ module.exports = class Keywords {
                 }
 
                 const checkIfKeywordsCanBeUploaded = await dictionaryHelper
-                .keywordsIndexTypeMapExists();
+                .keywordsIndexMapExists();
                 
                 if(!checkIfKeywordsCanBeUploaded.data) {
                     throw { message: CONSTANTS.apiResponses.DICTIONARY_KEYWORDS_MAPPING_MISSING_ERROR }
@@ -161,7 +161,7 @@ module.exports = class Keywords {
             try {
 
                 const checkIfKeywordsCanBeUploaded = await dictionaryHelper
-                .keywordsIndexTypeMapExists();
+                .keywordsIndexMapExists();
                 
                 if(!checkIfKeywordsCanBeUploaded.data) {
                     throw { message: CONSTANTS.apiResponses.DICTIONARY_KEYWORDS_MAPPING_MISSING_ERROR }

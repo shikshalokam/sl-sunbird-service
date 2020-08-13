@@ -71,5 +71,6 @@ module.exports = {
   ORG_DEACTIVATED: "Organisation de-activated successfully.",
   ROLES_REMOVED: "Roles removed successfully.",
   USER_REMOVED: "User removed from organisation successfully.",
-
+  DEVICE_PROFILE_FETCH_SUCCESSFUL: "Device profile fetched successfully.",
+  DEVICE_REGISTER_SUCCESSFUL : "Device registered successfully."
 };

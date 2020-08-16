@@ -171,7 +171,7 @@ module.exports = class BodhHelper {
 
                     const addCourseToAutocomplete = await elasticSearchHelper.createOrUpdateDocumentInIndex(
                         bodhContentIndex,
-                        eachContent.IL_UNIQUE_ID,
+                        eachContent.code,
                         {
                             suggest: suggestContent,
                             rawContent: eachContent
@@ -200,7 +200,7 @@ module.exports = class BodhHelper {
 
                             const addCourseToAutocomplete = await elasticSearchHelper.createOrUpdateDocumentInIndex(
                                 bodhContentIndex + "-" + orgId,
-                                eachContent.IL_UNIQUE_ID,
+                                eachContent.code,
                                 {
                                     suggest: suggestContent,
                                     rawContent: eachContent
@@ -214,12 +214,12 @@ module.exports = class BodhHelper {
 
                     if (!addCourseToAutocomplete.data) {
                         contentUpdateResult.push({
-                            IL_UNIQUE_ID: eachContent.IL_UNIQUE_ID,
+                            code: eachContent.code,
                             status: CONSTANTS.common.FAILED
                         })
                     } else {
                         contentUpdateResult.push({
-                            IL_UNIQUE_ID: eachContent.IL_UNIQUE_ID,
+                            code: eachContent.code,
                             status: CONSTANTS.common.SUCCESS
                         })
                     }

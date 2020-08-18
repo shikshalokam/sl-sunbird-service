@@ -100,7 +100,9 @@ let enviromentVariables = {
   },
   "SUNBIRD_KEYCLOAK_GRANT_TYPE" : {
     "message" : "Required sunbird keycloak grant",
-    "optional" : false
+    "optional" : true,
+    "default": "password"
+
   },
   "SUNBIRD_KEYCLOAK_SESSION_SCOPE" : {
     "message" : "Required sunbird session scope",

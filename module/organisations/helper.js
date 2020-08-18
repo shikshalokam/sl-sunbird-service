@@ -338,8 +338,7 @@ module.exports = class OrganisationsHelper {
             let activateOrganisation = await sunbirdService.updateOrgStatus(organisationDetails, token);
             if (activateOrganisation && activateOrganisation.response && activateOrganisation.response == CONSTANTS.common.SUNBIRD_SUCCESS) {
 
-                const msg = CONSTANTS.apiResponses.ORG_ACTIVATED;
-                resolve({ data: activateOrganisation.result, message: msg, success: true });
+                 resolve({ data: activateOrganisation.result, message: CONSTANTS.apiResponses.ORG_ACTIVATED, success: true });
             } else {
                 throw new Error(activateOrganisation.message);
             }
@@ -373,10 +372,8 @@ module.exports = class OrganisationsHelper {
 
             let deactivateOrganisation = await sunbirdService.updateOrgStatus(organisationDetails, token);
             if (deactivateOrganisation && deactivateOrganisation.response && deactivateOrganisation.response == CONSTANTS.common.SUNBIRD_SUCCESS) {
-               
-                const msg = CONSTANTS.apiResponses.ORG_DEACTIVATED;
                 
-                resolve({ data: deactivateOrganisation.result, message: msg, success: true });
+                resolve({ data: deactivateOrganisation.result, message: CONSTANTS.apiResponses.ORG_DEACTIVATED, success: true });
             } else {
                 throw new Error(deactivateOrganisation.message);
             }

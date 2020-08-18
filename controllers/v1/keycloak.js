@@ -30,12 +30,12 @@ module.exports = class Keycloak {
   */
 
   /**
-    * @api {get} /sunbird/api/v1/keycloak/getToken Get keyclock token
+    * @api {get} /sunbird/api/v1/keycloak/generateToken Get keyclock token
     * Get keyclock token
     * @apiVersion 1.0.0
-    * @apiGroup keycloak
+    * @apiGroup Keycloak
     * @apiHeader {String} internal-access-token Internal access token
-    * @apiSampleRequest /sunbird/api/v1/keycloak/getToken
+    * @apiSampleRequest /sunbird/api/v1/keycloak/generateToken
     * @apiUse successBody
     * @apiUse errorBody
     * @apiParamExample {json} Request:
@@ -62,16 +62,16 @@ module.exports = class Keycloak {
   /**
   * To get keycloak token
   * @method
-  * @name getToken
+  * @name generateToken
   * @param  {req}  - requested data.
   * @returns {json} Response consists of keycloak token
   */
 
- getToken(req) {
+ generateToken(req) {
     return new Promise(async (resolve, reject) => {
       try {
 
-        let tokenInfo = await KeycloakHelper.getToken(req.body.username,req.body.password);
+        let tokenInfo = await KeycloakHelper.generateToken(req.body.username,req.body.password);
         
           return resolve({ result: tokenInfo.data, message: tokenInfo.message });
 

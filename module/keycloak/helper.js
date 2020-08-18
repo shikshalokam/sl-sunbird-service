@@ -16,18 +16,18 @@ module.exports = class keycloakHelper {
     /**
     * To get keycloak user token
     * @method
-    * @name  getToken
+    * @name  generateToken
     * @param {String} username - user name of keycloak user
     * @param {String} password - password of keycloak user 
     * @returns {json} Response consists of keycloak user token
     */
-    static getToken(username = "", password = "") {
+    static generateToken(username = "", password = "") {
         return new Promise(async (resolve, reject) => {
             try {
 
                 if (username == "" || password == "") throw new Error("Invalid Credentials.")
 
-                let keyCloakLoginResponse = await sunbirdService.getToken({
+                let keycloakLoginResponse = await sunbirdService.generateToken({
                     "client_id": process.env.SUNBIRD_KEYCLOAK_CLIENT_ID,
                     "username": username, 
                     "password": password,
@@ -35,14 +35,14 @@ module.exports = class keycloakHelper {
                     "scope" : process.env.SUNBIRD_KEYCLOAK_SESSION_SCOPE
                 })
                
-                if (keyCloakLoginResponse.status == 200 && keyCloakLoginResponse.data && keyCloakLoginResponse.data.access_token && keyCloakLoginResponse.data.access_token != "") {
+                if (keycloakLoginResponse.status == 200 && keycloakLoginResponse.data && keycloakLoginResponse.data.access_token && keycloakLoginResponse.data.access_token != "") {
                     resolve({
                         message:CONSTANTS.apiResponses.TOKEN_FETCHED,
                         success: true,
-                        data: keyCloakLoginResponse.data
+                        data: keycloakLoginResponse.data
                     })
                 } else {
-                   throw new Error(keyCloakLoginResponse.data.error_description);
+                   throw new Error(keycloakLoginResponse.data.error_description);
                 }
 
             } catch (error) {

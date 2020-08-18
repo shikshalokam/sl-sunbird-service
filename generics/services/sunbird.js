@@ -873,20 +873,20 @@ const assignRoles = function (orgnisationInfo, token) {
 /**
   * To get user keycloak token
   * @function
-  * @name getToken
+  * @name generateToken
   * @param {Object} userCredentials  - keycloak credentials 
   * @param {String} userCredentials.userName - keyclock user name
   * @param {String} userCredentials.password - keyclock user password
   * @returns {JSON} - keycloak user token information
 */
 
-const getToken = function (userCredentials) {
+const generateToken = function (userCredentials) {
     return new Promise(async (resolve, reject) => {
 
         const keycloakAuthServerUrl =
             process.env.SUNBIRD_KEYCLOAK_AUTH_ENDPOINT + "/realms/" +
             process.env.SUNBIRD_KEYCLOAK_REALM + "/protocol/openid-connect/token"
-        const response = await callKeyCloakService(keycloakAuthServerUrl, userCredentials);
+        const response = await callKeycloakService(keycloakAuthServerUrl, userCredentials);
         return resolve(response);
 
     })
@@ -895,13 +895,13 @@ const getToken = function (userCredentials) {
 /**
   * To make api call 
   * @function
-  * @name callKeyCloakService
+  * @name callKeycloakService
   * @param {String} url - api end point
   * @param {Json} data - request json data
   * @returns {JSON} - api response
 */
 
-function callKeyCloakService(url = "", data = {}) {
+function callKeycloakService(url = "", data = {}) {
     return new Promise(async (resolve, reject) => {
         try {
 
@@ -951,5 +951,5 @@ module.exports = {
     getOrganisationDetails: getOrganisationDetails,
     updateOrganisationDetails: updateOrganisationDetails,
     assignRoles: assignRoles,
-    getToken: getToken
+    generateToken: generateToken
 };

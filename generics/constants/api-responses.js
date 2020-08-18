@@ -67,9 +67,10 @@ module.exports = {
   ASSIGNED_ROLE_SUCCESSFULLY: "User roles added to organisation  successfully",
   ORG_UPDATED: "Organisation Details Updated Successfully",
   ORG_DETAILS_FOUND: "Organisation Details Found",
-  ORG_ACTIVATED: "Organisation Activated Successfully",
-  ORG_DEACTIVATED: "Organisation Deactivated Successfully",
+  ORG_ACTIVATED: "Organisation Activated Successfully.",
+  ORG_DEACTIVATED: "Organisation Deactivated Successfully.",
   ROLES_REMOVED: "Roles removed successfully",
   USER_REMOVED: "User Removed From Organisation Successfully",
+  TOKEN_FETCHED: "Token fetched successfully",
 
 };

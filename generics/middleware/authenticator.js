@@ -95,7 +95,7 @@ module.exports = async function (req, res, next, token = "") {
     return;
   }
 
-  let internalAccessApiPaths = ["keywords", "token/verify"];
+  let internalAccessApiPaths = ["keywords", "token/verify","keycloak/getToken","users/create"];
   let performInternalAccessTokenCheck = false;
   await Promise.all(internalAccessApiPaths.map(async function (path) {
     if (req.path.includes(path)) {

@@ -34,7 +34,7 @@ module.exports = class Token {
   * }
   * @apiParamExample {json} Response:
     {
-    "message": "Token is valid",
+    "message": "Token is valid.",
     "status": 200,
     "result": {
         "address": [],

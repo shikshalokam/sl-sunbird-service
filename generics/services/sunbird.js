@@ -8,6 +8,7 @@
 //dependencies
 
 const request = require('request');
+const httpRequest = require(GENERIC_HELPERS_PATH + '/http-request');
 const shikshalokamService = require(GENERIC_HELPERS_PATH + "/shikshalokam");
 const fs = require("fs");
 
@@ -270,7 +271,7 @@ const getUserProfile = async function (token, userId) {
 
                 if (err) {
                     throw {
-                        message:CONSTANTS.apiResponses.SUNBIRD_SERVICE_DOWN
+                        message: CONSTANTS.apiResponses.SUNBIRD_SERVICE_DOWN
                     };
                 } else {
                     if (data.statusCode != 200) {
@@ -439,68 +440,69 @@ const uploadContent = async function (file, contentId, token, contentType, mimeT
   * @returns {JSON} - consist of sunbird service response
 */
 
-function callToSunbird(requestType, url, token, requestBody = "") {
+function callToSunbird(requestType, url, token = "", requestBody = "") {
 
     return new Promise(async (resolve, reject) => {
 
         try {
-            
-       
-        let options = {
-            "headers": {
-                "content-type": "application/json",
-                "authorization": process.env.AUTHORIZATION,
-                "x-authenticated-user-token": token
+
+
+            let options = {
+                "headers": {
+                    "content-type": "application/json",
+                    "authorization": process.env.AUTHORIZATION,
+                }
+            };
+            if (token) {
+                options['headers']['x-authenticated-user-token'] = token;
             }
-        };
 
-        if (requestType != "GET") {
-            options['json'] = { request: requestBody };
-
-        }
-        url = process.env.SUNBIRD_BASE_URL + url;
-        if (requestType == "PATCH") {
-            request.patch(url, options, callback);
-        } else if (requestType == "GET") {
-            request.get(url, options, callback);
-        } else {
-            request.post(url, options, callback);
-        }
-       
-        function callback(err, data) {
-            if (err) {
-                return reject({
-                    message: CONSTANTS.apiResponses.SUNBIRD_SERVICE_DOWN
-                });
+            if (requestType != "GET") {
+                    options['json'] = { request: requestBody };
+            }
+            url = process.env.SUNBIRD_BASE_URL + url;
+            if (requestType == "PATCH") {
+                request.patch(url, options, callback);
+            } else if (requestType == "GET") {
+                request.get(url, options, callback);
             } else {
-                if (data.statusCode == HTTP_STATUS_CODE.ok.status) {
+                request.post(url, options, callback);
+            }
 
-                    if (!data.body.responseCode) {
-                        data.body = JSON.parse(data.body);
-                    }
-                    if (data.body && data.body.responseCode && data.body.responseCode == CONSTANTS.common.OK) {
-                        if (data.body.result) {
-
-                            return resolve(data.body.result);
-                        }
-                    }
+            function callback(err, data) {
+                if (err) {
+                    return reject({
+                        message: CONSTANTS.apiResponses.SUNBIRD_SERVICE_DOWN
+                    });
                 } else {
-                    let message= "";
-                    if(data.body && data.body.message){
-                        message = data.body.message;
-                    }else{
-                        message = data.body.params.errmsg;
+                    if (data.statusCode == HTTP_STATUS_CODE.ok.status) {
+
+                        if (!data.body.responseCode) {
+                            data.body = JSON.parse(data.body);
+                        }
+                        if (data.body && data.body.responseCode && data.body.responseCode == CONSTANTS.common.OK) {
+                            if (data.body.result) {
+
+                                return resolve(data.body.result);
+                            }
+                        }
+                    } else {
+                        let message = "";
+                        if (data.body && data.body.message) {
+                            message = data.body.message;
+                        } else {
+                            message = data.body.params.errmsg;
+                        }
+                        return resolve({ message: message });
+
                     }
-                    return resolve({ message: message });
 
                 }
-
             }
-        }
 
-    } catch (error) {
-        return reject({ message:error.message });      
-    }
+        } catch (error) {
+            return reject({ message: error.message });
+        }
 
     });
 }
@@ -596,7 +598,7 @@ const filtersList = function (token) {
   * @returns {json} response consist of created user details
 */
 
-const createUser = async function (userInputData, token) {
+const createUser = async function (userInputData, token = "") {
     return new Promise(async (resolve, reject) => {
 
         const createUserUrl = CONSTANTS.endpoints.SUNBIRD_CREATE_USER;
@@ -820,7 +822,7 @@ const updateOrgStatus = function (organisationDetails, token) {
     return new Promise(async (resolve, reject) => {
 
         const updateOrgStatusUrl = CONSTANTS.endpoints.SUNBIRD_ORG_STATUS_UPDATE;
-
+   
         const response = await callToSunbird("PATCH", updateOrgStatusUrl, token, organisationDetails);
         return resolve(response);
     });
@@ -868,6 +870,61 @@ const assignRoles = function (orgnisationInfo, token) {
     })
 }
 
+/**
+  * To get user keycloak token
+  * @function
+  * @name getToken
+  * @param {Object} userCredentials  - keycloak credentials 
+  * @param {String} userCredentials.userName - keyclock user name
+  * @param {String} userCredentials.password - keyclock user password
+  * @returns {JSON} - keycloak user token information
+*/
+
+const getToken = function (userCredentials) {
+    return new Promise(async (resolve, reject) => {
+
+        const keycloakAuthServerUrl =
+            process.env.SUNBIRD_KEYCLOAK_AUTH_ENDPOINT + "/realms/" +
+            process.env.SUNBIRD_KEYCLOAK_REALM + "/protocol/openid-connect/token"
+        const response = await callKeyCloakService(keycloakAuthServerUrl, userCredentials);
+        return resolve(response);
+
+    })
+}
+
+/**
+  * To make api call 
+  * @function
+  * @name callKeyCloakService
+  * @param {String} url - api end point
+  * @param {Json} data - request json data
+  * @returns {JSON} - api response
+*/
+
+function callKeyCloakService(url = "", data = {}) {
+    return new Promise(async (resolve, reject) => {
+        try {
+
+            url = process.env.SUNBIRD_BASE_URL + url;
+            const reqObj = new httpRequest()
+            const options = {
+                form: data
+            }
+
+            const response = await reqObj.post(
+                url,
+                options
+            )
+            return resolve(response)
+
+        } catch (error) {
+            return reject(error);
+        }
+    })
+}
+
+
+
 
 
 module.exports = {
@@ -893,5 +950,6 @@ module.exports = {
     updateOrgStatus: updateOrgStatus,
     getOrganisationDetails: getOrganisationDetails,
     updateOrganisationDetails: updateOrganisationDetails,
-    assignRoles: assignRoles
+    assignRoles: assignRoles,
+    getToken: getToken
 };

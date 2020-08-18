@@ -54,7 +54,7 @@ module.exports = class Users {
   * @apiUse errorBody
   * @apiParamExample {json} Response:
   *{
-    "message": "Platform user profile fetched successfully",
+    "message": "Platform user profile fetched successfully.",
     "status": 200,
     "result": {
         "response": {
@@ -218,7 +218,7 @@ module.exports = class Users {
   * @apiParamExample {json} Response:
   * 
   * {
-  *   "message": "User created successfully",
+  *   "message": "User created successfully.",
   *   "status": 200,
   *    "result": [ 
   *     {  
@@ -233,7 +233,7 @@ module.exports = class Users {
     return new Promise(async (resolve, reject) => {
 
       try {
-       let userCreate = await usersHelper.create(req.body,req.userDetails.userToken,req.userDetails.userId);
+       let userCreate = await usersHelper.create(req.body);
        return resolve({ result: userCreate.data, message: userCreate.message });
 
     } catch (error) {
@@ -272,7 +272,7 @@ module.exports = class Users {
   * @apiParamExample {json} Response:
   * 
   * {
-  *   "message": "User added to organisation successfully",
+  *   "message": "User added to organisation successfully.",
   *   "status": 200,
   * }
   */
@@ -316,7 +316,7 @@ module.exports = class Users {
    * @apiUse errorBody
    * @apiSampleResponse
    * {
-   *    "message": "User activated successfully",
+   *    "message": "User activated successfully.",
    *    "status": 200,
    *    "result": {
    *      "response": "SUCCESS"
@@ -362,7 +362,7 @@ module.exports = class Users {
    * @apiUse errorBody
    * @apiSampleResponse
    * {
-   *    "message": "User deactivated successfully",
+   *    "message": "User deactivated successfully.",
    *    "status": 200,
    *    "result": {
    *      "response": "SUCCESS"

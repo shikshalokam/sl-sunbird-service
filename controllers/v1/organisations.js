@@ -41,7 +41,7 @@ module.exports = class Organisations {
     * @apiParamExample {json} Response:
     * 
     * {
-    *   "message": "Organisation list fetched Successfully",
+    *   "message": "Organisation list fetched successfully.",
     *   "status": 200,
     *    "result": [ 
     *     {  
@@ -106,7 +106,7 @@ module.exports = class Organisations {
   * @apiParamExample {json} Response:
   * 
   * {
-  *   "message": "Organisation list fetched Successfully",
+  *   "message": "Organisation list fetched successfully.",
   *   "status": 200,
   *    "result": {
   *      "count": 1,
@@ -182,7 +182,7 @@ module.exports = class Organisations {
  * 
  * {
  *  "status": 200,
- *  "message": ""message": "User roles added to organisation  successfully"
+ *  "message": ""message": "User roles added to organisation  successfully."
  *      "result": {
  *          "response": "SUCCESS"
  *      }
@@ -193,7 +193,7 @@ module.exports = class Organisations {
 */
 
   /**
-  * To assign Roles to the organisation for the user
+  * To assign roles to the organisation for the user
   * @method
   * @name assignRoles
   * @param  {req}  - requested data.
@@ -242,7 +242,7 @@ module.exports = class Organisations {
       "externalId": "ext1332sdddda2ww22",
       "provider": "string",
       "name": "testing",
-      "email2": "abc@gmail.com",
+      "email": "abc@gmail.com",
       "address": "iiii"
     }
    * @apiUse successBody
@@ -251,7 +251,7 @@ module.exports = class Organisations {
    * 
    * {
    *  "status": 200,
-   *  "message": ""message": "Organisation List fetched Successfully"
+   *  "message": ""message": "Organisation List fetched successfully."
    *      "result": {
    *          "columns":[{
    *             "type": "column",
@@ -321,7 +321,7 @@ module.exports = class Organisations {
      * @apiUse errorBody
      * @apiParamExample {json} Response:
      * {
-     *  "message": "Organisation Created Successfully",
+     *  "message": "Organisation created successfully.",
      *  "status": 200,
      *  "result": {
      *     "organisationId": "013014480583598080574",
@@ -372,7 +372,7 @@ module.exports = class Organisations {
      * @apiUse errorBody
      * @apiParamExample {json} Response:
      * {
-     *  "message": "Organisation Details Fetched Successfully",
+     *  "message": "Organisation details fetched successfully.",
      *  "status": 200,
      *  "result": {
      *     "organisationId": "013014480583598080574",
@@ -415,44 +415,42 @@ module.exports = class Organisations {
   }
 
   /**
-     * @api {post} /sunbird/api/v1/organisations/updateStatus Organisation Status Update
-     * To update organisation status
+     * @api {get} /sunbird/api/v1/organisations/removeUser   Remove user
+     * To remove User from organisation
      * @apiVersion 1.0.0
      * @apiGroup Organisations
      * @apiHeader {String} X-authenticated-user-token Authenticity token
-     * @apiSampleRequest /sunbird/api/v1/organisations/updateStatus
-     * @apiParamExample {json} Request:
+     * @apiSampleRequest /sunbird/api/v1/organisations/removeUser
      * {
-     *   "organisationId": "013014480583598080574",
-     *   "status":"0"
+     *   "organisationId": "",
+     *   "userId":""
      * }
      * @apiUse successBody
      * @apiUse errorBody
      * @apiParamExample {json} Response:
      * {
-     *  "message": "Organisation Status Update Successfully",
+     *  "message": "user removed from organisation successfully.",
      *  "status": 200,
      *  "result": {
-     *     "response": "SUCCESS",
+     *     "response": "success",
      *   }
      * }
      * 
    */
   /**
-   * To update organisation status
+   * To Remove user from the organisation
    * @method
    * @name updateStatus
    * @param  {req}  - requested data.
-   * @returns {json} Response consists updated organisation status
+   * @returns {json} Response consists removed user status
    **/
 
-  updateStatus(req) {
+  removeUser(req) {
     return new Promise(async (resolve, reject) => {
       try {
 
-        let statusUpdate = await organisationsHelper.updateStatus(req.body, req.userDetails.userToken);
-        
-        return resolve({ result: statusUpdate.data, message: statusUpdate.message });
+        let removeUser = await organisationsHelper.removeUser(req.body, req.userDetails.userToken);
+        return resolve({ result: removeUser.data, message: removeUser.message });
 
       } catch (error) {
 
@@ -470,42 +468,88 @@ module.exports = class Organisations {
 
 
   /**
-     * @api {get} /sunbird/api/v1/organisations/removeUser   Remove user
-     * To remove User from organisation
+     * @api {get} /sunbird/api/v1/organisations/activate/:_id activate
+     * To activate organisation
      * @apiVersion 1.0.0
      * @apiGroup Organisations
      * @apiHeader {String} X-authenticated-user-token Authenticity token
-     * @apiSampleRequest /sunbird/api/v1/organisations/removeUser
-     * {
-     *   "organisationId": "",
-     *   "userId":""
-     * }
+     * @apiSampleRequest /sunbird/api/v1/organisations/activate/013014480583598080574
      * @apiUse successBody
      * @apiUse errorBody
      * @apiParamExample {json} Response:
      * {
-     *  "message": "user removed from Organisation Successfully",
+     *  "message": "Organisation Activated Successfully.",
      *  "status": 200,
      *  "result": {
-     *     "response": "success",
+     *     "response": "SUCCESS",
      *   }
      * }
      * 
    */
   /**
-   * To Remove user from the Organisation
+   * To activate organisation
    * @method
-   * @name updateStatus
+   * @name activate
    * @param  {req}  - requested data.
-   * @returns {json} Response consists removed user status
+   * @returns {json} Response consists activated organisation information
    **/
 
-  removeUser(req) {
+  activate(req) {
     return new Promise(async (resolve, reject) => {
       try {
 
-        let removeUser = await organisationsHelper.removeUser(req.body, req.userDetails.userToken);
-        return resolve({ result: removeUser.data, message: removeUser.message });
+        let activateOrganisation = await organisationsHelper.activate(req.params._id, req.userDetails.userToken);
+        
+        return resolve({ result: activateOrganisation.data, message: activateOrganisation.message });
+
+      } catch (error) {
+
+        return reject({
+          status:
+            error.status ||
+            HTTP_STATUS_CODE["internal_server_error"].status,
+          message:
+            error.message ||
+            HTTP_STATUS_CODE["internal_server_error"].message
+        });
+      }
+    });
+  }
+
+  /**
+     * @api {get} /sunbird/api/v1/organisations/deactivate/:_id deactivate
+     * To deactivate organisation
+     * @apiVersion 1.0.0
+     * @apiGroup Organisations
+     * @apiHeader {String} X-authenticated-user-token Authenticity token
+     * @apiSampleRequest /sunbird/api/v1/organisations/deactivate/013014480583598080574
+     * @apiUse successBody
+     * @apiUse errorBody
+     * @apiParamExample {json} Response:
+     * {
+     *  "message": "Organisation Deactivated Successfully.",
+     *  "status": 200,
+     *  "result": {
+     *     "response": "SUCCESS",
+     *   }
+     * }
+     * 
+   */
+  /**
+   * To deactivate organisation
+   * @method
+   * @name deactivate
+   * @param  {req}  - requested data.
+   * @returns {json} Response consists deactivated organisation information
+   **/
+
+  deactivate(req) {
+    return new Promise(async (resolve, reject) => {
+      try {
+
+        let deactivateOrganisation = await organisationsHelper.deactivate(req.params._id, req.userDetails.userToken);
+        
+        return resolve({ result: deactivateOrganisation.data, message: deactivateOrganisation.message });
 
       } catch (error) {
 

@@ -18,19 +18,20 @@ module.exports = class Organisations {
   }
 
   /**
-* @apiDefine errorBody
-* @apiError {String} status 4XX,5XX
-* @apiError {String} message Error
-*/
+  * @apiDefine errorBody
+  * @apiError {String} status 4XX,5XX
+  * @apiError {String} message Error
+  */
+
   /**
     * @apiDefine successBody
     * @apiSuccess {String} status 200
     * @apiSuccess {String} result Data
- */
+  */
 
   /**
-    * @api {get} /sunbird/api/v1/organisations/list list
-    * Get platform organisations list.
+    * @api {get} /sunbird/api/v1/organisations/list
+    * Organisation list
     * @apiVersion 1.0.0
     * @apiGroup Organisations
     * @apiHeader {String} internal-access-token Internal access token
@@ -89,8 +90,8 @@ module.exports = class Organisations {
   }
 
   /**
-  * @api {get} /sunbird/api/v1/organisations/users Users
-  * Get platform users list for organisation.
+  * @api {get} /sunbird/api/v1/organisations/users
+  * Organisation user list.
   * @apiVersion 1.0.0
   * @apiGroup Organisations
   * @apiHeader {String} internal-access-token Internal access token
@@ -162,8 +163,8 @@ module.exports = class Organisations {
 
 
   /**
- * @api {post} /sunbird/api/v1/organisations/assignRoles Assign Roles
- * To assign Roles to the organisation for the user
+ * @api {post} /sunbird/api/v1/organisations/assignRoles
+ * Assign orgnisation roles to a user
  * @apiVersion 1.0.0
  * @apiGroup Organisations
  * @apiHeader {String} internal-access-token Internal access token
@@ -230,20 +231,20 @@ module.exports = class Organisations {
 
 
   /**
-   * @api {post} /sunbird/api/v1/organisations/create Create
-   * To create the organisation
+   * @api {post} /sunbird/api/v1/organisations/create
+   * Create an organisation
    * @apiVersion 1.0.0
    * @apiGroup Organisations
+   * @apiHeader {String} internal-access-token Internal access token
    * @apiHeader {String} X-authenticated-user-token Authenticity token
    * @apiSampleRequest /sunbird/api/v1/organisations/create
    * @apiParamExample {json} Request:
    * {
-      "description": "for test",
+      "description": "Test description value",
       "externalId": "ext1332sdddda2ww22",
-      "provider": "string",
       "name": "testing",
       "email": "abc@gmail.com",
-      "address": "iiii"
+      "address": "Some valid address"
     }
    * @apiUse successBody
    * @apiUse errorBody
@@ -251,7 +252,7 @@ module.exports = class Organisations {
    * 
    * {
    *  "status": 200,
-   *  "message": ""message": "Organisation List fetched successfully."
+   *  "message": "message": "Organisation created successfully."
    *      "result": {
    *          "columns":[{
    *             "type": "column",
@@ -273,7 +274,7 @@ module.exports = class Organisations {
  */
 
   /**
-  * To create the organisation
+  * To create an organisation
   * @method
   * @name create
   * @param  {req}  - requested data.
@@ -303,10 +304,11 @@ module.exports = class Organisations {
   }
 
   /**
-     * @api {post} /sunbird/api/v1/organisations/update Update
-     * To update organisation details
+     * @api {post} /sunbird/api/v1/organisations/update
+     * Update organisation details
      * @apiVersion 1.0.0
      * @apiGroup Organisations
+     * @apiHeader {String} internal-access-token Internal access token
      * @apiHeader {String} X-authenticated-user-token Authenticity token
      * @apiSampleRequest /sunbird/api/v1/organisations/update
      * @apiParamExample {json} Request:
@@ -330,6 +332,7 @@ module.exports = class Organisations {
      * }
      * 
    */
+
   /**
    * To update organisation data
    * @method
@@ -362,8 +365,8 @@ module.exports = class Organisations {
 
 
   /**
-     * @api {get} /sunbird/api/v1/organisations/details/:organisationId Organisation Details
-     * To get organisation details
+     * @api {get} /sunbird/api/v1/organisations/details/:organisationId
+     * Organisation details
      * @apiVersion 1.0.0
      * @apiGroup Organisations
      * @apiHeader {String} X-authenticated-user-token Authenticity token
@@ -419,6 +422,7 @@ module.exports = class Organisations {
      * To remove User from organisation
      * @apiVersion 1.0.0
      * @apiGroup Organisations
+     * @apiHeader {String} internal-access-token Internal access token
      * @apiHeader {String} X-authenticated-user-token Authenticity token
      * @apiSampleRequest /sunbird/api/v1/organisations/removeUser
      * {
@@ -478,7 +482,7 @@ module.exports = class Organisations {
      * @apiUse errorBody
      * @apiParamExample {json} Response:
      * {
-     *  "message": "Organisation Activated Successfully.",
+     *  "message": "Organisation activated successfully.",
      *  "status": 200,
      *  "result": {
      *     "response": "SUCCESS",
@@ -527,7 +531,7 @@ module.exports = class Organisations {
      * @apiUse errorBody
      * @apiParamExample {json} Response:
      * {
-     *  "message": "Organisation Deactivated Successfully.",
+     *  "message": "Organisation de-activated successfully.",
      *  "status": 200,
      *  "result": {
      *     "response": "SUCCESS",

@@ -45,7 +45,7 @@ module.exports = class Keycloak {
     *  }
     * @apiParamExample {json} Response:
     * {
-      "message": "Token fetched successfully",
+      "message": "User token fetched successfully.",
       "status": 200,
       "result": {
         "access_token": "eyJhbGciOiJSUzI1NiIs...       ...6zsxP6QhxIpJew",

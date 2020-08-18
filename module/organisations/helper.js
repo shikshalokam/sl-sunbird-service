@@ -26,16 +26,12 @@ module.exports = class OrganisationsHelper {
     static list(token, pageSize, pageNo, searchText, status) {
         return new Promise(async (resolve, reject) => {
             try {
-
-                if(pageNo >0){
-                    pageNo = pageNo -1;
-                }
-
+                
                 let request = {
                     "filters": {
                     },
                     "limit": pageSize,
-                    "offset": pageNo
+                    "offset": pageNo -1
                 }
 
                 if (searchText) {
@@ -290,7 +286,7 @@ module.exports = class OrganisationsHelper {
     }
 
     /**
-    * remove user from the organisation
+    * Remove user from the organisation
     * @method
     * @name  removeUser
     * @param {Object} organisationDetails - organisation user details 
@@ -304,7 +300,7 @@ module.exports = class OrganisationsHelper {
         return new Promise(async (resolve, reject) => {
             try {
 
-                let removeUser = await sunbirdService.removeUser(organisationDetails, token);
+                let removeUser = await sunbirdService.removeUserFromOrganisation(organisationDetails, token);
                 if (removeUser && removeUser.response && removeUser.response == CONSTANTS.common.SUNBIRD_SUCCESS) {
                     resolve({ data: removeUser, message: CONSTANTS.apiResponses.USER_REMOVED, success: true });
                 } else {

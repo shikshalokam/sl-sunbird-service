@@ -83,7 +83,7 @@ module.exports = async function (req, res, next, token = "") {
 
   // Allow search endpoints for non-logged in users.
   let guestAccess = false;
-  let guestAccessPaths = ["bodh/search", "bodh/request", "device"];
+  const guestAccessPaths = ["bodh/search", "bodh/request", "device"];
   await Promise.all(guestAccessPaths.map(async function (path) {
     if (req.path.includes(path)) {
       guestAccess = true;
@@ -95,7 +95,7 @@ module.exports = async function (req, res, next, token = "") {
     return;
   }
 
-  let internalAccessApiPaths = ["keywords", "token/verify"];
+  const internalAccessApiPaths = ["keywords", "token/verify","keycloak/generateToken","users/create"];
   let performInternalAccessTokenCheck = false;
   await Promise.all(internalAccessApiPaths.map(async function (path) {
     if (req.path.includes(path)) {
@@ -117,7 +117,7 @@ module.exports = async function (req, res, next, token = "") {
   }
 
 
-  let securedApiPaths = ["learningResources/","users/","/organisations/"];
+  const securedApiPaths = ["learningResources/","users/","/organisations/"];
   let tokenAndInternalAccessTokenRequired = false;
   await Promise.all(securedApiPaths.map(async function (path) {
     if (req.path.includes(path)) {

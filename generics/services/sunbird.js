@@ -901,18 +901,18 @@ const generateToken = function (userCredentials) {
   * @returns {JSON} - api response
 */
 
-function callKeycloakService(url = "", data = {}) {
+function callKeycloakService(endpoint = "", data = {}) {
     return new Promise(async (resolve, reject) => {
         try {
 
-            url = process.env.SUNBIRD_BASE_URL + url;
+            endpoint = process.env.SUNBIRD_BASE_URL + endpoint;
             const reqObj = new httpRequest()
             const options = {
                 form: data
             }
 
             const response = await reqObj.post(
-                url,
+                endpoint,
                 options
             )
             return resolve(response)

@@ -1,12 +1,12 @@
 /**
- * name : Keycloak.js
+ * name : keycloak.js
  * author : Rakesh Kumar
  * created-date : 17-Aug-2020
- * Description : Keycloaks related information.
+ * Description : Keycloak related information.
  *
 **/
 
-const KeycloakHelper = require(MODULES_BASE_PATH + "/keycloak/helper.js");
+const keycloakHelper = require(MODULES_BASE_PATH + "/keycloak/helper.js");
 /**
     * Keycloak
     * @class
@@ -30,8 +30,8 @@ module.exports = class Keycloak {
   */
 
   /**
-    * @api {get} /sunbird/api/v1/keycloak/generateToken Get keyclock token
-    * Get keyclock token
+    * @api {get} /sunbird/api/v1/keycloak/generateToken Get keycloak token
+    * Get keycloak token
     * @apiVersion 1.0.0
     * @apiGroup Keycloak
     * @apiHeader {String} internal-access-token Internal access token
@@ -71,8 +71,7 @@ module.exports = class Keycloak {
     return new Promise(async (resolve, reject) => {
       try {
 
-        let tokenInfo = await KeycloakHelper.generateToken(req.body.username,req.body.password);
-        
+        const tokenInfo = await keycloakHelper.generateToken(req.body.username,req.body.password);
           return resolve({ result: tokenInfo.data, message: tokenInfo.message });
 
           

@@ -102,11 +102,11 @@ let enviromentVariables = {
     "message" : "Required sunbird keycloak grant",
     "optional" : true,
     "default": "password"
-
   },
   "SUNBIRD_KEYCLOAK_SESSION_SCOPE" : {
     "message" : "Required sunbird session scope",
-    "optional" : false
+    "optional" : true,
+    "default": "offline_access"
   },
   "SUNBIRD_FRAMEWORK" : {
     "message" : "Required sunbird framework name",

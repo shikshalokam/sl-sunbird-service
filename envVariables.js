@@ -98,6 +98,16 @@ let enviromentVariables = {
     "message" : "Required sunbird cache ttl",
     "optional" : false
   },
+  "SUNBIRD_KEYCLOAK_GRANT_TYPE" : {
+    "message" : "Required sunbird keycloak grant",
+    "optional" : true,
+    "default": "password"
+  },
+  "SUNBIRD_KEYCLOAK_SESSION_SCOPE" : {
+    "message" : "Required sunbird session scope",
+    "optional" : true,
+    "default": "offline_access"
+  },
   "SUNBIRD_FRAMEWORK" : {
     "message" : "Required sunbird framework name",
     "optional" : false

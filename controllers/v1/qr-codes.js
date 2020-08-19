@@ -47,7 +47,7 @@ module.exports = class QrCodes extends Abstract {
      * @apiUse errorBody
      * @apiParamExample {json} Response:
      * {
-     * "message": "Qr code image generated successfully",
+     * "message": "Qr code image generated successfully.",
      * "status": 200,
      * "result":
      * {
@@ -105,7 +105,7 @@ module.exports = class QrCodes extends Abstract {
 
      * @apiParamExample {json} Response:
      * {
-     * "message": "Qr code pdfs generated successfully",
+     * "message": "Qr code pdfs generated successfully.",
      * "status": 200,
      * "result":[{
      * code : "N7W8L4"

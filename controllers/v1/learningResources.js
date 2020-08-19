@@ -123,7 +123,7 @@ module.exports = class LearningResources {
   * @apiUse errorBody
   * @apiParamExample {json} Response:
     {
-    "message":"filters fetched successfully",
+    "message":"Filters fetched successfully",
     "status": 200,
       "result": {
          "medium": [

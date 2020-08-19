@@ -108,6 +108,11 @@ let enviromentVariables = {
     "optional" : true,
     "default": "offline_access"
   },
+  "SUNBIRD_ADMIN_CLI" : {
+    "message" : "Required sunbird admin cli",
+    "optional" : true,
+    "default": "admin-cli"
+  },
   "SUNBIRD_FRAMEWORK" : {
     "message" : "Required sunbird framework name",
     "optional" : false

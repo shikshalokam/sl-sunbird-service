@@ -28,7 +28,7 @@ module.exports = class keycloakHelper {
                 if (username == "" || password == "") throw new Error("Invalid Credentials.")
 
                 let keycloakLoginResponse = await sunbirdService.generateToken({
-                    "client_id": process.env.SUNBIRD_KEYCLOAK_CLIENT_ID,
+                    "client_id": process.env.SUNBIRD_ADMIN_CLI,
                     "username": username, 
                     "password": password,
                     "grant_type":process.env.SUNBIRD_KEYCLOAK_GRANT_TYPE,

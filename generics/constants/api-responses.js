@@ -73,5 +73,6 @@ module.exports = {
   USER_REMOVED: "User removed from organisation successfully.",
   DEVICE_PROFILE_FETCH_SUCCESSFUL: "Device profile fetched successfully.",
   DEVICE_REGISTER_SUCCESSFUL : "Device registered successfully.",
-  TOKEN_FETCHED: "User token fetched successfully."
+  TOKEN_FETCHED: "User token fetched successfully.",
+  ROLES_FOUND: "Roles found successfully.",
 };

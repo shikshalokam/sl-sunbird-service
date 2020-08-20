@@ -42,6 +42,7 @@ module.exports = class Roles extends Abstract {
 
   /**
   * @api {post} /sunbird/api/v1/roles/list list 
+  * TO get platform roles
   * @apiVersion 1.0.0
   * @apiName list 
   * @apiGroup Roles
@@ -51,23 +52,39 @@ module.exports = class Roles extends Abstract {
   * @apiUse errorBody
   * @apiParamExample {json} Response:
   * 
-  * {
-  *   "message": "User created successfully.",
-  *   "status": 200,
-  *    "result": [ 
-  *     {  
-  *         "response": "SUCCESS",
-  *         "userId": ""
-  *     }
+  *{
+    "message":"Roles found successfully.",
+    "status": 200,
+    "result": [
+        {
+            "id": "COURSE_MENTOR",
+            "name": "Course Mentor"
+        },
+        {
+            "id": "CONTENT_REVIEWER",
+            "name": "Content Reviewer"
+        },
+        {
+            "id": "TEACHER_BADGE_ISSUER",
+            "name": "Teacher Badge Issuer"
+        }
   *  ]
   * }
+  */
+
+ /**
+   * To get all platform roles
+   * @method
+   * @name list
+   * @param  {req}  - requested data.
+   * @returns {json} Response consists platform roles
   */
    list(req) {
         return new Promise(async (resolve, reject) => {
           try {
     
             let roles = await roleshelper.list(req.body.token);
-            return resolve({ result:roles.data,message:roles.message });
+            return resolve({ result:roles.data, message:roles.message });
             
           } catch (error) {
     

@@ -41,10 +41,9 @@ module.exports = class Roles extends Abstract {
     }
 
   /**
-  * @api {post} /sunbird/api/v1/roles/list list 
-  * TO get platform roles
+  * @api {get} /sunbird/api/v1/roles/list To get platform roles 
   * @apiVersion 1.0.0
-  * @apiName list 
+  * @apiName Roles List
   * @apiGroup Roles
   * @apiHeader {String} internal-access-token Internal access token
   * @apiSampleRequest /sunbird/api/v1/roles/list

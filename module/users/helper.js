@@ -55,7 +55,7 @@ module.exports = class UsersHelper {
     * @param {String} token - User access token
     * @returns {json} Response consists of created user details.
     */
-    static create(userDetails, token) {
+    static create(userDetails, token="") {
         return new Promise(async (resolve, reject) => {
             try {
                 let response = await sunbirdService.createUser(userDetails, token);

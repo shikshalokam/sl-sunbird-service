@@ -285,44 +285,6 @@ module.exports = class OrganisationsHelper {
         });
     }
 
-
-    /**
-    * To update organisation status
-    * @method
-    * @name  updateStatus
-    * @param {Object} organisationDetails - organisation details object
-    * @param {String} organisationDetails.organisationId - organisation id
-    * @param {String} organisationDetails.status - status code
-    * @param  {token} token  - keyclock access token
-    * @returns {json} Response consists of organisation update status info
-    */
-
-    static updateStatus(organisationDetails, token) {
-        return new Promise(async (resolve, reject) => {
-            try {
-
-                let updateOrg = await sunbirdService.updateOrgStatus(organisationDetails, token);
-                if (updateOrg && updateOrg.response && updateOrg.response == CONSTANTS.common.SUNBIRD_SUCCESS) {
-
-                    let msg = CONSTANTS.apiResponses.ORG_ACTIVATED;
-                    if (organisationDetails.status == 0) {
-                        msg = CONSTANTS.apiResponses.ORG_DEACTIVATED;
-                    }
-                    resolve({ data: updateOrg.result, message: msg, success: true });
-                } else {
-                    throw new Error(updateOrg.message);
-                }
-
-            } catch (error) {
-                return reject({
-                    success: false,
-                    message: error.message ? error.message : HTTP_STATUS_CODE["internal_server_error"].message,
-                    data: false
-                });
-            }
-        });
-    }
-
     /**
     * Remove user from the organisation
     * @method
@@ -354,5 +316,76 @@ module.exports = class OrganisationsHelper {
             }
         });
     }
+
+    /**
+    * To activate organisation
+    * @method
+    * @name  activate
+    * @param {String} organisationId - organisation id
+    * @param  {token} token  - keyclock access token
+    * @returns {json} Response consists of organisation activate status info
+    */
+
+   static activate(organisationId, token) {
+    return new Promise(async (resolve, reject) => {
+        try {
+
+            const organisationDetails = {
+                organisationId: organisationId,
+                status:1
+            }
+
+            let activateOrganisation = await sunbirdService.updateOrgStatus(organisationDetails, token);
+            if (activateOrganisation && activateOrganisation.response && activateOrganisation.response == CONSTANTS.common.SUNBIRD_SUCCESS) {
+
+                 resolve({ data: activateOrganisation.result, message: CONSTANTS.apiResponses.ORG_ACTIVATED, success: true });
+            } else {
+                throw new Error(activateOrganisation.message);
+            }
+
+        } catch (error) {
+            return reject({
+                success: false,
+                message: error.message ? error.message : HTTP_STATUS_CODE["internal_server_error"].message,
+                data: false
+            });
+        }
+    });
+}
+    /**
+    * To deactivate organisation
+    * @method
+    * @name  deactivate
+    * @param {String} organisationId - organisation id
+    * @param  {token} token  - keyclock access token
+    * @returns {json} Response consists of organisation deactivate status info
+    */
+
+   static deactivate(organisationId, token) {
+    return new Promise(async (resolve, reject) => {
+        try {
+
+            const organisationDetails = {
+                organisationId: organisationId,
+                status:0
+            }
+
+            let deactivateOrganisation = await sunbirdService.updateOrgStatus(organisationDetails, token);
+            if (deactivateOrganisation && deactivateOrganisation.response && deactivateOrganisation.response == CONSTANTS.common.SUNBIRD_SUCCESS) {
+                
+                resolve({ data: deactivateOrganisation.result, message: CONSTANTS.apiResponses.ORG_DEACTIVATED, success: true });
+            } else {
+                throw new Error(deactivateOrganisation.message);
+            }
+
+        } catch (error) {
+            return reject({
+                success: false,
+                message: error.message ? error.message : HTTP_STATUS_CODE["internal_server_error"].message,
+                data: false
+            });
+        }
+    });
+}
 
 };

@@ -41,7 +41,8 @@ module.exports = class Keycloak {
     * @apiParamExample {json} Request:
     * {
     *   "username" : "220750161",
-    *   "password" : "punjab@123@PJ111"
+    *   "password" : "punjab@123@PJ111",
+    *   "client_id" : "sl-ionic-connect"
     *  }
     * @apiParamExample {json} Response:
     * {
@@ -71,7 +72,7 @@ module.exports = class Keycloak {
     return new Promise(async (resolve, reject) => {
       try {
 
-        const tokenInfo = await keycloakHelper.generateToken(req.body.username,req.body.password);
+        const tokenInfo = await keycloakHelper.generateToken(req.body.username,req.body.password,req.body.client_id);
           return resolve({ result: tokenInfo.data, message: tokenInfo.message });
 
           

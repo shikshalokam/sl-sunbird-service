@@ -21,14 +21,14 @@ module.exports = class keycloakHelper {
     * @param {String} password - password of keycloak user 
     * @returns {json} Response consists of keycloak user token
     */
-    static generateToken(username = "", password = "") {
+    static generateToken(username = "", password = "",clientId = "") {
         return new Promise(async (resolve, reject) => {
             try {
 
                 if (username == "" || password == "") throw new Error("Invalid Credentials.")
 
                 let keycloakLoginResponse = await sunbirdService.generateToken({
-                    "client_id": process.env.SUNBIRD_ADMIN_CLI,
+                    "client_id": clientId ? clientId : process.env.SUNBIRD_ADMIN_CLI,
                     "username": username, 
                     "password": password,
                     "grant_type":process.env.SUNBIRD_KEYCLOAK_GRANT_TYPE,

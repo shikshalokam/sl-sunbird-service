@@ -516,11 +516,12 @@ function callToSunbird(requestType, url, token = "", requestBody = "") {
   * @param limit - page limit for the request 
   * @param offset - page offset for the request
   * @param filters - api filters for the request 
-  * @param sortBy
+  * @param sortBy- sort the data by asc or desc
+  * @param searchText - search text
   * @returns {JSON} - consist of learning resources list
 */
 
-const learningResources = function (token, limit, offset, filters = "", sortBy = "") {
+const learningResources = function (token, limit, offset, filters = "", sortBy = "",searchText="") {
     return new Promise(async (resolve, reject) => {
 
         try {
@@ -534,7 +535,11 @@ const learningResources = function (token, limit, offset, filters = "", sortBy =
                 },
                 "limit": limit,
                 "mode": "soft",
-                "offset": offset - 1
+                "offset": offset - 1,
+                
+            }
+            if(searchText){
+                requestBody["query"] = searchText;
             }
 
             let keys = Object.keys(filters);

@@ -526,6 +526,8 @@ const learningResources = function (token, limit, offset, filters = "", sortBy =
 
         try {
 
+            
+            offset = ( offset - 1 ) * limit + 1;
             const learningResourceUrl = CONSTANTS.endpoints.GET_RESOURCES;
             let requestBody = {
                 "source": "web",
@@ -535,7 +537,7 @@ const learningResources = function (token, limit, offset, filters = "", sortBy =
                 },
                 "limit": limit,
                 "mode": "soft",
-                "offset": offset - 1,
+                "offset": offset,
                 
             }
             if(searchText){

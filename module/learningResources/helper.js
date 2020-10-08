@@ -42,11 +42,19 @@ module.exports = class LearningResourcesHelper {
                 let learningResources = await sunbirdService.learningResources(token, pageSize, pageNo, filters, sortBy,searchText);
                 if (learningResources && learningResources.content) {
 
+                    let resources = []
+                    if(learningResources.count > 0){
+                        learningResources.content.map(function(resource){
+                            resource['previewUrl'] = process.env.SUNBIRD_URL+CONSTANTS.common.CONTENT_PATH+resource.identifier;
+                            resources.push(resource);
+                        });
+                    }
+
                     resolve({
                         message: CONSTANTS.apiResponses.LEARNING_RESORCES_FOUND,
                         success: true,
                         data: {
-                            content: learningResources.content,
+                            content: resources,
                             count: learningResources.count
                         }
                     })

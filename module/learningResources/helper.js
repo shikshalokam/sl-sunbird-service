@@ -45,7 +45,7 @@ module.exports = class LearningResourcesHelper {
                     let resources = []
                     if(learningResources.count > 0){
                         learningResources.content.map(function(resource){
-                            resource['previewUrl'] = process.env.SUNBIRD_URL+CONSTANTS.common.CONTENT_PATH+resource.identifier;
+                            resource['previewUrl'] = process.env.SUNBIRD_BASE_URL+CONSTANTS.common.CONTENT_PATH+resource.identifier;
                             resources.push(resource);
                         });
                     }

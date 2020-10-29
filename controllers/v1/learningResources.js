@@ -93,7 +93,8 @@ module.exports = class LearningResources {
           req.pageSize,
           req.pageNo,
           req.body.filters ? req.body.filters : {},
-          req.query.sortBy ? req.query.sortBy : ""
+          req.query.sortBy ? req.query.sortBy : "",
+          req.searchText
         );
         return resolve({ result: response.data, message: response.message });
 

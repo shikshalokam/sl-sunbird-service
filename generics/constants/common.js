@@ -21,6 +21,7 @@ module.exports = {
      TRUE: true,
     FALSE: false,
     RESPONSE_OK: "OK",
-    SUNBIRD_SUCCESS:"SUCCESS"
+    SUNBIRD_SUCCESS:"SUCCESS",
+    CONTENT_PATH: "/resources/play/content/"
     
 };

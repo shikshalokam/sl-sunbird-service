@@ -458,7 +458,7 @@ function callToSunbird(requestType, url, token = "", requestBody = "") {
             }
 
             if (requestType != "GET") {
-                    options['json'] = { request: requestBody };
+                options['json'] = { request: requestBody };
             }
             url = process.env.SUNBIRD_BASE_URL + url;
             if (requestType == "PATCH") {
@@ -521,26 +521,28 @@ function callToSunbird(requestType, url, token = "", requestBody = "") {
   * @returns {JSON} - consist of learning resources list
 */
 
-const learningResources = function (token, limit, offset, filters = "", sortBy = "",searchText="") {
+const learningResources = function (token, limit, offset, filters = "", sortBy = "", searchText = "") {
     return new Promise(async (resolve, reject) => {
 
         try {
 
-            
-            offset = ( offset - 1 ) * limit + 1;
+            offset = (offset - 1) * limit;
             const learningResourceUrl = CONSTANTS.endpoints.GET_RESOURCES;
             let requestBody = {
                 "source": "web",
                 "name": "Resource",
                 "filters": {
-                    "contentType": ["Resource"],
+                    "contentType": [
+                        "Resource"
+                    ]
                 },
                 "limit": limit,
                 "mode": "soft",
                 "offset": offset,
-                
+
             }
-            if(searchText){
+
+            if (searchText) {
                 requestBody["query"] = searchText;
             }
 
@@ -564,7 +566,6 @@ const learningResources = function (token, limit, offset, filters = "", sortBy =
                     "createdOn": "desc"
                 }
             }
-
             let response = await callToSunbird("POST", learningResourceUrl, token, requestBody);
             return resolve(response);
         } catch (error) {
@@ -829,7 +830,7 @@ const updateOrgStatus = function (organisationDetails, token) {
     return new Promise(async (resolve, reject) => {
 
         const updateOrgStatusUrl = CONSTANTS.endpoints.SUNBIRD_ORG_STATUS_UPDATE;
-   
+
         const response = await callToSunbird("PATCH", updateOrgStatusUrl, token, organisationDetails);
         return resolve(response);
     });

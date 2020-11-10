@@ -397,7 +397,7 @@ module.exports = class Users {
   /**
   * @api {get} /sunbird/api/v1/users/search
   * @apiVersion 1.0.0
-  * @apiName User List
+  * @apiName User Search
   * @apiGroup Users
   * @apiHeader {String} internal-access-token Internal access token
   * @apiHeader {String} X-authenticated-user-token Authenticity token
@@ -436,7 +436,7 @@ module.exports = class Users {
   * @returns {json} Response consists of platform organisation list
   */
 
-  searchUsers(req) {
+  search(req) {
     return new Promise(async (resolve, reject) => {
       try {
 

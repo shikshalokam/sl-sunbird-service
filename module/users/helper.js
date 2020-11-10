@@ -163,4 +163,67 @@ module.exports = class UsersHelper {
             }
         });
     }
+
+
+    /**
+   * Search user.
+   * @method
+   * @name search
+   * @param {String} token - user access token
+   * @param {String} userId - user id
+   * @param {String} organisationId - organisation id
+   * @param {String} pageSize - maximum limit 
+   * @param {String} pageNo - page number
+   * @param {String} searchText - search text of users
+   * @param {String} status - status of the users
+   * @param {Array} requestedUsers - array of selected user id
+   * @returns {json} Response consists of users of organisation.
+   */
+
+    static search(token, userId, userName, pageSize, pageNo, searchText, status = "", requestedUsers = []) {
+        return new Promise(async (resolve, reject) => {
+            try {
+
+                let apiRequest = {
+                    "filters": {
+                        "userName": userName,
+                    }
+                }
+
+                if (pageNo) {
+                    apiRequest['offset'] = pageNo - 1;
+                }
+                if (pageSize) {
+                    apiRequest['limit'] = pageSize;
+                }
+                if (searchText) {
+                    apiRequest['query'] = searchText;
+                }
+                if (requestedUsers.length > 0) {
+                    apiRequest['filters']["id"] = requestedUsers;
+                }
+                if (status) {
+                    apiRequest['filters']['status'] = status;
+                }
+
+                let usersList =
+                    await sunbirdService.users(token, apiRequest);
+
+
+                if (usersList.response && usersList.response.content) {
+                    return resolve({ data: usersList.response, success: true, message: CONSTANTS.apiResponses.LIST_OF_USERS, success: true });
+                } else {
+                    throw new Error(usersList.message);
+                }
+
+            } catch (error) {
+
+                return reject({
+                    success: false,
+                    message: error.message ? error.message : HTTP_STATUS_CODE["internal_server_error"].message,
+                    data: false
+                });
+            }
+        })
+    }
 }

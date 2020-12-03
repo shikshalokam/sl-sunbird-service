@@ -391,4 +391,75 @@ module.exports = class Users {
     })
   }
 
+
+
+
+  /**
+  * @api {get} /sunbird/api/v1/users/search
+  * @apiVersion 1.0.0
+  * @apiName User Search
+  * @apiGroup Users
+  * @apiHeader {String} internal-access-token Internal access token
+  * @apiHeader {String} X-authenticated-user-token Authenticity token
+  * @apiSampleRequest /sunbird/api/v1/users/search/
+  * @apiParamExample {json} Response:
+  * {
+  *   "userName":"xxxxxx"
+  * }
+  * 
+  * @apiUse successBody
+  * @apiUse errorBody
+  * @apiParamExample {json} Response:
+  * 
+  * {
+  *   "message": "User list fetched successfully.",
+  *   "status": 200,
+  *    "result": {
+  *      "count": 1,
+  *       "usersList": [ {
+  *            "lastName": "",
+  *             "email": "",
+  *             "firstName": "abcd", 
+  *          }
+  *       ]
+  *    }   
+  * }
+  * 
+  * 
+*/
+
+  /**
+  * Get users search.
+  * @method
+  * @name searchUsers
+  * @param  {req}  - requested data.
+  * @returns {json} Response consists of platform organisation list
+  */
+
+  search(req) {
+    return new Promise(async (resolve, reject) => {
+      try {
+
+        let usersList = await usersHelper.search(
+          req.userDetails.userToken,
+          req.body.userName ? req.body.userName : "",
+          req.body.email ? req.body.email : "",
+          req.body.phone ? req.body.phone : ""
+        );
+        return resolve({ result: usersList.data, message: usersList.message });
+
+      } catch (error) {
+
+        return reject({
+          status:
+            error.status ||
+            HTTP_STATUS_CODE["internal_server_error"].status,
+          message:
+            error.message ||
+            HTTP_STATUS_CODE["internal_server_error"].message
+        });
+      }
+    });
+  }
+
 }

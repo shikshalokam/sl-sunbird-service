@@ -57,6 +57,7 @@ module.exports = {
   USER_CREATED: "User created successfully.",
   USER_BLOCKED: "User deactivated successfully.",
   USER_UNBLOCKED: "User activated successfully.",
+  LIST_OF_USERS: "Users list fetched successfully.",
   FAILED_TO_UPDATE: "Failed to update the status.",
   USER_PROFILE: "Platform user profile fetched successfully.",
   USER_ADDED: "User added to organisation successfully.",
@@ -75,4 +76,5 @@ module.exports = {
   DEVICE_REGISTER_SUCCESSFUL : "Device registered successfully.",
   TOKEN_FETCHED: "User token fetched successfully.",
   ROLES_FOUND: "Roles found successfully.",
+
 };

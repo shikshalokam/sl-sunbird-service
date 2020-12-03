@@ -170,19 +170,13 @@ module.exports = class UsersHelper {
    * @method
    * @name search
    * @param {String} token - user access token
-   * @param {String} userId - user id
-   * @param {String} organisationId - organisation id
-   * @param {String} pageSize - maximum limit 
-   * @param {String} pageNo - page number
-   * @param {String} searchText - search text of users
-   * @param {String} status - status of the users
-   * @param {Array} requestedUsers - array of selected user id
+   * @param {String} userName - user name
    * @param {String} email - user email address
    * @param {String} phone - user phone number
-   * @returns {json} Response consists of users of organisation.
+   * @returns {json} Response consists of users of information.
    */
 
-    static search(token, userId, userName, pageSize, pageNo, searchText, status = "", requestedUsers = [],email="",phone="") {
+    static search(token,userName,email,phone) {
         return new Promise(async (resolve, reject) => {
             try {
 
@@ -199,22 +193,6 @@ module.exports = class UsersHelper {
                 }
                 if(phone){
                     apiRequest['filters']['phone'] = phone;   
-                }
-
-                if (pageNo) {
-                    apiRequest['offset'] = pageNo - 1;
-                }
-                if (pageSize) {
-                    apiRequest['limit'] = pageSize;
-                }
-                if (searchText) {
-                    apiRequest['query'] = searchText;
-                }
-                if (requestedUsers.length > 0) {
-                    apiRequest['filters']["id"] = requestedUsers;
-                }
-                if (status) {
-                    apiRequest['filters']['status'] = status;
                 }
 
                 let usersList =

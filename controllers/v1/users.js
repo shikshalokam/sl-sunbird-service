@@ -442,13 +442,7 @@ module.exports = class Users {
 
         let usersList = await usersHelper.search(
           req.userDetails.userToken,
-          req.userDetails.userId,
           req.body.userName ? req.body.userName : "",
-          req.pageSize ? req.pageSize : 1, 
-          req.pageNo ? req.pageNo : 1, 
-          req.body.query ? req.body.query : "",
-          req.body.status ? req.body.status : "",
-          req.body.userIds ? req.body.userIds : [] ,
           req.body.email ? req.body.email : "",
           req.body.phone ? req.body.phone : ""
         );

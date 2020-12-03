@@ -177,17 +177,28 @@ module.exports = class UsersHelper {
    * @param {String} searchText - search text of users
    * @param {String} status - status of the users
    * @param {Array} requestedUsers - array of selected user id
+   * @param {String} email - user email address
+   * @param {String} phone - user phone number
    * @returns {json} Response consists of users of organisation.
    */
 
-    static search(token, userId, userName, pageSize, pageNo, searchText, status = "", requestedUsers = []) {
+    static search(token, userId, userName, pageSize, pageNo, searchText, status = "", requestedUsers = [],email="",phone="") {
         return new Promise(async (resolve, reject) => {
             try {
 
                 let apiRequest = {
                     "filters": {
-                        "userName": userName,
                     }
+                }
+                if(userName){
+                    apiRequest['filters']['userName'] = userName;  
+                }
+
+                if(email){
+                    apiRequest['filters']['email'] = email;   
+                }
+                if(phone){
+                    apiRequest['filters']['phone'] = phone;   
                 }
 
                 if (pageNo) {

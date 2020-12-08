@@ -163,4 +163,56 @@ module.exports = class UsersHelper {
             }
         });
     }
+
+
+    /**
+   * Search user.
+   * @method
+   * @name search
+   * @param {String} token - user access token
+   * @param {String} userName - user name
+   * @param {String} email - user email address
+   * @param {String} phone - user phone number
+   * @returns {json} Response consists of users of information.
+   */
+
+    static search(token,userName,email,phone) {
+        return new Promise(async (resolve, reject) => {
+            try {
+
+                let apiRequest = {
+                    "filters": {
+                    }
+                }
+                if(userName){
+                    apiRequest['filters']['userName'] = userName;  
+                }
+
+                if(email){
+                    apiRequest['filters']['email'] = email;   
+                }
+                if(phone){
+                    apiRequest['filters']['phone'] = phone;   
+                }
+
+                let usersList =
+                    await sunbirdService.users(token, apiRequest);
+
+
+                if (usersList.response && usersList.response.content) {
+                    return resolve({ data: usersList.response, success: true, message: CONSTANTS.apiResponses.LIST_OF_USERS, success: true });
+                } else {
+                    throw new Error(usersList.message);
+                }
+
+            } catch (error) {
+
+                return reject({
+                    success: false,
+                    message: error.message ? error.message : HTTP_STATUS_CODE["internal_server_error"].message,
+                    data: false
+                });
+            }
+        })
+    }
 }

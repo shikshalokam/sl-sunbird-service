@@ -9,5 +9,6 @@
 let healthCheckService = require("./healthCheckService");
 
 module.exports = function (app) {
+    app.get("/health",healthCheckService.health_check);
     app.get("/healthCheckStatus",healthCheckService.healthCheckStatus);
 }
